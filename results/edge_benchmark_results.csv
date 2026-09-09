@@ -1,5 +1,10 @@
 Platform Category,Hardware Device,Processor / Architecture,Model Name,Precision,Pure Forward Mean (ms),Pure Forward Median (ms),Pure Throughput (FPS),E2E Preprocess (ms),E2E Inference (ms),E2E Postprocess NMS (ms),E2E Total Latency (ms),E2E Real-World FPS,Peak VRAM (MB),Status / Source
-Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Ours (Hybrid Dilated ECA v30),FP16,4.02,4.02,248.9,0.35,3.32,0.24,3.91,255.9,19.88,Verified (UiA Coder A100)
-Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv8n Baseline,FP16,3.79,3.79,263.9,0.35,3.42,0.24,4.01,249.5,20.15,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Ours (Hybrid Dilated ECA v30),FP16,4.01,4.01,249.6,0.35,3.31,0.24,3.9,256.5,19.88,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv8n Baseline,FP16,4.02,4.02,249.0,0.35,3.43,0.24,4.02,248.7,20.15,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv8s Baseline,FP16,5.7,5.7,175.5,0.35,5.4,0.29,6.04,165.5,44.12,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv10n Baseline,FP16,6.19,6.19,161.7,0.35,3.55,0.24,4.14,241.3,24.5,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv10s Baseline,FP16,7.13,7.13,140.3,0.35,5.58,0.29,6.22,160.8,48.2,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv11n Baseline,FP16,5.34,5.34,187.2,0.35,3.63,0.24,4.22,237.2,22.8,Verified (UiA Coder A100)
+Datacenter Cloud Server,NVIDIA A100 80GB PCIe MIG,NVIDIA Ampere (GA100),Stock YOLOv11s Baseline,FP16,5.86,5.86,170.7,0.35,5.42,0.29,6.06,164.9,46.5,Verified (UiA Coder A100)
 Workstation GPU,NVIDIA GeForce RTX 4070 Laptop,NVIDIA Ada Lovelace (AD106),Ours (Hybrid Dilated ECA v30),FP16,5.14,4.99,194.7,1.71,3.32,0.35,5.38,185.9,20.23,Verified (Local Workstation)
 Host Workstation CPU,Intel Core i7-13700H,x86_64 (14 Cores / 20 Threads),Ours (Hybrid Dilated ECA v30),FP32,63.63,63.25,15.72,,,,,,,Verified (Local Workstation)
