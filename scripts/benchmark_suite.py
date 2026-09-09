@@ -5,17 +5,13 @@ Automated benchmark suite for all models matching the IEEE paper comparison:
   1. Ours (Hybrid Dilated ECA v30)
   2. YOLOv8n
   3. YOLOv8s
-  4. YOLOv10n
+  4. YOLOv10n (Optional, crashes on older ARMv8.0 boards like RPi 4)
   5. YOLOv10s
   6. YOLOv11n
   7. YOLOv11s
 
 Usage:
-  # On GPU (A100 / RTX / Jetson):
-  python scripts/benchmark_suite.py --device 0 --half --runs 200
-
-  # On CPU (Server / Pi 4 / Rock Pi):
-  python scripts/benchmark_suite.py --device cpu --runs 50
+  python scripts/benchmark_suite.py --device cpu --runs 20 --skip-v10
 """
 
 import argparse
@@ -37,7 +33,7 @@ register_c2f_eca_dilated()
 
 from ultralytics import YOLO
 
-MODELS = [
+ALL_MODELS = [
     ("Ours (Hybrid Dilated ECA)", "weights/v30_champion_best.pt"),
     ("YOLOv8n", "yolov8n.pt"),
     ("YOLOv8s", "yolov8s.pt"),
@@ -47,7 +43,7 @@ MODELS = [
     ("YOLOv11s", "yolo11s.pt"),
 ]
 
-def benchmark_single(name, weights_path, device_str, imgsz=640, warmup=15, runs=100, half=False):
+def benchmark_single(name, weights_path, device_str, imgsz=640, warmup=10, runs=50, half=False):
     if device_str.isdigit():
         torch_dev = torch.device(f"cuda:{device_str}")
         dev_arg = device_str
@@ -97,7 +93,7 @@ def benchmark_single(name, weights_path, device_str, imgsz=640, warmup=15, runs=
     for _ in range(min(5, warmup)):
         _ = model(dummy_img, device=dev_arg, half=use_half, verbose=False)
 
-    e2e_runs = min(runs, 80)
+    e2e_runs = min(runs, 40)
     pre_l, inf_l, post_l = [], [], []
     for _ in range(e2e_runs):
         res = model(dummy_img, device=dev_arg, half=use_half, verbose=False)[0]
@@ -131,26 +127,38 @@ def benchmark_single(name, weights_path, device_str, imgsz=640, warmup=15, runs=
 
 def main():
     parser = argparse.ArgumentParser(description="Full Model Suite Benchmark")
-    parser.add_argument("--device", type=str, default="0", help="'0', 'cuda', 'cpu'")
+    parser.add_argument("--device", type=str, default="cpu", help="'0', 'cuda', 'cpu'")
     parser.add_argument("--half", action="store_true", help="FP16 precision (GPU only)")
-    parser.add_argument("--runs", type=int, default=150, help="Runs per model")
-    parser.add_argument("--warmup", type=int, default=15, help="Warmup iterations")
+    parser.add_argument("--runs", type=int, default=20, help="Runs per model")
+    parser.add_argument("--warmup", type=int, default=5, help="Warmup iterations")
+    parser.add_argument("--skip-v10", action="store_true", help="Skip YOLOv10 (fixes illegal instruction on RPi 4)")
+    parser.add_argument("--models", nargs="+", default=None, help="Specific models to test (e.g. --models v30 v8n v11n)")
     parser.add_argument("--out-csv", type=str, default="results/suite_benchmark.csv", help="Output CSV path")
     args = parser.parse_args()
 
+    models_to_run = []
+    for name, path in ALL_MODELS:
+        if args.skip_v10 and "v10" in path.lower():
+            print(f"[Skip] Skipping {name} due to --skip-v10 flag.")
+            continue
+        if args.models:
+            if not any(m.lower() in path.lower() for m in args.models):
+                continue
+        models_to_run.append((name, path))
+
     print("=" * 70)
-    print("       FULL IEEE PAPER COMPARISON BENCHMARK SUITE       ")
+    print("       EDGE BENCHMARK SUITE       ")
     print("=" * 70)
-    print(f"Device: {args.device} | Precision: {'FP16' if args.half else 'FP32'} | Runs: {args.runs}")
+    print(f"Device: {args.device} | Runs: {args.runs} | Models: {len(models_to_run)}")
     print("=" * 70)
 
     records = []
-    for name, path in MODELS:
+    for name, path in models_to_run:
         try:
             res = benchmark_single(name, path, args.device, warmup=args.warmup, runs=args.runs, half=args.half)
             records.append(res)
         except Exception as e:
-            print(f"Error benchmarking {name}: {e}")
+            print(f"[Error] Failed {name}: {e}")
 
     df = pd.DataFrame(records)
     out_path = REPO_ROOT / args.out_csv
