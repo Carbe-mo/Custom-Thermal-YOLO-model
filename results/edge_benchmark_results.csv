@@ -22,3 +22,7 @@ Embedded SBC (ARM),Rock Pi 4C+,Rockchip RK3399 (2x A72 + 4x A53),Stock YOLOv10n 
 Embedded SBC (ARM),Rock Pi 4C+,Rockchip RK3399 (2x A72 + 4x A53),Stock YOLOv10s Baseline,FP32,3814.65,3814.65,0.3,,,,3173.0,0.3,,Verified (Physical Rock Pi 4C+)
 Embedded SBC (ARM),Rock Pi 4C+,Rockchip RK3399 (2x A72 + 4x A53),Stock YOLOv11n Baseline,FP32,3136.93,3136.93,0.3,,,,2852.14,0.4,,Verified (Physical Rock Pi 4C+)
 Embedded SBC (ARM),Rock Pi 4C+,Rockchip RK3399 (2x A72 + 4x A53),Stock YOLOv11s Baseline,FP32,3159.39,3159.39,0.3,,,,3150.24,0.3,,Verified (Physical Rock Pi 4C+)
+Low-Power Edge SBC (ARM),Raspberry Pi 4B,Broadcom BCM2711 (4x Cortex-A72),Ours (Hybrid Dilated ECA v30),FP32,1179.16,1179.16,0.8,,,,970.76,1.0,,Verified (Physical Raspberry Pi 4B)
+Low-Power Edge SBC (ARM),Raspberry Pi 4B,Broadcom BCM2711 (4x Cortex-A72),Stock YOLOv8n Baseline,FP32,963.26,963.26,1.0,,,,991.13,1.0,,Verified (Physical Raspberry Pi 4B)
+Low-Power Edge SBC (ARM),Raspberry Pi 4B,Broadcom BCM2711 (4x Cortex-A72),Stock YOLOv8s Baseline,FP32,2382.64,2382.64,0.4,,,,2361.25,0.4,,Verified (Physical Raspberry Pi 4B)
+Low-Power Edge SBC (ARM),Raspberry Pi 4B,Broadcom BCM2711 (4x Cortex-A72),Stock YOLOv10n Baseline,FP32,,,,,,,,,,Incompatible (Illegal Instruction on Cortex-A72)
