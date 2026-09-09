@@ -1,0 +1,17 @@
+# v0_baseline — Stock YOLOv8n (no modifications)
+#
+# This file exists per CLAUDE.md rules ("every variant has its own model.yaml").
+# v0 uses the built-in yolov8n.yaml architecture with zero changes.
+# train.py passes model="yolov8n.pt" to load pretrained COCO weights +
+# the stock architecture definition directly from ultralytics.
+#
+# Architecture reference (ultralytics yolov8n.yaml):
+#   Backbone: CSPDarknet with C2f blocks
+#   Neck:     PANet (top-down + bottom-up)
+#   Head:     Decoupled anchor-free Detect head
+#   Params:   ~3.01 M
+#   GFLOPs:   ~8.1
+
+variant: v0_baseline
+base: yolov8n.pt
+modifications: none

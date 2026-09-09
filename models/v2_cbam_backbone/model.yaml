@@ -1,0 +1,55 @@
+# v2_cbam_backbone — YOLOv8n with CBAM Attention Blocks in Backbone
+#
+# Modifications vs v0_baseline:
+#   Inserted CBAM (Channel + Spatial Attention) after each C2f block in the backbone.
+#   Head connections (Concat layers) are updated to reference the new backbone indices:
+#     - P4 backbone is at layer 9 (was 6)
+#     - P3 backbone is at layer 6 (was 4)
+#     - P5 backbone is at layer 13 (was 9)
+#     - P4 head intermediate is at layer 16 (was 12)
+#
+# Parameters:
+#   nc: 4 (person, trolley, bag, unattended)
+#   scale: n (depth: 0.33, width: 0.25, max_channels: 1024)
+
+nc: 4
+scales:
+  n: [0.33, 0.25, 1024]
+
+# YOLOv8.0n backbone with CBAM attention
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]          # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]]         # 1-P2/4
+  - [-1, 3, C2f, [128, True]]          # 2
+  - [-1, 1, CBAM, []]                  # 3-CBAM after C2f
+  - [-1, 1, Conv, [256, 3, 2]]         # 4-P3/8
+  - [-1, 6, C2f, [256, True]]          # 5
+  - [-1, 1, CBAM, []]                  # 6-CBAM after C2f (P3)
+  - [-1, 1, Conv, [512, 3, 2]]         # 7-P4/16
+  - [-1, 6, C2f, [512, True]]          # 8
+  - [-1, 1, CBAM, []]                  # 9-CBAM after C2f (P4)
+  - [-1, 1, Conv, [1024, 3, 2]]        # 10-P5/32
+  - [-1, 3, C2f, [1024, True]]         # 11
+  - [-1, 1, CBAM, []]                  # 12-CBAM after C2f (pre-SPPF)
+  - [-1, 1, SPPF, [1024, 5]]           # 13-SPPF (P5)
+
+# YOLOv8.0n head
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]  # 14
+  - [[-1, 9], 1, Concat, [1]]                   # 15-cat backbone P4 (layer 9)
+  - [-1, 3, C2f, [512]]                         # 16
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]  # 17
+  - [[-1, 6], 1, Concat, [1]]                   # 18-cat backbone P3 (layer 6)
+  - [-1, 3, C2f, [256]]                         # 19 (P3/8-small)
+
+  - [-1, 1, Conv, [256, 3, 2]]                  # 20
+  - [[-1, 16], 1, Concat, [1]]                  # 21-cat head P4 (layer 16)
+  - [-1, 3, C2f, [512]]                         # 22 (P4/16-medium)
+
+  - [-1, 1, Conv, [512, 3, 2]]                  # 23
+  - [[-1, 13], 1, Concat, [1]]                  # 24-cat head P5 (layer 13)
+  - [-1, 3, C2f, [1024]]                        # 25 (P5/32-large)
+
+  - [[19, 22, 25], 1, Detect, [nc]]             # 26-Detect(P3, P4, P5)

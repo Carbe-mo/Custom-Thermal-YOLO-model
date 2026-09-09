@@ -1,0 +1,54 @@
+# v3_bifpn_neck — YOLOv8n with Weighted Bi-Directional Feature Pyramid Network (BiFPN)
+#
+# Modifications vs v0_baseline:
+#   Replaced PANet neck with BiFPN:
+#     1. Fast Normalized Weighted Concat (BiFPN_Concat2) on top-down and bottom-up fusions.
+#     2. 3-Way Feature Fusion (BiFPN_Concat3) at P4 merging:
+#        - Bottom-up P3 downsampled features
+#        - Original Backbone P4 residual skip connection
+#        - Intermediate Top-Down P4 features
+#   Backbone remains identical to v0_baseline.
+#
+# Parameters:
+#   nc: 4 (person, trolley, bag, unattended)
+#   scale: n (depth: 0.33, width: 0.25, max_channels: 1024)
+
+nc: 4
+scales:
+  n: [0.33, 0.25, 1024]
+
+# YOLOv8.0n backbone (identical to v0_baseline)
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]          # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]]         # 1-P2/4
+  - [-1, 3, C2f, [128, True]]          # 2
+  - [-1, 1, Conv, [256, 3, 2]]         # 3-P3/8
+  - [-1, 6, C2f, [256, True]]          # 4 (Backbone P3)
+  - [-1, 1, Conv, [512, 3, 2]]         # 5-P4/16
+  - [-1, 6, C2f, [512, True]]          # 6 (Backbone P4)
+  - [-1, 1, Conv, [1024, 3, 2]]        # 7-P5/32
+  - [-1, 3, C2f, [1024, True]]         # 8
+  - [-1, 1, SPPF, [1024, 5]]           # 9 (Backbone P5)
+
+# BiFPN Head
+head:
+  # Top-Down Pathway
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]    # 10
+  - [[-1, 6], 1, BiFPN_Concat2, [1]]             # 11: Weighted concat(P5_up, Backbone_P4)
+  - [-1, 3, C2f, [512]]                          # 12: P4_td
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]    # 13
+  - [[-1, 4], 1, BiFPN_Concat2, [1]]             # 14: Weighted concat(P4_up, Backbone_P3)
+  - [-1, 3, C2f, [256]]                          # 15: P3_out (P3/8-small)
+
+  # Bottom-Up Pathway with 3-way BiFPN Residual Fusion
+  - [-1, 1, Conv, [256, 3, 2]]                   # 16: Downsample P3_out
+  - [[-1, 6, 12], 1, BiFPN_Concat3, [1]]         # 17: 3-way Weighted concat(P3_down, Backbone_P4, P4_td)
+  - [-1, 3, C2f, [512]]                          # 18: P4_out (P4/16-medium)
+
+  - [-1, 1, Conv, [512, 3, 2]]                   # 19: Downsample P4_out
+  - [[-1, 9], 1, BiFPN_Concat2, [1]]             # 20: Weighted concat(P4_down, Backbone_P5)
+  - [-1, 3, C2f, [1024]]                         # 21: P5_out (P5/32-large)
+
+  - [[15, 18, 21], 1, Detect, [nc]]              # 22: Detect(P3, P4, P5)
