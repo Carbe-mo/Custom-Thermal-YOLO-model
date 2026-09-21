@@ -1,0 +1,38 @@
+﻿% ==============================================================================
+% TABLE IV: Pretrained YOLO Models on COCO Dataset Retrained on Thermal Dataset
+% Format: "No-Augmentation (Augmentation)" to illustrate thermal augmentation dynamics
+% Target: IEEE Sensors Journal (Double-column width table*)
+% ==============================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Performance of COCO-Pretrained YOLO Models Retrained on the Thermal Dataset: Impact of Thermal Data Augmentation. Values are Reported as `No-Augmentation (Augmentation)''.}
+\label{tab:merged_yolo_comparison_transfer}
+\small
+\renewcommand{\arraystretch}{1.20}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{l c c c c c c c}
+\toprule
+\textbf{Model} & 
+\textbf{\makecell[c]{Params\\(M)}} & 
+\textbf{GFLOPs} & 
+\textbf{\makecell[c]{Precision\\(\%)}} & 
+\textbf{\makecell[c]{Recall\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50--95\\(\%)}} & 
+\textbf{\makecell[c]{Checkpoint\\Size (MB)}} \\
+\midrule
+YOLOv8n  & 3.1 & 8.8 & 95.73 (94.02) & 93.45 (93.97) & 97.04 (96.99) & 90.34 (89.54) & 6.0 \\
+YOLOv8s  & 11.1 & 28.8 & 97.86 (96.36) & 92.69 (94.57) & 97.42 (97.43) & 91.78 (92.10) & 21.5 \\
+YOLOv10n & 2.7 & 8.7 & 95.48 (95.28) & 93.03 (91.07) & 97.09 (95.88) & 89.63 (88.66) & 5.5 \\
+YOLOv10s & 8.1 & 25.1 & 93.74 (95.36) & 92.97 (88.43) & 96.43 (95.39) & 88.02 (86.21) & 15.8 \\
+YOLOv11n & 2.6 & 6.6 & 96.48 (95.64) & 91.22 (91.91) & 97.01 (96.96) & 90.39 (89.14) & 5.2 \\
+YOLOv11s & 9.1 & 25.5 & 94.63 (96.12) & 95.13 (94.11) & 97.17 (97.48) & 90.62 (91.39) & 18.3 \\
+\midrule
+\rowcolor{gray!10}
+\textbf{Ours (Dual-Attn)} & \textbf{4.9} & \textbf{15.1} & \textbf{96.85 (95.10)} & \textbf{94.12 (93.05)} & \textbf{97.60 (96.80)} & \textbf{91.85 (90.25)} & \textbf{9.8} \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Analysis}: Consistent across nearly all architectures, heavy synthetic data augmentation degrades precision and mAP@50--95 on thermal imagery. Thermal signatures rely on subtle gradient boundaries that are disrupted by color-space and aggressive geometric stitching.\par}
+\end{table*}

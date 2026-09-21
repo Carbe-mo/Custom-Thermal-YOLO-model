@@ -12,6 +12,8 @@ runs/
 # Large dataset image binaries (keep data/splits/ tracked)
 data/thermal/
 data/rgb/
+data/fusion/
+data/fusion_data.yaml
 *.cache
 *.zip
 

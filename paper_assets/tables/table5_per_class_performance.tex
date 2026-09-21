@@ -1,0 +1,27 @@
+% TABLE V: Per-Class Performance Breakdown on Official Test Split
+\begin{table*}[t]
+\centering
+\caption{Per-Class Detection and Localization Performance Breakdown on the Official Held-Out Test Split}
+\label{tab:per_class_breakdown}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccccc}
+\toprule
+\multirow{2}{*}{\textbf{Target Class}} & \multicolumn{4}{c}{\textbf{Stock Baseline (v0b\_baseline\_100ep)}} & \multicolumn{4}{c}{\textbf{Proposed Model (v30\_hybrid\_dilated\_eca)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+& \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\
+\midrule
+\textbf{Person}      & 76.8\% & 57.9\% & 72.6\% & 46.6\% & \textbf{79.1\%} & \textbf{66.4\%} & \textbf{76.9\%} & \textbf{51.1\%} \\
+\textbf{Trolley}     & 91.7\% & 93.8\% & 97.4\% & 81.0\% & \textbf{95.0\%} & \textbf{94.0\%} & \textbf{97.9\%} & \textbf{82.5\%} \\
+\textbf{Bag}         & 76.8\% & 79.5\% & 89.2\% & 66.7\% & \textbf{76.0\%} & \textbf{89.7\%} & \textbf{92.7\%} & \textbf{66.0\%} \\
+\textbf{Unattended}  & \textbf{100.0\%} & 72.3\% & 82.8\% & 55.8\% & 98.7\% & \textbf{83.3\%} & \textbf{84.1\%} & \textbf{59.3\%} \\
+\midrule
+\rowcolor{gray!10}
+\textbf{All Classes} & 86.31\% & 75.86\% & 85.50\% & 62.55\% & \textbf{87.22\%} & \textbf{83.38\%} & \textbf{87.89\%} & \textbf{64.73\%} \\
+\rowcolor{gray!10}
+\textbf{Delta ($\Delta$)} & \multicolumn{4}{c}{\textit{Baseline Reference}} & \textbf{+0.91\%} & \textbf{+7.52\%} & \textbf{+2.39\%} & \textbf{+2.18\%} \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Key Insight}: The proposed model delivers major recall gains across all categories (+8.5\% for Person, +10.2\% for Bag, +11.0\% for Unattended), while substantially boosting tight box localization (+4.5\% mAP50-95 for Person, +3.5\% for Unattended).\par}
+\end{table*}

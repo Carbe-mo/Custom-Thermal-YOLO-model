@@ -1,0 +1,10 @@
+path: D:\Yolo\Data\project_flir\thermal-yolo\data\thermal
+train: D:\Yolo\Data\project_flir\thermal-yolo\data\thermal\train.txt
+val: D:\Yolo\Data\project_flir\thermal-yolo\data\thermal\val.txt
+test: D:\Yolo\Data\project_flir\thermal-yolo\data\thermal\test.txt
+nc: 4
+names:
+  0: person
+  1: trolley
+  2: bag
+  3: unattended

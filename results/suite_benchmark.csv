@@ -1,0 +1,2 @@
+Pure_Latency_ms,Pure_FPS,E2E_Preprocess_ms,E2E_Inference_ms,E2E_NMS_ms,E2E_Total_ms,E2E_FPS,Model,Weights,Precision
+95.18,10.5,2.84,92.29,0.65,95.78,10.4,YOLOv8n,yolov8n.pt,FP32
