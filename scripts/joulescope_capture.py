@@ -40,51 +40,35 @@ def check_joulescope_installed():
 def capture_stream(device, duration_sec: float, desc: str = "Measurement"):
     """
     Capture high-resolution statistics from Joulescope over a specified window.
+    Supports both JS220 and JS110 returning 2D NumPy array [current, voltage] or dict.
     """
     print(f"\n[Joulescope] Capturing {desc} for {duration_sec:.1f}s...")
     t0 = time.time()
     
-    # Read aggregated statistics
-    # In joulescope v1+, device.read() extracts voltage, current, power, energy
-    try:
-        data = device.read(duration=duration_sec)
-        actual_dur = time.time() - t0
-        
-        voltage = float(np.mean(data["signals"]["voltage"]["value"]))
-        current = float(np.mean(data["signals"]["current"]["value"]))
-        power = float(np.mean(data["signals"]["power"]["value"]))
-        energy = float(data["accumulators"]["energy"]["value"])
-        
-        return {
-            "duration": actual_dur,
-            "voltage_v": voltage,
-            "current_ma": current * 1000.0,
-            "power_w": power,
-            "energy_j": energy,
-        }
-    except Exception as e:
-        print(f"[Warning] High-level read failed ({e}), falling back to sample streaming...")
-        # Fallback reading strategy for legacy joulescope drivers
-        samples = []
-        def on_data(data):
-            # data is a 2D or dict with current and voltage
-            p = data.get("power", None)
-            if p is not None:
-                samples.extend(p)
-
-        device.stream_start()
-        time.sleep(duration_sec)
-        device.stream_stop()
-        
-        power_mean = float(np.mean(samples)) if samples else 0.0
-        energy_j = power_mean * duration_sec
-        return {
-            "duration": duration_sec,
-            "voltage_v": 5.0,  # nominal
-            "current_ma": (power_mean / 5.0) * 1000.0,
-            "power_w": power_mean,
-            "energy_j": energy_j,
-        }
+    data = device.read(duration=duration_sec)
+    actual_dur = time.time() - t0
+    
+    if isinstance(data, dict):
+        current_a = np.asarray(data["signals"]["current"]["value"])
+        voltage_v = np.asarray(data["signals"]["voltage"]["value"])
+    else:
+        # Standard Joulescope JS220 / v1 read returns Nx2 np.ndarray: [current (A), voltage (V)]
+        current_a = data[:, 0]
+        voltage_v = data[:, 1]
+    
+    power_w = current_a * voltage_v
+    mean_power = float(np.mean(power_w))
+    mean_voltage = float(np.mean(voltage_v))
+    mean_current_ma = float(np.mean(current_a)) * 1000.0
+    energy_j = mean_power * actual_dur
+    
+    return {
+        "duration": actual_dur,
+        "voltage_v": mean_voltage,
+        "current_ma": mean_current_ma,
+        "power_w": mean_power,
+        "energy_j": energy_j,
+    }
 
 
 def save_power_result(row_dict):
