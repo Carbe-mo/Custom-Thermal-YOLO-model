@@ -14,6 +14,8 @@ data/thermal/
 data/rgb/
 data/fusion/
 data/fusion_data.yaml
+data/fusion_dual/
+data/fusion_dual_data.yaml
 *.cache
 *.zip
 

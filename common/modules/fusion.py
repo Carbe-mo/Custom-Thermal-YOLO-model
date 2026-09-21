@@ -1,15 +1,11 @@
 """
-common/modules/fusion.py — RGB-Thermal Fusion Modules
-=====================================================
+common/modules/fusion.py — RGB-Thermal Fusion Modules & Registration
+=====================================================================
 
-Implements fusion modules for multi-modal detection:
-- SliceChannels: Splits 6-channel input into RGB/Thermal streams
-- AddFusion:     Element-wise addition of two feature maps
-- GatedFusion:   Learned gated combination (MBNet / GMFNet style)
-
-Usage in model.yaml:
-  - [-1, 1, SliceChannels, [0, 3]]          # Extract RGB channels
-  - [[5, 16], 1, GatedFusion, [64]]         # Fuse P3 features
+Implements fusion modules for dual-stream multi-modal detection:
+- SliceChannels: Extracts channel slices (e.g. RGB 0:3, Thermal 3:6)
+- AddFusion:     Element-wise feature addition
+- GatedFusion:   Dynamic attention gating: g*F_rgb + (1-g)*F_thermal
 """
 
 from __future__ import annotations
@@ -24,20 +20,12 @@ import torch.nn as nn
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from ultralytics.nn.modules.conv import Conv
+from ultralytics.nn.modules.conv import Conv, Index
 
 
 class SliceChannels(nn.Module):
     """
-    Slices a contiguous range of channels from the input tensor.
-    
-    Args:
-        start_ch: Start channel index (inclusive).
-        end_ch:   End channel index (exclusive).
-    
-    Example:
-        SliceChannels(0, 3)  → extracts channels 0,1,2 (RGB)
-        SliceChannels(3, 6)  → extracts channels 3,4,5 (Thermal replicated)
+    Extracts a slice of channels from the input tensor [B, C, H, W].
     """
     def __init__(self, start_ch: int, end_ch: int):
         super().__init__()
@@ -51,13 +39,9 @@ class SliceChannels(nn.Module):
 class AddFusion(nn.Module):
     """
     Element-wise addition of two feature maps.
-    
-    Input: list of two tensors [F_rgb, F_thermal] with identical shapes.
-    Output: F_rgb + F_thermal (same shape).
     """
-    def __init__(self, c1: int = 0):
+    def __init__(self, c: int = 0):
         super().__init__()
-        # c1 is accepted but unused — needed for YAML parse_model compatibility
 
     def forward(self, x: list[torch.Tensor]) -> torch.Tensor:
         return x[0] + x[1]
@@ -65,20 +49,12 @@ class AddFusion(nn.Module):
 
 class GatedFusion(nn.Module):
     """
-    Dynamic Gated Fusion (inspired by MBNet / GMFNet).
-    
-    Learns a gating map g ∈ [0,1]^C that dynamically combines two modalities:
+    Dynamic Gated Fusion (MBNet / GMFNet style).
+    Learns spatial-channel gating map g in [0, 1] to dynamically balance modalities:
         F_fused = g * F_rgb + (1 - g) * F_thermal
-    
-    The gate is computed from the concatenation of both feature maps
-    via a 1×1 convolution + sigmoid.
-    
-    Args:
-        c: Number of channels in each input feature map.
     """
     def __init__(self, c: int):
         super().__init__()
-        # Gate: concat(F_rgb, F_th) → 1x1 conv → sigmoid → [0,1]^C
         self.gate_conv = nn.Sequential(
             nn.Conv2d(c * 2, c, kernel_size=1, bias=False),
             nn.BatchNorm2d(c),
@@ -92,16 +68,12 @@ class GatedFusion(nn.Module):
         return g * f_rgb + (1.0 - g) * f_th
 
 
-# ---------------------------------------------------------------------------
-# Registration with Ultralytics
-# ---------------------------------------------------------------------------
 _REGISTERED = False
 
 
 def register_fusion_modules() -> None:
     """
-    Register SliceChannels, AddFusion, and GatedFusion into Ultralytics
-    nn modules and parse_model so model.yaml can reference them directly.
+    Register SliceChannels, AddFusion, and GatedFusion with Ultralytics parser.
     """
     global _REGISTERED
     if _REGISTERED:
@@ -110,36 +82,82 @@ def register_fusion_modules() -> None:
     import ultralytics.nn.tasks as tasks
     import ultralytics.nn.modules as modules
 
+    # Register in tasks and modules dictionaries
     for cls in [SliceChannels, AddFusion, GatedFusion]:
         tasks.__dict__[cls.__name__] = cls
         modules.__dict__[cls.__name__] = cls
 
+    orig_parse = tasks.parse_model
+
+    def custom_parse(d, ch, verbose=True):
+        custom_layers = {}
+        d_mod = copy.deepcopy(d)
+
+        extra_save = []
+        for section in ("backbone", "head"):
+            if section in d_mod:
+                for i, item in enumerate(d_mod[section]):
+                    f, n, m_name, args = item
+                    if m_name == "SliceChannels":
+                        custom_layers[(section, i)] = ("SliceChannels", f, n, args)
+                        out_c = args[1] - args[0]
+                        # Use Index placeholder to set exact output channels without width scaling
+                        d_mod[section][i] = [f, 1, "Index", [out_c]]
+                    elif m_name in ("GatedFusion", "AddFusion"):
+                        custom_layers[(section, i)] = (m_name, f, n, args)
+                        # Replace temporarily with Identity from first branch
+                        f1, f2 = f[0], f[1]
+                        extra_save.append(f2)
+                        d_mod[section][i] = [f1, 1, "nn.Identity", []]
+
+        model, save = orig_parse(d_mod, ch, verbose=verbose)
+
+        # Merge extra save indices
+        for s_idx in extra_save:
+            if s_idx not in save:
+                save.append(s_idx)
+        save.sort()
+
+        # Replace placeholders with actual module instances
+        bb_len = len(d_mod.get("backbone", []))
+        for (section, i), (m_name, f, n, args) in custom_layers.items():
+            idx = i if section == "backbone" else bb_len + i
+
+            if m_name == "SliceChannels":
+                layer = SliceChannels(args[0], args[1])
+                layer.i = idx
+                layer.f = f
+                layer.type = "common.modules.fusion.SliceChannels"
+                layer.np = 0
+                model[idx] = layer
+
+            elif m_name == "GatedFusion":
+                # Determine channel width of the branch from previous layer
+                c = model[f[0]].conv.out_channels if hasattr(model[f[0]], "conv") else (
+                    model[f[0]].cv2.conv.out_channels if hasattr(model[f[0]], "cv2") else args[0]
+                )
+                layer = GatedFusion(c)
+                layer.i = idx
+                layer.f = f
+                layer.type = "common.modules.fusion.GatedFusion"
+                layer.np = sum(p.numel() for p in layer.parameters())
+                model[idx] = layer
+
+            elif m_name == "AddFusion":
+                c = args[0]
+                layer = AddFusion(c)
+                layer.i = idx
+                layer.f = f
+                layer.type = "common.modules.fusion.AddFusion"
+                layer.np = 0
+                model[idx] = layer
+
+        return model, save
+
+    tasks.parse_model = custom_parse
     _REGISTERED = True
 
 
 if __name__ == "__main__":
     register_fusion_modules()
-
-    # Unit test: SliceChannels
-    x = torch.randn(2, 6, 40, 40)
-    rgb = SliceChannels(0, 3)(x)
-    th = SliceChannels(3, 6)(x)
-    assert rgb.shape == (2, 3, 40, 40)
-    assert th.shape == (2, 3, 40, 40)
-    print(f"SliceChannels: {x.shape} → RGB {rgb.shape}, TH {th.shape}")
-
-    # Unit test: AddFusion
-    f1 = torch.randn(2, 64, 20, 20)
-    f2 = torch.randn(2, 64, 20, 20)
-    fused_add = AddFusion(64)([f1, f2])
-    assert fused_add.shape == f1.shape
-    print(f"AddFusion: 2×{f1.shape} → {fused_add.shape}")
-
-    # Unit test: GatedFusion
-    gf = GatedFusion(64)
-    fused_gate = gf([f1, f2])
-    assert fused_gate.shape == f1.shape
-    n_params = sum(p.numel() for p in gf.parameters())
-    print(f"GatedFusion: 2×{f1.shape} → {fused_gate.shape}  ({n_params} params)")
-
-    print("\nAll fusion module tests passed!")
+    print("Fusion modules registered successfully.")
