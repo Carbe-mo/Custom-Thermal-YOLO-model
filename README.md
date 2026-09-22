@@ -162,7 +162,7 @@ If you find this architecture, empirical findings, or benchmark useful in your r
 
 ```bibtex
 @article{thermal_hybrid_yolo_2026,
-  author    = {Satyam and Contributors},
+  author    = {Satya Mohit and Contributors},
   title     = {Overcoming Radiant Heat Diffusion: Stage-Selective Dilated Attention in Lightweight YOLO for Real-Time Edge Thermal Surveillance},
   journal   = {IEEE Sensors Journal},
   year      = {2026},
