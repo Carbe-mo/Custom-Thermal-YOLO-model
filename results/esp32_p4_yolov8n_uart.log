@@ -1,0 +1,112 @@
+ESP-ROM:esp32p4-eco2-20240710
+Build:Jul 10 2024
+rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1a54
+load:0x4ff2abd0,len:0xf2c
+load:0x4ff2cbd0,len:0x3320
+entry 0x4ff2abda
+[0;32mI (25) boot: ESP-IDF v5.3.2 2nd stage bootloader[0m
+[0;32mI (26) boot: compile time Sep 22 2026 13:01:34[0m
+[0;32mI (26) boot: Multicore bootloader[0m
+[0;32mI (30) boot: chip revision: v1.0[0m
+[0;32mI (32) boot: efuse block revision: v0.3[0m
+[0;32mI (37) qio_mode: Enabling default flash chip QIO[0m
+[0;32mI (42) boot.esp32p4: SPI Speed      : 80MHz[0m
+[0;32mI (47) boot.esp32p4: SPI Mode       : QIO[0m
+[0;32mI (52) boot.esp32p4: SPI Flash Size : 16MB[0m
+[0;32mI (57) boot: Enabling RNG early entropy source...[0m
+[0;32mI (62) boot: Partition Table:[0m
+[0;32mI (66) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (73) boot:  0 nvs              WiFi data        01 02 0000a000 00005000[0m
+[0;32mI (80) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (88) boot:  2 factory          factory app      00 00 00010000 007d0000[0m
+[0;32mI (96) boot: End of partition table[0m
+[0;32mI (99) esp_image: segment 0: paddr=00010020 vaddr=482d0020 size=36f894h (3602580) map[0m
+[0;32mI (660) esp_image: segment 1: paddr=0037f8bc vaddr=30100000 size=0005ch (    92) load[0m
+[0;32mI (662) esp_image: segment 2: paddr=0037f920 vaddr=4ff00000 size=006f8h (  1784) load[0m
+[0;32mI (667) esp_image: segment 3: paddr=00380020 vaddr=48000020 size=2c5198h (2904472) map[0m
+[0;32mI (1119) esp_image: segment 4: paddr=006451c0 vaddr=4ff006f8 size=10910h ( 67856) load[0m
+[0;32mI (1133) esp_image: segment 5: paddr=00655ad8 vaddr=4ff11080 size=03a78h ( 14968) load[0m
+[0;32mI (1141) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (1141) boot: Disabling RNG early entropy source...[0m
+[0;32mI (1154) hex_psram: vendor id    : 0x0d (AP)[0m
+[0;32mI (1154) hex_psram: Latency      : 0x01 (Fixed)[0m
+[0;32mI (1154) hex_psram: DriveStr.    : 0x00 (25 Ohm)[0m
+[0;32mI (1158) hex_psram: dev id       : 0x03 (generation 4)[0m
+[0;32mI (1164) hex_psram: density      : 0x07 (256 Mbit)[0m
+[0;32mI (1169) hex_psram: good-die     : 0x06 (Pass)[0m
+[0;32mI (1174) hex_psram: SRF          : 0x02 (Slow Refresh)[0m
+[0;32mI (1180) hex_psram: BurstType    : 0x00 ( Wrap)[0m
+[0;32mI (1185) hex_psram: BurstLen     : 0x03 (2048 Byte)[0m
+[0;32mI (1191) hex_psram: BitMode      : 0x01 (X16 Mode)[0m
+[0;32mI (1196) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)[0m
+[0;32mI (1202) hex_psram: DriveStrength: 0x00 (1/1)[0m
+[0;32mI (1208) MSPI DQS: tuning success, best phase id is 2[0m
+[0;32mI (1385) MSPI DQS: tuning success, best delayline id is 11[0m
+I esp_psram: Found 32MB PSRAM device
+I esp_psram: Speed: 200MHz
+[0;32mI (1386) mmu_psram: flash_drom_paddr_start: 0x10000[0m
+[0;32mI (1561) mmu_psram: flash_irom_paddr_start: 0x380000[0m
+[0;32mI (1700) hex_psram: psram CS IO is dedicated[0m
+[0;32mI (1700) cpu_start: Multicore app[0m
+[0;32mI (2030) esp_psram: SPI SRAM memory test OK[0m
+[0;33mW (2039) clk: esp_perip_clk_init() has not been implemented yet[0m
+[0;32mI (2045) cpu_start: Pro cpu start user code[0m
+[0;32mI (2046) cpu_start: cpu freq: 360000000 Hz[0m
+[0;32mI (2046) app_init: Application information:[0m
+[0;32mI (2049) app_init: Project name:     yolo11_detect[0m
+[0;32mI (2054) app_init: App version:      1012855-dirty[0m
+[0;32mI (2060) app_init: Compile time:     Sep 22 2026 12:54:05[0m
+[0;32mI (2066) app_init: ELF file SHA256:  321ee6bf2...[0m
+[0;32mI (2071) app_init: ESP-IDF:          v5.3.2[0m
+[0;32mI (2076) efuse_init: Min chip rev:     v0.1[0m
+[0;32mI (2081) efuse_init: Max chip rev:     v1.99 [0m
+[0;32mI (2086) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (2091) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (2098) heap_init: At 4FF177C0 len 00023800 (142 KiB): RAM[0m
+[0;32mI (2104) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM[0m
+[0;32mI (2110) heap_init: At 4FF40000 len 00040000 (256 KiB): RAM[0m
+[0;32mI (2117) heap_init: At 3010005C len 00001FA4 (7 KiB): TCM[0m
+[0;32mI (2123) esp_psram: Adding pool of 22848K of PSRAM memory to heap allocator[0m
+[0;32mI (2131) spi_flash: detected chip: generic[0m
+[0;32mI (2135) spi_flash: flash io: qio[0m
+[0;32mI (2140) main_task: Started on CPU0[0m
+[0;32mI (2180) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (2180) main_task: Calling app_main()[0m
+[0;32mI (2180) yolov8n_bench: ==================================================[0m
+[0;32mI (2190) yolov8n_bench:   Stock YOLOv8n INT8 Benchmark                    [0m
+[0;32mI (2200) yolov8n_bench:   Target: ESP32-P4 RISC-V Dual-Core @ 400 MHz     [0m
+[0;32mI (2200) yolov8n_bench: ==================================================[0m
+[0;32mI (5270) yolov8n_bench: Decoded test image: 405x540 (3 channels)[0m
+[0;32mI (5270) yolov8n_bench: Initial Free PSRAM: 22737096 bytes, Free SRAM: 418227 bytes[0m
+[0;32mI (5280) yolov8n_bench: Loading Quantized INT8 YOLOv8n Model...[0m
+[0;32mI (5280) yolov8n_bench: Warming up (2 iterations)...[0m
+[0;33mW (5390) FbsLoader: CONFIG_SPIRAM_RODATA or CONFIG_SPIRAM_XIP_FROM_PSRAM option is on, fbs model is copied to PSRAM.[0m
+[0;33mW (5480) dl::Model: minimize() will delete unused inference variables, breaking model testing/debugging.[0m
+[0;32mI (10130) yolov8n_bench: >>> STARTING 10-RUN BENCHMARK (ACTIVE INFERENCE) <<<[0m
+[0;32mI (12500) yolov8n_bench: Run  1/10: 2273.76 ms (detections: 4)[0m
+[0;32mI (14870) yolov8n_bench: Run  2/10: 2273.74 ms (detections: 4)[0m
+[0;32mI (17240) yolov8n_bench: Run  3/10: 2273.76 ms (detections: 4)[0m
+[0;32mI (19610) yolov8n_bench: Run  4/10: 2273.73 ms (detections: 4)[0m
+[0;32mI (21980) yolov8n_bench: Run  5/10: 2273.72 ms (detections: 4)[0m
+[0;32mI (24350) yolov8n_bench: Run  6/10: 2273.74 ms (detections: 4)[0m
+[0;32mI (26720) yolov8n_bench: Run  7/10: 2273.73 ms (detections: 4)[0m
+[0;32mI (29090) yolov8n_bench: Run  8/10: 2273.74 ms (detections: 4)[0m
+[0;32mI (31460) yolov8n_bench: Run  9/10: 2273.71 ms (detections: 4)[0m
+[0;32mI (33830) yolov8n_bench: Run 10/10: 2273.68 ms (detections: 4)[0m
+[0;32mI (33830) yolov8n_bench: ==================================================[0m
+[0;32mI (33830) yolov8n_bench:   YOLOv8n BENCHMARK SUMMARY (ESP32-P4)            [0m
+[0;32mI (33840) yolov8n_bench: ==================================================[0m
+[0;32mI (33850) yolov8n_bench:   Model:           Stock YOLOv8n                  [0m
+[0;32mI (33850) yolov8n_bench:   Precision:       INT8 Quantized (esp-ppq)       [0m
+[0;32mI (33860) yolov8n_bench:   Clock:           400 MHz RISC-V SIMD            [0m
+[0;32mI (33870) yolov8n_bench:   Iterations:      10[0m
+[0;32mI (33880) yolov8n_bench:   Average Latency: 2273.73 ms[0m
+[0;32mI (33880) yolov8n_bench:   Min Latency:     2273.68 ms[0m
+[0;32mI (33890) yolov8n_bench:   Max Latency:     2273.76 ms[0m
+[0;32mI (33890) yolov8n_bench:   Throughput:      0.44 FPS[0m
+[0;32mI (33900) yolov8n_bench:   PSRAM Remaining: 19679180 bytes[0m
+[0;32mI (33900) yolov8n_bench:   SRAM Remaining:  390983 bytes[0m
+[0;32mI (33910) yolov8n_bench: ==================================================[0m
+[0;32mI (33920) yolov8n_bench: Benchmark completed successfully. Halting.[0m

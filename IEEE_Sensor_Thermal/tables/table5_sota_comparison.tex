@@ -1,0 +1,45 @@
+﻿% ==============================================================================
+% TABLE V: Comparison of Existing YOLO Architectures and Proposed Model on TMCR
+% Trained from Scratch under Identical Conditions (No Pretraining, No Augmentation)
+% Target: IEEE Sensors Journal (Double-column width table*)
+% ==============================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Comparison of Existing YOLO Variants, Thermal-Specific Architectures, and the Proposed Model on the TMCR Dataset (Trained from Scratch Without Pretraining or Augmentation)}
+\label{tab:merged_yolo_comparison}
+\small
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{l c c c c c c c}
+\toprule
+\textbf{Model Architecture} & 
+\textbf{\makecell[c]{Params\\(M)}} & 
+\textbf{\makecell[c]{GFLOPs\\(640$\times)}} & 
+\textbf{\makecell[c]{Precision\\(\%)}} & 
+\textbf{\makecell[c]{Recall\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50--95\\(\%)}} & 
+\textbf{\makecell[c]{Model Size\\(MB)}} \\
+\midrule
+YOLOv8n                      & 3.1  & 8.8  & 97.09 & 91.07 & 96.63 & 88.89 & 6.0  \\
+YOLOv8s                      & 11.1 & 28.8 & 96.06 & 82.91 & 93.08 & 84.66 & 21.5 \\
+YOLOv10n                     & 2.7  & 8.7  & 94.31 & 91.81 & 96.25 & 88.35 & 5.5  \\
+YOLOv10s                     & 8.1  & 25.1 & 94.23 & 90.38 & 95.53 & 85.77 & 15.8 \\
+YOLOv11n                     & 2.6  & 6.6  & 95.87 & 91.32 & 96.41 & 86.42 & 5.2  \\
+YOLOv11s                     & 9.1  & 25.5 & 93.59 & 91.10 & 95.50 & 84.31 & 18.3 \\
+\midrule
+YOLO-SMUG~\cite{luo2025yolo} & 7.1  & 32.5 & 96.63 & 91.04 & 96.35 & 87.20 & 14.8 \\
+YOLO-CCS~\cite{li2024yolo}   & 6.5  & 8.1  & 92.43 & 89.72 & 94.09 & 81.96 & 13.5 \\
+\midrule
+\rowcolor{gray!12}
+\textbf{Ours (Proposed Dual-Attn)} & \textbf{4.9} & \textbf{15.1} & 95.10 & \textbf{93.00} & \textbf{96.60} & \textbf{89.90} & \textbf{9.8} \\
+\rowcolor{gray!06}
+Ours + MSGF-TIR~\cite{li2024thermal} & 4.9 & 15.1 & \textbf{96.10} & 93.10 & 96.60 & \textbf{90.10} & 9.8 \\
+\rowcolor{gray!06}
+Ours + KBHE~\cite{mudavath2025person}  & 4.9 & 15.1 & 94.70 & 92.10 & \textbf{97.10} & 89.70 & 9.8 \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: All models were trained entirely from scratch on the TMCR benchmark under strictly identical conditions to isolate raw architectural representation capability. Bold font indicates best metrics within comparable lightweight categories.\par}
+\end{table*}

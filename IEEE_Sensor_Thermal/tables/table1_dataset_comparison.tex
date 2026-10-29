@@ -1,0 +1,28 @@
+% TABLE I: Comparison of our Thermal Surveillance Dataset with Existing Infrared Benchmarks
+\begin{table*}[t]
+\centering
+\caption{Comparison of the Proposed Thermal Security Dataset with Existing Infrared Object Detection Benchmarks}
+\label{tab:dataset_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c c l c c c}
+\toprule
+\textbf{Benchmark Dataset} & 
+\textbf{Year} & 
+\textbf{Modality} & 
+\textbf{\makecell[c]{Target Domain /\\Surveillance Setting}} & 
+\textbf{\makecell[c]{Pedestrian\\Detection}} & 
+\textbf{\makecell[c]{Carried Luggage\\(Trolley, Bag)}} & 
+\textbf{\makecell[c]{Unattended\\Anomaly}} \\
+\midrule
+OSU Thermal~\cite{davis2007background}    & 2005 & LWIR Thermal  & Static Campus Surveillance   & \cmark & \xmark & \xmark \\
+KAIST Multispectral~\cite{choi2018kaist}   & 2018 & Thermal + RGB & Autonomous Driving (Roadway) & \cmark & \xmark & \xmark \\
+FLIR ADAS~\cite{flir_adas_dataset}         & 2019 & Thermal + RGB & Autonomous Driving (Roadway) & \cmark & \xmark & \xmark \\
+CVC-14~\cite{gonzalez2016pedestrian}       & 2016 & Thermal + RGB & Automotive Pedestrian Only   & \cmark & \xmark & \xmark \\
+LLVIP~\cite{jia2021llvip}                  & 2021 & Thermal + RGB & Low-Light Pedestrian Urban   & \cmark & \xmark & \xmark \\
+M3FD~\cite{liu2022target}                  & 2022 & Thermal + RGB & Multi-Scenario Target Track  & \cmark & \xmark & \xmark \\
+\midrule
+\textbf{Ours (Thermal Security)}           & \textbf{2026} & \textbf{LWIR Thermal} & \textbf{Transit Hub / Security Surveillance} & \textbf{\cmark} & \textbf{\cmark} & \textbf{\cmark} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

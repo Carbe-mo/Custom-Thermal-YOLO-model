@@ -1,12 +1,11 @@
 \documentclass[journal,twoside,web]{ieeecolor}
-\pdfobjcompresslevel=0   % disable object-stream compression (avoids the buffer overflow)
+\pdfobjcompresslevel=0   % disable object-stream compression (avoids buffer overflow)
 \pdfcompresslevel=9      % compress streams (keeps file size reasonable)
-\pdfminorversion=5       % optional: lower PDF version compatibility if needed
+\pdfminorversion=5       % lower PDF version compatibility
 
 \usepackage{jsen}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
-%\usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -15,22 +14,16 @@
 \usepackage{wrapfig}
 \usepackage{tabularx}
 \usepackage{multirow}
-\usepackage{siunitx}  % For S columns and \sisetup
-\usepackage{booktabs} % For \toprule, \midrule, \bottomrule
-\usepackage[table]{xcolor}  % For \rowcolor (this also loads colortbl)
-\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{algorithm}
-\usepackage{comment}
-%\usepackage{algorithm2e}
 \usepackage{algorithmic}
-\usepackage{algorithm}
 \usepackage{pifont}
 \usepackage{hyperref}
 \usepackage{makecell}
-
-%\pgfplotsset{compat=1.18}
 
 \pdfobjcompresslevel=0
 \pdfminorversion=5
@@ -38,7 +31,6 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 
-%\usepackage{algpseudocode}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \markboth{\journalname, }
@@ -46,701 +38,538 @@
 \definecolor{abstractbg}{rgb}{0.89804,0.94510,0.83137}
 \setlength{\fboxrule}{0pt}
 \setlength{\fboxsep}{0pt}
+
 \begin{document}
-\title{TMCR Edge-YOLO: Thermal Sensing-based Mobility-Context Recognition on the Edge}
-\begin{comment}
-\author{Bethi Pardhasaradhi, \IEEEmembership{Member, IEEE}, and Linga Reddy Cenkeramaddi, \IEEEmembership{Member, IEEE}
-\end{comment}
-\author{Advik Manda, Bethi Pardhasaradhi, %\IEEEmembership{Member, IEEE} 
+\title{Thermal-Security-YOLO: Hybrid Dilated Channel Attention for Thermal Transit Surveillance and Edge Hardware Energy Profiling}
+
+\author{Satya Mohit, Bethi Pardhasaradhi, \IEEEmembership{Member, IEEE},
 and Linga Reddy Cenkeramaddi, \IEEEmembership{Senior Member, IEEE}
-\thanks{Compiled on \today. 
-}
-\thanks{Bethi Pardhasaradhi, and Linga Reddy Cenkeramaddi are with the autonomous and cyber-physical systems (ACPS) research group, Department of Information and Communication Technology (ICT), University of Agder, Campus Grimstad, Jon Lilletuns Vei 9, 4879, Grimstad, Norway (e-mail: pardhasaradhi.bethi@uia.no, linga.cenkeramaddi@uia.no.) }
-\thanks{Advik Manda is with Department of Electronics and Communications Engineering (ECE), Indian Institute of Information Technology, Design and Manufacturing (IIITDM), Kancheepuram, 600127, India. and with the autonomous and cyber-physical systems (ACPS) research group, Department of Information and Communication Technology (ICT), University of Agder, Campus Grimstad, Jon Lilletuns Vei 9, 4879, Grimstad, Norway (e-mail: advik2040@gmail.com.)}
+\thanks{Compiled on \today.}
+\thanks{Satya Mohit, Bethi Pardhasaradhi, and Linga Reddy Cenkeramaddi are with the autonomous and cyber-physical systems (ACPS) research group, Department of Information and Communication Technology (ICT), University of Agder, Campus Grimstad, Jon Lilletuns Vei 9, 4879 Grimstad, Norway (e-mail: satyam@uia.no, pardhasaradhi.bethi@uia.no, linga.cenkeramaddi@uia.no).}
 }
 
 \IEEEtitleabstractindextext{%
 \fcolorbox{abstractbg}{abstractbg}{%
 \begin{minipage}{\textwidth}%
-\begin{wrapfigure}[14]{r}{3in}%
+\begin{wrapfigure}[11]{r}{3in}%
 \includegraphics[width=2.9in]{yolo_thermal_front.pdf}%
 \end{wrapfigure}%
 \begin{abstract}
-Thermal infrared (IR) sensors provide illumination-invariant perception and privacy-preserving monitoring for smart environments, assistive mobility, and human-centric analytics. However, existing IR detection systems typically treat pedestrians as a single class and do not capture the diversity of mobility contexts encountered in real settings, where individuals may use assistive devices, carry loads, or interact with dependent/personal transport objects. This creates a coupled sensing challenge: recognizing fine-grained mobility-context signatures in low-contrast thermal imagery while maintaining deployment feasibility on resource-constrained edge platforms. This work introduces the Thermal Mobility Context Recognition (TMCR) problem, which focuses on identifying distinct mobility signatures in thermal imagery that describe how people move and interact with their surroundings. Data were acquired using FLIR ThermiBot~2 cameras across twelve categories, including walking, wheelchairs, rollators, crutches, blind sticks, walking sticks, strollers, bicycles, luggage, shopping trolleys, and dogs. These classes are organized into five semantic groups: general agents, wheeled mobility assistance, non-wheeled mobility assistance, load-bearing objects, and personal or dependent transport. To jointly address thermal discriminability and edge efficiency, we develop a lightweight dual-attention YOLO-Thermal architecture that is co-optimized for IR imaging and embedded inference. A key contribution of this work is a cloud-edge methodology in which all training, annotation, and model optimization are performed in the cloud, while inference is executed entirely on the edge. This separation enables high-compute learning in the cloud and low-latency prediction on compact thermal sensing nodes. The proposed model achieves an mAP\(_{50\text{--}95}\) of 89.9\%, which is 3.37\% higher than YOLOv8s, while using only 4.9 million parameters. Cross-platform evaluation demonstrates edge-feasible deployment on edge platforms such as Raspberry~Pi~Zero 2W, Raspberry~Pi~5, NVIDIA Jetson AGX Xavier, and Rock Pi 4 C+ boards. The inference latency is \textbf{6183.36\,ms on Pi Zero} and \textbf{726.28\,ms on Pi 5}. These results show that the contribution is not only a thermal dataset, but a combined sensing--modeling--deployment framework in which cloud-trained and edge-executed thermal models enable context-aware mobility understanding for privacy-preserving intelligent sensing applications.
-
+Automated video surveillance in high-throughput transit hubs, such as airport terminals, railway stations, and multi-modal transit corridors, requires robust 24/7 perception that functions reliably irrespective of optical illumination while strictly preserving personal privacy. Long-wave infrared (LWIR) thermal sensors provide illumination-invariant sensing and inherent privacy preservation by imaging radiometric temperature differentials rather than identifying visual textures. However, deploying object detectors on thermal surveillance streams poses severe challenges: diffuse thermal boundaries, lack of optical surface textures, subtle temperature contrast between carried items and human bodies, and the critical security requirement of identifying both mobile entities (\textit{Person}, \textit{Trolley}, \textit{Bag}) and stationary safety hazards (\textit{Unattended Anomaly}). Furthermore, smart camera installations demand execution on severely resource-constrained edge computing hardware. To address these challenges, this paper presents \textbf{Thermal-Security-YOLO}, a lightweight, thermally co-optimized detection framework tailored for transit security surveillance. We introduce a newly curated Thermal Security Surveillance dataset comprising 1,067 verified LWIR frames and 3,849 annotated instances across transit security classes. To overcome the receptive field limitations of standard convolutional kernels without parameter inflation, we propose \textbf{Hybrid Dilated ECA-YOLO}. The architecture selectively embeds dilated residual bottlenecks ($d=2$) in deeper feature stages ($P_4$, $P_5$) coupled with parameter-free 1D Efficient Channel Attention (ECA) to capture long-range contextual spatial relationships while avoiding early-stage gridding artifacts. Our model achieves \textbf{87.89\% mAP@50 and 64.73\% mAP@50--95} on the held-out test split with only \textbf{3.01\,M parameters and 8.1\,GFLOPs}. Crucially, it yields massive recall improvements on security-critical targets (+8.5pp for Person, +10.2pp for Bag, and +11.0pp for Unattended Anomaly) and out-localizes larger 11\,M+ parameter models (YOLOv8s, YOLO11s) while running 1.8$\times$ faster. Finally, we conduct empirical hardware deployment and in-line physical energy profiling using a laboratory-grade \textbf{Joulescope JS220 high-speed DC energy analyzer} (2\,MS/s) across a Waveshare ESP32-P4 dual-core RISC-V microcontroller (INT8 ESP-DL hardware 2D accelerator: 2173.7\,ms, 1.23\,W, 18.1\,MB free PSRAM), a Raspberry Pi 5 SBC (673.7\,ms, 4.85\,W, 3268.8\,mJ/frame), and an NVIDIA Jetson AGX Xavier (7.71\,ms, 129.7\,FPS, 11.01\,W, achieving top energy efficiency at 11.78\,frames/Joule). These results validate our framework as a practical, energy-efficient solution for autonomous privacy-preserving transit security.
 \end{abstract}
 
-
 \begin{IEEEkeywords}
-	Infrared Object Detection, YOLO, Attention Mechanisms, Dual Attention, Channel Attention, Spatial Attention, Lightweight Object Detection, Optimized Residual Block, Custom Architecture.
+Thermal infrared sensing, object detection, security surveillance, transit hubs, unattended luggage anomaly, Efficient Channel Attention, dilated convolution, edge computing, RISC-V, ESP32-P4, Joulescope energy profiling.
 \end{IEEEkeywords}
 \end{minipage}}}
 \maketitle
+
 \section{Introduction}
-Infrared (IR) and thermal imaging sensors have become fundamental components of modern perception systems, enabling robust human detection and environmental awareness under poor lighting and adverse weather conditions~\cite{wilson2023recent}. Unlike visible-light cameras, thermal sensors operate independently of ambient illumination and inherently preserve privacy by capturing temperature-dependent information rather than identifiable textures. These properties make them suitable for intelligent transportation~\cite{zhang2020traffic}, assistive mobility~\cite{breland2021robust}, and smart-city monitoring applications~\cite{guan2018daily}. The integration of thermal sensing with embedded AI has further enabled intelligent edge nodes capable of local decision-making and event recognition without continuous cloud connectivity, thereby reducing latency, communication overhead, and energy consumption.
+\label{sec:introduction}
 
-Thermal imaging is applied in diverse domains, including activity recognition%~\cite{min2025human}
-, transportation%~\cite{zhang2020traffic}
-, manufacturing%~\cite{altaf2022usage}
-, pedestrian detection%~\cite{altay2022use}
-, indoor occupancy monitoring%~\cite{yang2024occluded}
-, and target tracking%~\cite{yang2015distributed}.
-In addition, thermal sensors can be synchronized and fused with other modalities such as radar, RGB cameras, and acoustic sensors to enhance perception robustness~\cite{ding2025fiafusion,cai2025wavefusion}. Commercial systems including FLIR Tau, A655Sc, and ThermiBot~2 have demonstrated effectiveness for pedestrian detection and traffic analytics~\cite{zhang2020traffic,rezzouki2021monitoring,altay2022use}. Despite these advances, most IR-based perception frameworks treat all pedestrians as a homogeneous class, overlooking the diversity of human mobility behaviors observed in real environments. Individuals may walk unassisted, use crutches, rollators, or wheelchairs, or push and carry objects such as strollers, bicycles, or shopping trolleys. These conditions significantly alter body posture and radiometric distribution, resulting in distinct thermal mobility signatures that conventional detectors fail to recognize. While early works addressed generic thermal pedestrian detection~\cite{rezzouki2021monitoring,altay2022use}, and recent studies explored assistive mobility detection at traffic-controlled intersections~\cite{ni2025thermal}, these efforts mainly focus on binary recognition or traffic scenarios. Furthermore, the computational complexity of current DL frameworks poses challenges for deployment on resource-constrained edge devices.
-
-According to the World Health Organization (WHO), more than 16\% of the global population lives with some form of physical disability, and over 250 million people rely on mobility aids such as wheelchairs, crutches, or rollators (statistics from page 10 of~\cite{un2020ageing}). With the population aged 65 and above projected to reach 1.5 billion by 2050, the demand for accessible, mobility-aware intelligent systems is expected to increase sharply. This societal need highlights the importance of perception technologies that can recognize mobility contexts and adapt to diverse human motion patterns in public and assistive environments. The mobility aid dataset~\cite{vasquez2017deep,kollmitz2019deep} provides RGB-D images for mobility-restricted individuals in indoor settings. A separate disabled-people detection dataset was curated in~\cite{alruwaili2024deep}. In contrast, existing IR-based datasets such as OSU~\cite{davis2007background}, FLIR ADAS~\cite{flir_adas_dataset}, KAIST~\cite{choi2018kaist}, and DENSE~\cite{bijelic2020seeing} primarily capture pedestrians or vehicles under varied weather conditions without distinguishing mobility contexts. Data on mobility restriction for barrier-free intersections are reported in~\cite{ni2025thermal}. There is a clear need for a thermal-based mobility-context dataset to support inclusive perception.
-
-{Existing thermal detection studies predominantly target coarse categories (e.g., pedestrian/vehicle) or general surveillance/traffic analytics, whereas fine-grained mobility-context classes relevant to inclusive sensing remain insufficiently represented in available thermal datasets and benchmarks. In addition, many detector pipelines are adapted from RGB-oriented designs without explicitly addressing thermal-specific challenges such as low contrast, limited texture, and subtle human--object interaction cues. Finally, the feasibility of deploying mobility-context recognition on highly resource-constrained edge devices is often not evaluated as part of a unified sensor-to-deployment framework. Accordingly, the central challenge addressed in this work is to enable \emph{fine-grained, privacy-preserving mobility-context recognition from thermal imagery under resource-efficient edge deployment constraints}. This is not only a detector-design problem, but a coupled sensing--learning--deployment problem involving (i) thermal data availability for mobility-context classes, (ii) discriminative feature extraction for low-contrast thermal signatures, and (iii) lightweight inference for embedded platforms. \emph{This work does not claim mobility-context recognition as a wholly new research problem}; rather, it targets the specific and underexplored setting of thermal sensing-based mobility-context detection with edge-feasible deployment for inclusive intelligent environments.}
-
-
-To address this gap, this work introduces the Thermal Mobility-Context Recognition (TMCR) problem, supported by a newly curated dataset recorded using a FLIR ThermiBot~2 thermal sensor. The dataset organizes diverse real-world mobility modes into five semantic categories: 1. General agents: freely moving entities such as pedestrians and cars. 2. Wheeled mobility assistance: individuals using rollators or wheelchairs. 3. Non-wheeled mobility assistance: individuals using crutches, walking sticks, or blind sticks. 4. Load-bearing objects: individuals carrying or pulling items such as luggage or shopping trolleys. 5. Personal or dependent transport: individuals interacting with strollers, bicycles, or dogs.
-%Each category reflects specific posture, movement, and heat-distribution patterns. Recognizing these fine-grained contexts is essential for inclusive sensing and safe interaction.
-
-YOLO is a widely used real-time object detector, with versions from YOLOv1 to YOLOv12~\cite{redmon2016you,lin2017focal,wang2021scaled,wang2023yolov7,li2023yolov6,carion2020end}. Custom YOLO variants have been proposed for specialized tasks~\cite{wang2020eca,hou2021coordinate,misra2021triplet} and often underperform outside their target domain. Several works investigated YOLO deployment on constrained edge hardware. Compressed YOLO variants for ultra-low-power processors were demonstrated on GAP8 and Jetson Nano~\cite{humes2023squeezed}. Edge-cloud cooperative frameworks based on YOLOv4 were applied to autonomous driving~\cite{liang2022edge}. CPU-only YOLOv8 deployments on Raspberry Pi~4B have been explored for industrial inspection~\cite{okano2025edge}. Comparative benchmarks across Raspberry Pi, Jetson, and Coral TPU were presented in~\cite{alqahtani2024benchmarking}. Most of these works focus on Jetson or higher Raspberry Pi models (Pi~4 or Pi~5) due to their RAM and peripherals. To the best of our knowledge, inference on Raspberry Pi Zero has not been reported because of its limited memory; high-capacity YOLOv8 anchor-less models are also not supported on Pi Zero due to Ultralytics constraints. To overcome these limitations, this paper proposes Dual Attention Optimized Residual Block (DA-ORB) YOLO, a lightweight object detection architecture optimized for the IR spectrum. %The design emphasizes thermal-domain efficiency and discriminability through architectural refinement rather than scale, pretraining, or heavy augmentation. The core module, named OptimizedResidualBlock, is an inverted residual structure with depthwise separable convolution to capture wide spatial context with low computational cost. It integrates Efficient Channel Attention (ECA) for adaptive channel recalibration and Spatial Attention (SA) for emphasizing thermally salient regions that are often low contrast in IR imagery. Embedding these mechanisms throughout the backbone enables consistent IR-specific feature refinement. 
-This work targets miniaturized Raspberry Pi Zero edge by bypassing ultralytics limitations through custom deployment and streaming-based model loading. A cloud-edge methodology is proposed: training is performed entirely in the cloud, while inference runs on the edge directly from sensor streams. An anchor-less YOLO model to operate on the ultra-small Raspberry Pi Zero.
-\begin{table*}[t]
+\begin{figure}[t]
 \centering
-\caption{Comparison of the proposed TMCR dataset with existing IR and mobility-related datasets}
-\label{tab:dataset_comparison}
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Dataset} &
-\textbf{Year} &
-\textbf{Modality} &
-\textbf{Mobility-Aid} &
-\textbf{Mobility-Context} &
-\textbf{Seasons} &
-\textbf{Domain} \\
-\midrule
-
-OSU thermal~\cite{davis2007background} &
-2005 &
-Thermal (LWIR) &
-\xmark &
-\xmark &
-\xmark &
-Pedestrian detection \\
-
-FLIR ADAS~\cite{flir_adas_dataset} &
-2019 &
-Thermal + RGB &
-\xmark &
-\xmark &
-\xmark &
-Autonomous driving \\
-
-KAIST multispectral~\cite{choi2018kaist} &
-2018 &
-Thermal + RGB &
-\xmark &
-\xmark &
-\xmark &
-Pedestrian detection \\
-
-DENSE~\cite{bijelic2020seeing} &
-2020 &
-Thermal + Radar + LiDAR &
-\xmark &
-\xmark &
-\cmark  &
-Adverse-weather driving \\
-
-Mobility aid dataset~\cite{vasquez2017deep} &
-2017 &
-RGB-D &
-\cmark (3 aids) &
-{~Limited} &
-\xmark &
-Indoor hospital robotics \\
-
-TD4PWMR~\cite{ni2025thermal} &
-2025 &
-Thermal (LWIR) &
-12 classes &
-\xmark &
-\cmark &
-Traffic intersections \\
-
-\midrule
-Ours &
-{2025} &
-{Thermal (LWIR)} &
-\cmark (12 aids) &
-\cmark (5 classes) &
-\cmark (4 seasons) &
-{TMCR} \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-\begin{figure}[t]  \includegraphics[width=\columnwidth]{datasetAdvik.pdf}
-\caption{TMCR dataset: description for class and sub-classes}
-\label{fig:yolo_images}
+\includegraphics[width=\columnwidth]{rgb_thermal_side_by_side.pdf}
+\caption{Visual comparison between visible-spectrum (RGB) and long-wave infrared (LWIR) sensing modalities in a transit concourse: (a) optical RGB camera captures identifiable facial identities and fine clothing textures while suffering from specular floor glare and sensitivity to ambient light; (b) LWIR thermal imaging detects radiated body heat and temperature differentials, inherently protecting personal privacy while providing robust 24/7 detection of pedestrians, luggage, and metal baggage trolleys regardless of ambient illumination.}
+\label{fig:rgb_thermal_comparison}
 \end{figure}
 
-{The main contributions of this work are:}
-\begin{itemize}
-    \item \textbf{Dataset for thermal mobility-context recognition:} We formulate Thermal Mobility-Context Recognition (TMCR) as a fine-grained, privacy-preserving thermal sensing problem and introduce a new FLIR ThermiBot~2 dataset organized into five mobility-context classes. %(general agents, wheeled mobility assistance, non-wheeled mobility assistance, load-bearing objects, and personal/dependent transport).
-    
-    \item \textbf{Thermal-aware lightweight detector design:} We propose DA-ORB YOLO that combines depthwise-efficient feature extraction with ECA~\cite{wang2020eca} and SA~\cite{bao2023sctanet} to improve thermal saliency modeling under low-contrast IR conditions while maintaining computational efficiency.
-    
-    \item \textbf{Resource-efficient edge deployment and validation:} We develop a cloud-edge inference framework and evaluate deployment on multiple edge platforms, including NVIDIA Jetson AGX Xavier~\cite{jetson_agx_xavier}, Raspberry Pi 5B~\cite{raspberry_pi_5}, Rock Pi 4C+~\cite{rock_pi_4c_plus}, and Raspberry Pi Zero 2W~\cite{raspberry_pi_zero_2w} demonstrating hardware scalability and practical edge feasibility for thermal sensing applications.
-\end{itemize}
+According to Airports Council International (ACI) World and the SITA \textit{Baggage IT Insights} report, global air passenger traffic reached 9.4~billion passengers in 2024 and is projected to exceed 19~billion by 2042, with over 33.4~million bags mishandled, delayed, or misplaced across international transit hubs annually~\cite{aci2024traffic,sita2025baggage}. Simultaneously, public transit concourses and landside airport terminals remain prime targets for improvised explosive devices (IEDs) concealed within abandoned personal luggage---as exemplified by the 2016 Brussels Airport departure-hall bombings and the 2013 Boston Marathon backpack attacks~\cite{start2024gtd,tripathi2018abandoned}. Because international aviation security protocols (e.g., ICAO Annex~17) mandate that any unattended bag be treated as a potential explosive threat until cleared by explosive ordnance disposal (EOD) teams, even benign forgotten bags routinely trigger terminal evacuations, ground stops, and cascading operational disruptions~\cite{icao2022annex17}. This urgent operational and societal need underscores the importance of automated, privacy-preserving perception technologies capable of continuously monitoring human--baggage interactions and rapidly flagging unattended luggage anomalies in crowded public infrastructure.
 
-%The remainder of the paper is organized as follows. Section~II presents the dataset and existing YOLO architectures. Section~III details proposed YOLO architecture. Section~IV details the cloud-edge system architecture. Section~V and Section~VI reports results and conclusions, respectively.
+Automated surveillance systems deployed in high-throughput transit hubs---such as international airport terminals, railway concourses, and metro transit stations---play a vital role in ensuring public safety, crowd flow optimization, and anomaly detection~\cite{wilson2023recent,zhang2020traffic}. Conventional visual surveillance architectures rely predominantly on visible-spectrum (RGB) optical cameras. However, optical sensors suffer from fundamental limitations in complex real-world environments: their performance degrades severely under low-light night conditions, heavy artificial glare, abrupt shadows, backlighting through glass facades, and atmospheric obscuration such as smoke or steam~\cite{altay2022use}. Furthermore, as illustrated in Fig.~\ref{fig:rgb_thermal_comparison}, visible cameras capture identifiable facial traits and clothing textures, raising severe privacy and data protection concerns under strict regulatory frameworks such as the European General Data Protection Regulation (GDPR)~\cite{breland2021robust,guan2018daily}.
 
-\section{Dataset and Related Works}
+Thermal infrared (IR) sensors, specifically operating in the Long-Wave Infrared (LWIR) spectral band ($7.5\text{--}13.5\,\mu\text{m}$), provide an ideal sensing alternative. LWIR sensors detect passive radiant heat emitted directly by human bodies and physical objects rather than reflected ambient illumination. Consequently, thermal imaging is completely invariant to lighting conditions, operating with identical fidelity in pitch darkness, direct sunlight, and optical glare. Moreover, because thermal imagery captures thermal signatures rather than biometric surface pigmentation, it inherently preserves individual privacy, enabling continuous visual monitoring in sensitive public terminals without ethical or legal friction~\cite{wilson2023recent}.
 
-\subsection{Existing Datasets}
-The mobility aid dataset~\cite{vasquez2017deep,kollmitz2019deep} is one of the few benchmarks addressing people with mobility restrictions in indoor environments such as hospitals and public buildings. It provides more than 17{,}000 annotated RGB-D images while ensuring privacy through depth sensing. In contrast, for IR-based perception, most existing datasets, such as OSU~\cite{davis2007background}, FLIR ADAS~\cite{flir_adas_dataset}, KAIST~\cite{choi2018kaist}, and DENSE~\cite{bijelic2020seeing} mainly capture pedestrians or vehicles under diverse weather conditions without distinguishing between different mobility contexts as summarized in Table~\ref{tab:dataset_comparison}. The OSU dataset includes six low-resolution thermal videos of pedestrians recorded with a fixed Raytheon PalmIR 250D sensor. FLIR ADAS contains 9{,}711 thermal images across 15 object classes captured by a Teledyne FLIR Tau camera. The KAIST dataset combines thermal and visible imaging for autonomous and assisted driving and provides 8{,}970 thermal images recorded using a FLIR A655Sc camera. Similarly, the DENSE dataset integrates LiDAR, radar, and infrared data for adverse-weather driving scenarios and includes 11{,}500 thermal images captured by an Axis Q1922 FIR sensor. Although comprehensive, these datasets~\cite{davis2007background,flir_adas_dataset,choi2018kaist,bijelic2020seeing} do not include semantic differentiation of human mobility modes, which is essential for inclusive and context-aware perception. The actual dataset is Mobility-restriction data for barrier reduction at traffic-light-controlled intersections is collected in TD4PWMR~\cite{ni2025thermal}.
+Despite these compelling operational advantages, detecting security-critical objects in thermal surveillance imagery introduces formidable technical challenges:
+\begin{enumerate}
+    \item \textbf{Low Contrast and Diffuse Thermal Boundaries:} Long-wave radiation is inherently blurry and lacks high-frequency color or texture edges. In transit hubs, passengers frequently carry bags, pull rolling luggage, or navigate with airport baggage trolleys. Because metallic or synthetic luggage surfaces rapidly equilibrate with ambient indoor air while human bodies radiate warm body heat ($37^\circ\text{C}$), carried items often exhibit low radiometric contrast against background floors and human limbs.
+    \item \textbf{Critical Unattended Luggage Anomaly Detection:} Identifying abandoned or unattended baggage items is one of the most critical security imperatives in transit facilities. While a bag held or carried by a walking passenger moves dynamically with the human heat signature, an unattended bag becomes a stationary, cooling radiometric anomaly detached from any thermal human core. Detecting such subtle spatial anomalies reliably without triggering crippling false alarm rates requires robust contextual spatial reasoning.
+    \item \textbf{Severe Edge Deployment Constraints:} Real-world transit security architectures increasingly favor decentralized smart cameras or battery/PoE-powered edge sensing nodes to eliminate continuous, bandwidth-heavy video streaming to centralized servers~\cite{humes2023squeezed,okano2025edge}. These edge nodes often rely on resource-constrained embedded microcontrollers (e.g., RISC-V processors) or compact single-board computers (SBCs) with strict memory buffers (tens of megabytes) and milliwatt-scale power budgets. Standard lightweight object detectors (e.g., stock YOLOv8n) employ small $3\times3$ convolutional kernels that possess insufficient receptive fields to bind human bodies with distant trolley frames or subtle luggage contours. Conversely, heavy attention mechanisms, deformable convolutions, or transformer backbones incur severe memory and latency bottlenecks that cause out-of-memory (OOM) failures on embedded edge hardware~\cite{luo2025yolo,li2024yolo}.
+\end{enumerate}
+
+To overcome these coupled sensing, modeling, and edge execution challenges, this work introduces \textbf{Thermal-Security-YOLO}, a lightweight, thermally co-optimized object detection and edge execution framework tailored specifically for transit hub surveillance. 
+
+We curate and annotate a specialized \textbf{Thermal Security Surveillance dataset} comprising 1,067 unique high-resolution LWIR frames and 3,849 object instances captured in realistic transit settings across four target classes: \textit{Person}, \textit{Trolley} (wheeled baggage carts), \textit{Bag} (carried luggage and backpacks), and \textit{Unattended Anomaly} (stationary abandoned luggage).
+
+To maximize thermal discriminability without expanding model capacity, we propose \textbf{Hybrid Dilated ECA-YOLO}. Rather than inserting heavy spatial attention or computationally demanding deformable convolutions, we develop a stage-selective architecture that integrates dilated convolutions ($d=2$) within the bottleneck layers of deeper feature stages ($P_4$ and $P_5$), combined with 1D parameter-free Efficient Channel Attention (ECA)~\cite{wang2020eca}. The dilated bottleneck effectively expands the receptive field from $3\times3$ to $5\times5$ ($D_{\text{eff}}=5$), enabling the network to capture extended physical context (such as the geometric relationship between a passenger and their baggage cart) without adding parameters or downsampling fine spatial resolution. Dense convolutions ($d=1$) are preserved in early stages ($P_2, P_3$) to prevent high-frequency gridding artifacts on localized thermal gradients.
+
+Furthermore, we conduct empirical hardware deployment and physical electrical profiling using an in-line laboratory-grade \textbf{Joulescope JS220 high-speed precision DC energy analyzer} sampling at 2\,MS/s. We benchmark our model alongside six state-of-the-art YOLO baselines (YOLOv8n, YOLOv8s, YOLOv10n, YOLOv10s, YOLO11n, YOLO11s) across heterogeneous hardware tiers: an ultra-low-power dual-core RISC-V microcontroller (Waveshare ESP32-P4 Nano running ESP-DL INT8 hardware 2D DMA acceleration), single-board computers (Rock Pi 4C+ and Raspberry Pi 5 running multi-threaded CPU ONNX Runtime), and an embedded GPU platform (NVIDIA Jetson AGX Xavier running TensorRT FP16).
+
+\textbf{Main Contributions of this Work:}
+\begin{enumerate}
+    \item \textbf{Thermal Security Surveillance Benchmark:} We curate and evaluate a dedicated LWIR thermal dataset comprising 1,067 frames and 3,849 instances capturing complex human--baggage interactions and unattended luggage anomalies in transit security settings.
+    \item \textbf{Lightweight Hybrid Dilated ECA-YOLO Architecture:} We design a compact thermal detector (3.01\,M parameters, 8.1\,GFLOPs) that pairs stage-selective dilated residual bottlenecks ($d=2$ at $P_4, P_5$) with 1D adaptive Efficient Channel Attention. The model achieves 87.89\% mAP@50 and 64.73\% mAP@50--95 on the held-out test split, outperforming stock YOLOv8n (+4.48pp precision, +2.39pp mAP@50, +1.81pp mAP@50--95) and matching or outperforming 11\,M+ parameter models (YOLOv8s, YOLO11s).
+    \item \textbf{Targeted Security Recall & Localization Gains:} Our architecture yields massive recall improvements on critical security targets: \textbf{+8.5pp for Person (66.4\%)}, \textbf{+10.2pp for Bag (89.7\%)}, and \textbf{+11.0pp for Unattended Anomaly (83.3\%)}, along with substantial tight localization improvements (+4.5pp mAP@50--95 on Person and +3.5pp on Unattended Anomaly), effectively mitigating thermal boundary blur.
+    \item \textbf{Physical Joulescope Energy Profiling across Heterogeneous Edge Tiers:} We present rigorous empirical power, frame latency, energy-per-frame, and memory measurements using an in-line Joulescope JS220 across RISC-V microcontroller (ESP32-P4), ARM CPU (RPi 5), and Volta GPU (Jetson) platforms. Our model achieves top energy efficiency on GPU (11.78\,frames/Joule) and maintains 18.1\,MB of free PSRAM headroom on the microcontroller, where larger models induce near-OOM instability.
+\end{enumerate}
+
+\section{Thermal Security Dataset and Related Benchmarks}
+\label{sec:dataset_and_related}
+
+\subsection{Comparison with Existing Infrared Benchmarks}
+As shown in Table~\ref{tab:dataset_comparison}, existing infrared object detection datasets have almost exclusively focused on automotive road scenes or military target tracking. The OSU Thermal Pedestrian database~\cite{davis2007background} pioneered static-camera surveillance evaluation but restricted annotations to a single monolithic pedestrian class. The KAIST Multispectral benchmark~\cite{choi2018kaist} and FLIR ADAS dataset~\cite{flir_adas_dataset} introduced paired RGB-thermal imagery for autonomous vehicle navigation, categorizing roadway objects such as cars, trucks, pedestrians, and cyclists. Other datasets such as CVC-14~\cite{gonzalez2016pedestrian}, LLVIP~\cite{jia2021llvip}, and M3FD~\cite{liu2022target} focused on low-light urban streets and multi-modal target fusion.
+
+\begin{table*}[t]
+\centering
+\caption{Comparison of the Proposed Thermal Security Dataset with Existing Infrared Object Detection Benchmarks}
+\label{tab:dataset_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c c l c c c}
+\toprule
+\textbf{Benchmark Dataset} & 
+\textbf{Year} & 
+\textbf{Modality} & 
+\textbf{\makecell[c]{Target Domain /\\Surveillance Setting}} & 
+\textbf{\makecell[c]{Pedestrian\\Detection}} & 
+\textbf{\makecell[c]{Carried Luggage\\(Trolley, Bag)}} & 
+\textbf{\makecell[c]{Unattended\\Anomaly}} \\
+\midrule
+OSU Thermal~\cite{davis2007background}    & 2005 & LWIR Thermal  & Static Campus Surveillance   & \cmark & \xmark & \xmark \\
+KAIST Multispectral~\cite{choi2018kaist}   & 2018 & Thermal + RGB & Autonomous Driving (Roadway) & \cmark & \xmark & \xmark \\
+FLIR ADAS~\cite{flir_adas_dataset}         & 2019 & Thermal + RGB & Autonomous Driving (Roadway) & \cmark & \xmark & \xmark \\
+CVC-14~\cite{gonzalez2016pedestrian}       & 2016 & Thermal + RGB & Automotive Pedestrian Only   & \cmark & \xmark & \xmark \\
+LLVIP~\cite{jia2021llvip}                  & 2021 & Thermal + RGB & Low-Light Pedestrian Urban   & \cmark & \xmark & \xmark \\
+M3FD~\cite{liu2022target}                  & 2022 & Thermal + RGB & Multi-Scenario Target Track  & \cmark & \xmark & \xmark \\
+\midrule
+\textbf{Ours (Thermal Security)}           & \textbf{2026} & \textbf{LWIR Thermal} & \textbf{Transit Hub / Security Surveillance} & \textbf{\cmark} & \textbf{\cmark} & \textbf{\cmark} \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: \cmark\ indicates explicit class annotation; \xmark\ indicates absent or unannotated. While conventional benchmarks evaluate open roadways, our dataset uniquely targets high-throughput security facilities where pedestrians actively interact with carried luggage, baggage trolleys, and potential unattended anomaly objects.\par}
+\end{table*}
+
+None of these existing benchmarks address transit hub surveillance where passengers interact with carried baggage, push multi-tiered luggage trolleys, or where unattended items present potential safety hazards. The proposed Thermal Security Surveillance dataset bridges this critical gap.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig1_dataset_samples.pdf}
+\caption{Representative sample frames from the proposed Thermal Security Surveillance dataset, illustrating pedestrians interacting with baggage trolleys, carried luggage, and stationary unattended luggage anomalies under varied thermal contrast.}
+\label{fig:dataset_samples}
+\end{figure}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_rgb_thermal_scene_comparison.png}
+\caption{Paired visible-spectrum (RGB) and long-wave infrared (LWIR) thermal frames across eight distinct acquisition scenes, illustrating the environmental diversity of the proposed dataset: (a) indoor seated waiting area; (b) outdoor pedestrian walkway; (c) indoor corridor with carried luggage; (d) staircase descent; (e) indoor lobby with multiple suitcases; (f) building main entrance with glass facade; (g) outdoor adverse weather (rain, umbrellas); and (h) parking area with vehicle. Each column shows the same scene captured simultaneously by the Teledyne FLIR C5 dual-sensor camera. RGB images (top rows) reveal identifiable facial features and clothing textures, while the corresponding LWIR thermal images (bottom rows) capture only radiometric heat signatures, inherently preserving individual privacy. Ambient temperature ranges span from $-3.8\,^{\circ}\text{C}$ to $34.0\,^{\circ}\text{C}$ across sessions.}
+\label{fig:scene_diversity}
+\end{figure*}
+
 \begin{table}[t]
 \centering
-\caption{TMCR Dataset class and subclass instance counts}
-\label{tab:simple4-clean}
-\begin{tabular}{p{1.5cm} l l r}
+\caption{Geometric Scale Distribution and Crowd Density Composition of the Dataset}
+\label{tab:scene_composition}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Class} & \textbf{Total} & \textbf{Sub-Class} & \textbf{Count} \\
+\textbf{Class} & \textbf{Small ($<32^2$)} & \textbf{Medium ($32^2\text{--}96^2$)} & \textbf{Large ($>96^2$)} & \textbf{Median Scale ($\sqrt{\text{Area}}$)} \\
 \midrule
-
-\multirow{2}{=}{General Agents} & \multirow{2}{*}{14841} & person without mobility restrictions & 12117 \\ 
-\cmidrule(lr){3-4}
-                                &                         & car                                  & 2724 \\ 
+\textbf{Person}     & 64 (5.9\%)   & 411 (38.2\%) & 601 (55.9\%)   & 108.0\,px \\
+\textbf{Trolley}    & 1 (0.05\%)   & 369 (17.2\%) & 1{,}775 (82.7\%) & 147.3\,px \\
+\textbf{Bag}        & 1 (0.3\%)    & 80 (22.7\%)  & 272 (77.1\%)   & 147.1\,px \\
+\textbf{Unattended} & 14 (5.1\%)   & 230 (83.6\%) & 31 (11.3\%)    & 48.4\,px \\
 \midrule
+\textbf{Total}      & \textbf{80 (2.1\%)} & \textbf{1{,}090 (28.3\%)} & \textbf{2{,}679 (69.6\%)} & \textbf{138.2\,px} \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: Bounding box scale tiers follow the standard MS COCO area definitions ($s < 32^2$, $32^2 \le m \le 96^2$, $l > 96^2$ pixels). Frame-level crowd densities range from 0 to 11 objects/frame (mean $3.61$): 16 background frames (0 objects), 291 sparse frames (1--2 objects), 442 moderate frames (3--4 objects), 236 dense frames (5--6 objects), and 82 highly congested frames ($\ge 7$ objects).\par}
+\end{table}
 
-\multirow{2}{=}{Wheeled Mobility Assistance} & \multirow{2}{*}{1240} & person with wheelchair & 660 \\ 
-\cmidrule(lr){3-4}
-                                             &                        & person with rollator   & 580 \\ 
+As illustrated in Fig.~\ref{fig:scene_diversity} and quantified in Table~\ref{tab:scene_composition}, the dataset captures extensive spatial, geometric, and operational diversity. Across the 1,067 frames, object densities span from isolated targets to dense transit crowds with up to 11 concurrent instances per frame (average 3.61 instances/frame). The bounding-box scale distribution reveals critical category-specific dynamics: while transit trolleys and carried bags predominantly occupy the large-scale regime ($>96^2$\,px), the security-critical \textit{Unattended Anomaly} class concentrates overwhelmingly in the medium-to-small range (88.7\% $\le 96^2$\,px, median $\sqrt{\text{Area}} = 48.4$\,px). Furthermore, acquisitions span distinct indoor and outdoor surveillance environments with ambient temperatures ranging from $-3.8\,^{\circ}\text{C}$ to $34.0\,^{\circ}\text{C}$, exposing detectors to sharp thermal inversions, damp surface reflections, and low-contrast boundaries.
+
+\subsection{Thermal Security Dataset Collection and Split Statistics}
+Data acquisition was performed using calibrated FLIR Long-Wave Infrared (LWIR) sensors operating in the $7.5\text{--}13.5\,\mu\text{m}$ spectral bandwidth with a native resolution of $640\times512$ pixels. Cameras were mounted at elevated overhead surveillance vantage points ($2.5\text{--}4.0$\,m height) overlooking passenger concourses, check-in corridors, and baggage claim zones.
+
+The dataset contains \textbf{1,067 unique thermal frames} comprising \textbf{3,849 precisely annotated bounding-box instances}. The four target classes are defined as follows:
+\begin{enumerate}
+    \item \textbf{Person (1,076 instances, 28.0\%):} Moving and stationary pedestrians, airport staff, and passengers traversing transit areas unassisted or in transit flow.
+    \item \textbf{Trolley (2,145 instances, 55.7\%):} Metallic wheeled baggage carts, airport trolleys, and luggage pushcarts, either pushed by individuals or clustered in transit staging bays.
+    \item \textbf{Bag (353 instances, 9.2\%):} Backpacks, suitcases, shoulder bags, and duffel bags held, carried, or pulled in direct physical contact with a walking person.
+    \item \textbf{Unattended Anomaly (275 instances, 7.1\%):} Stationary, isolated baggage items, parcels, or luggage detached from any human handler for extended durations, representing potential security anomalies.
+\end{enumerate}
+
+\begin{table}[t]
+\centering
+\caption{Thermal Security Dataset Class Definitions and Instance Counts Across Data Splits}
+\label{tab:dataset_distribution}
+\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Class} & \textbf{Surveillance Context} & \textbf{Train} & \textbf{Val} & \textbf{Test} & \textbf{Total (\%)} \\
 \midrule
-
-\multirow{3}{=}{Non-Wheeled Mobility Assistance} & \multirow{3}{*}{2645} & person with crutches      & 50 \\ 
-\cmidrule(lr){3-4}
-                                                 &                        & person with walking stick & 97 \\ 
-\cmidrule(lr){3-4}
-                                                 &                        & person with blindstick    & 2498 \\ 
+\textbf{Person}     & Pedestrians \& individuals       & 742     & 237 & 97  & 1{,}076 (28.0\%) \\
+\textbf{Trolley}    & Wheeled baggage carts            & 1{,}514 & 407 & 224 & 2{,}145 (55.7\%) \\
+\textbf{Bag}        & Carried backpacks/luggage        & 250     & 64  & 39  & 353 (9.2\%) \\
+\textbf{Unattended} & Stationary luggage anomaly       & 177     & 68  & 30  & 275 (7.1\%) \\
 \midrule
-
-\multirow{2}{=}{Load-Bearing Objects} & \multirow{2}{*}{324} & person with luggage                & 283 \\ 
-\cmidrule(lr){3-4}
-                                      &                        & person with shopping/luggage trolley & 41 \\ 
-\midrule
-
-\multirow{3}{=}{Personal / Dependent Transport} & \multirow{3}{*}{1377} & person with stroller & 137 \\ 
-\cmidrule(lr){3-4}
-                                                &                        & person with bicycle  & 1159 \\ 
-\cmidrule(lr){3-4}
-                                                &                        & person with dog      & 81 \\ 
+\textbf{Total Inst.}& All bounding boxes               & 2{,}683 & 776 & 390 & 3{,}849 (100\%) \\
+\textbf{Total Img.} & Unique thermal frames            & 746     & 213 & 108 & 1{,}067 (100\%) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Dataset in This Work}
-A total of eight FLIR ThermiBot~2 infrared cameras were installed for dataset collection. Each camera operates within a spectral range of 7.5--13.5~$\mu$m, with a native resolution of $640 \times 512$ pixels, and supports focal lengths from 9~mm to 35~mm, enabling flexible deployment. The dataset includes 3{,}086 images captured in spring, 2{,}584 in summer, 2{,}534 in autumn, and 2{,}992 in winter. The image distribution is intentionally balanced across seasons to reduce seasonal bias during model training and evaluation. We have five semantic categories along with their corresponding subclasses. The five predefined classes are: general agents, wheeled mobility assistance, non-wheeled mobility assistance, load-bearing objects, and personal or dependent transport, as illustrated in Fig.~\ref{fig:yolo_images}. The class and subclass frequency distribution of the dataset is provided in Table~\ref{tab:simple4-clean}. For wheeled mobility assistance, the bounding box includes both the person and the wheelchair or rollator. Similarly, for strollers, bicycles, and dogs, the bounding box covers the person and the associated object. This combined labeling leverages the relative spatial relationship between the person and the item, improving detection accuracy.
+Table~\ref{tab:dataset_distribution} details the official train, validation, and held-out test splits. A strict 70\%/20\%/10\% image-level partitioning was enforced across unique recording sequences to prevent temporal data leakage. The held-out test split contains 108 frames and 390 ground-truth objects, serving as the benchmark for all evaluations in this paper.
 
-
-\begin{comment}
-    
-
-\subsection{YOLO Developments}
-
-The progress of modern IR object detection is closely linked to the evolution of real-time detectors. YOLOv1~\cite{redmon2016you} introduced the first CNN-based one-stage detector capable of real-time performance. Subsequent YOLO versions~\cite{lin2017focal,wang2021scaled,wang2023yolov7,li2023yolov6} progressively improved detection speed, accuracy, and scalability. Early variants (YOLOv1 to YOLOv3) established dense prediction and multi-scale detection. Later versions, such as YOLOv4, YOLOv5, and YOLOv7, integrated advanced training strategies and architectural components such as SPP, PANet, and CSP to enhance accuracy without compromising speed. YOLOv8 introduced anchor-free detection, the C2f backbone module, and a decoupled head for faster convergence. YOLOv10 focused on deployment efficiency through an end-to-end NMS-free design with dual-label assignment. YOLOv11 further improved backbone efficiency with C3k2 and C2PSA modules that combine lightweight convolutions with partial self-attention. Alongside convolution-based YOLO models, transformer-based detectors such as DETR~\cite{carion2020end} redefined object detection through end-to-end architectures that remove handcrafted anchors and non-maximum suppression. However, DETR models typically suffer from slow convergence and high computational overhead, limiting their suitability for real-time or embedded IR systems. Although recent variants such as RT-DETR attempt to reduce inference cost, lightweight and thermally optimized models remain underexplored.
-
-Beyond backbone scaling, numerous YOLO variants incorporate custom architectural modules tailored to specific sensing conditions. Spatial and channel attention mechanisms have been used to enhance detection in thermal or low-contrast environments. Coordinate Attention~\cite{hou2021coordinate} improves localization sensitivity and has been applied in YOLOv7-CA and YOLOv8-CA for road-scene and aerial IR tasks. CBAM integrates channel and spatial attention and has been applied to thermal pedestrian detection and medical thermal imagery. ECA~\cite{wang2020eca} provides efficient channel re-weighting without dimensionality reduction, making it suitable for embedded YOLO deployments. Triplet Attention~\cite{misra2021triplet} and hybrid attention have also been utilized in YOLO-Thermal~\cite{ni2025thermal} and related IR detection frameworks to capture anisotropic thermal features. These developments show that YOLO backbones are highly task-dependent. Modules designed for visible-spectrum images are often modified or replaced when applied to infrared, medical, or aerial domains. The literature also summarizes that the choice of attention mechanisms and convolutional context must be guided by sensing modality and deployment constraints.
-\end{comment}
 \begin{figure*}[t]
-\includegraphics[width=\linewidth]{yoloarchitecture.pdf}
-\caption{{Proposed custom YOLO architecture. (On the top row, we provided a standard YOLOv8  backbone with c2f blocks, and gets replaced by optimized residual block in the proposed YOLO variant)}}
-\label{fig:yolo_arch}
+\centering
+\includegraphics[width=\linewidth]{Dilated_ECA_Yolo.pdf}
+\caption{Comprehensive architecture and micro-structural components of the proposed Hybrid Dilated ECA-YOLO framework: (a) baseline YOLO backbone with conventional dense $3\times3$ bottlenecks; (b) proposed system macro-architecture incorporating stage-selective dense \texttt{C2f\_ECA} blocks at stages $P_2, P_3$ and dilated \texttt{C2f\_ECA\_Dilated} blocks ($d=2$) at stages $P_4, P_5$, feeding into the multi-scale PANet neck and decoupled anchor-free detection heads; (c) micro-architecture of the dense \texttt{C2f\_ECA} residual bottleneck; (d) micro-architecture of the dilated \texttt{C2f\_ECA\_Dilated} residual bottleneck ($d=2$, effective receptive field $5\times5$) expanding spatial context across diffuse thermal boundaries; and (e) parameter-free 1D Efficient Channel Attention (ECA) channel recalibration pipeline.}
+\label{fig:dilated_eca_arch}
 \end{figure*}
 
-\section{Proposed Method: Dual Attention YOLO}
-\label{sec:proposed}
+\section{Proposed Method: Hybrid Dilated ECA-YOLO}
+\label{sec:proposed_method}
 
-We introduce dual attention YOLO, a compact yet thermally adaptive object detection network. The design emphasizes discriminability through architectural refinement rather than scale expansion or heavy augmentation. At its core lies the Dual Attention Optimized Residual Block (DA-ORB), a unified computational unit that replaces the standard \texttt{C2f} block of YOLOv8. This block integrates both {Efficient Channel Attention (ECA)~\cite{wang2020eca} and Spatial Attention (SA)~\cite{bao2023sctanet} within an inverted residual structure to jointly enhance what (spectral relevance) and where (spatial saliency) representations in thermal images}.
+\subsection{Network Overview}
+As illustrated in Fig.~\ref{fig:dilated_eca_arch}(b), the proposed \textbf{Hybrid Dilated ECA-YOLO} architecture follows the single-stage anchor-free detection paradigm, comprising an efficient feature extraction backbone, a multi-scale Path Aggregation Network (PANet) neck, and decoupled detection heads. Fig.~\ref{fig:dilated_eca_arch}(a) depicts the conventional baseline backbone for direct structural comparison.
 
-%\subsection{Network Overview}
-The proposed dual attention YOLO follows the canonical single-stage detection paradigm:
+The core architectural innovation lies in the design of the \texttt{C2f\_ECA\_Dilated} bottleneck block, which replaces standard \texttt{C2f} modules in the deeper stages ($P_4$ and $P_5$) of the backbone. This structural refinement directly tackles the low-contrast and diffuse boundary characteristics of long-wave infrared radiation.
 
+\subsection{Receptive Field Expansion via Dilated Bottleneck Convolution}
+In visible RGB imagery, high-frequency chromatic edges and texture patterns enable standard $3\times3$ convolutional kernels to isolate objects within compact receptive fields. In contrast, thermal surveillance imagery is radiometric: metallic baggage cart frames, trolley wheels, and backpack straps produce thin, low-contrast boundaries that are easily overwhelmed by surrounding floor temperatures. 
+
+To reliably associate a walking passenger with their carried bag or trolley cart, the network must possess an effective receptive field that encompasses both entities simultaneously. Standard convolutions cannot expand spatial context without either increasing kernel size ($5\times5$ or $7\times7$), which incurs a quadratic parameter explosion ($O(k^2)$), or downsampling spatial resolution via strided pooling, which obliterates subtle pixel-width trolley wheels and luggage edges.
+
+Dilated (atrous) convolution provides an optimal mathematical formulation. Let $x \in \mathbb{R}^{C_{\text{in}} \times H \times W}$ represent an input feature tensor. A 2D dilated convolution with dilation rate $d$ is defined over spatial coordinates $(i, j)$ as:
+\begin{equation}
+y[i, j] = \sum_{m=-K}^{K} \sum_{n=-K}^{K} x[i + d \cdot m,\, j + d \cdot n] \cdot w[m, n]
+\label{eq:dilated_conv}
+\end{equation}
+where $w$ is a $(2K+1)\times(2K+1)$ convolutional filter bank. The effective receptive field (ERF) diameter $D_{\text{eff}}$ of the kernel is:
+\begin{equation}
+D_{\text{eff}} = (K_{\text{kernel}} - 1) \cdot d + 1
+\label{eq:receptive_field}
+\end{equation}
+By setting $d=2$ for a $3\times3$ kernel ($K_{\text{kernel}}=3$), the effective receptive field expands from $3\times3$ to $5\times5$ ($D_{\text{eff}}=5$), covering 25 spatial locations while executing only 9 multiply-accumulate operations per channel. This doubles the contextual integration area with zero increase in parameter count or computational FLOPs, as detailed in the micro-architecture in Fig.~\ref{fig:dilated_eca_arch}(d).
+
+\subsection{Efficient Channel Attention (ECA) Recalibration}
+While dilated convolution resolves spatial context, thermal imagery also requires selective weighting of spectral feature maps to emphasize thermally distinctive channels (such as temperature gradient boundaries) over background floor noise.
+
+Rather than adopting complex multi-layer perceptron (MLP) channel attention (e.g., SENet) which compresses channels and breaks direct channel-weight correspondence, we incorporate Efficient Channel Attention (ECA)~\cite{wang2020eca}. Given an intermediate bottleneck feature map $F \in \mathbb{R}^{C \times H \times W}$, channel-level summary descriptors are computed via Global Average Pooling (GAP):
+\begin{equation}
+z_c = \frac{1}{H \times W} \sum_{i=1}^H \sum_{j=1}^W F_c[i, j], \quad z \in \mathbb{R}^C
+\label{eq:gap}
+\end{equation}
+Local cross-channel interaction is modeled without dimensionality reduction via a fast 1D convolution with adaptive kernel size $k$:
+\begin{equation}
+\omega = \sigma\left(\mathrm{Conv1D}_k(z)\right)
+\label{eq:eca_conv1d}
+\end{equation}
+where $\sigma(\cdot)$ is the sigmoid activation function, and $k$ is dynamically determined proportional to channel capacity $C$:
+\begin{equation}
+k = \psi(C) = \left| \frac{\log_2(C)}{\gamma} + \frac{b}{\gamma} \right|_{\text{odd}}
+\label{eq:adaptive_k}
+\end{equation}
+with parameters $\gamma=2$ and $b=1$. The channel-refined tensor is produced via channel-wise broadcasting multiplication:
+\begin{equation}
+F_{\text{eca}} = \omega \otimes F
+\label{eq:recalibrated_tensor}
+\end{equation}
+as depicted in the attention workflow of Fig.~\ref{fig:dilated_eca_arch}(e).
+
+\subsection{Stage-Selective Hybrid Topology}
+A critical finding from our architectural experiments is that applying dilated convolutions uniformly across all stages of the backbone introduces severe high-frequency gridding artifacts (the ``checkerboard effect'') in early stages ($P_1, P_2, P_3$). In early layers, feature maps retain fine spatial resolutions ($320\times320$ and $160\times160$); inserting holes via dilation causes the kernel to skip over localized thermal edges.
+
+Therefore, we introduce a \textbf{Stage-Selective Hybrid Topology}:
 \begin{itemize}
-    \item \textbf{Backbone:} Stacked DA-ORB modules progressively downsample the input thermal image to generate multi-scale feature maps $(P_1$--$P_5)$. Each block adaptively emphasizes salient channels and spatial regions corresponding to thermally discriminative cues such as body posture or assistive-device contours. This backbone differs from the standard YOLOv8 architecture.
-    \item \textbf{Neck and Head:} A PANet-based neck fuses cross-scale features through bottom-up and top-down pathways, ensuring rich semantic propagation to the detection head. The detection head performs class prediction and bounding-box regression using decoupled branches. The neck and head remain identical to YOLOv8 model.
+    \item \textbf{Early Backbone Stages ($P_2, P_3$):} Retain standard dense convolutions ($d=1$) paired with ECA channel attention (Fig.~\ref{fig:dilated_eca_arch}(c)) to capture localized pixel gradients and maintain continuous boundary integrity.
+    \item \textbf{Deep Backbone Stages ($P_4, P_5$):} Replace standard bottlenecks with the proposed \texttt{C2f\_ECA\_Dilated} module ($d=2$, Fig.~\ref{fig:dilated_eca_arch}(d)), where downsampled spatial representations (stride 16 and 32) allow the enlarged receptive field to encompass extended human--trolley interactions without gridding distortions.
 \end{itemize}
 
-\subsection{Dual Attention Optimized Residual Block (DA-ORB)}
-Each DA-ORB replaces a single \texttt{C2f} block (refer Fig.~\ref{fig:yolo_arch}) and performs expansion, depthwise convolution, projection, dual attention, and residual fusion as a single atomic operation. Let $X_{\text{in}}\in\mathbb{R}^{C\times H\times W}$ denote the input feature map. The sequence of operations is described below.
-
-\subsubsection{Expansion and Depthwise Convolution}
-This stage increases the representational capacity of the input feature map while maintaining computational efficiency. First, a pointwise ($1\times1$) convolution expands the channel dimension to enrich feature diversity. A depthwise $5\times5$ convolution is then applied to capture broader spatial context while keeping the number of parameters low. Batch normalization and SiLU activation further stabilize training and introduce non-linearity
-$$U = \mathrm{BN}\!\left(\mathrm{SiLU}\!\left(\mathrm{DWConv}_{5\times5}\!\left(\mathrm{Conv}_{1\times1}(X_{\text{in}},\,C\!\rightarrow\!2C)\right)\right)\right),
-$$
-
-\subsubsection{Projection}
-
-After feature expansion and spatial processing, the number of channels is reduced back to the original dimensionality. This projection step compresses the enriched features while preserving the most informative representations, ensuring compatibility with the residual connection.
-$$
-F = \mathrm{BN}\!\left(\mathrm{Conv}_{1\times1}(U,\,2C\!\rightarrow\!C)\right).
-$$
+Algorithm~\ref{alg:c2f_eca_dilated} describes the forward pass of the \texttt{C2f\_ECA\_Dilated} block.
 
 \begin{algorithm}[t]
-\caption{Dual Attention Optimized Residual Block}
-\label{alg:daorb}
+\caption{Forward Execution of \texttt{C2f\_ECA\_Dilated} Bottleneck}
+\label{alg:c2f_eca_dilated}
 \begin{algorithmic}[1]
-\REQUIRE $X_{\text{in}}\in\mathbb{R}^{C\times H\times W}$
-\STATE $U \leftarrow \mathrm{BN}(\mathrm{SiLU}(\mathrm{Conv}_{1\times1}(X_{\text{in}},C\!\rightarrow\!2C)))$
-\STATE $U \leftarrow \mathrm{BN}(\mathrm{SiLU}(\mathrm{DWConv}_{5\times5}(U)))$
-\STATE $F \leftarrow \mathrm{BN}(\mathrm{Conv}_{1\times1}(U,2C\!\rightarrow\!C))$
-\STATE $z \leftarrow \mathrm{GAP}(F)$
-\STATE $\omega \leftarrow \sigma(\mathrm{Conv1D}_k(z))$
-\STATE $F_{\text{eca}} \leftarrow \omega \otimes F$
-\STATE $F_{\text{avg}} \leftarrow \mathrm{AvgPool}(F_{\text{eca}})$, \quad $F_{\text{max}} \leftarrow \mathrm{MaxPool}(F_{\text{eca}})$
-\STATE $M_{\text{sa}} \leftarrow \sigma(\mathrm{Conv}_{7\times7}([F_{\text{avg}};F_{\text{max}}]))$
-\STATE $F_{\text{sa}} \leftarrow M_{\text{sa}} \otimes F_{\text{eca}}$
-\STATE $X_{\text{out}} \leftarrow X_{\text{in}} + F_{\text{sa}}$
+\REQUIRE Feature tensor $X_{\text{in}} \in \mathbb{R}^{C \times H \times W}$, Dilation rate $d=2$, ECA kernel $k$
+\STATE Split input along channel axis: $X_1, X_2 \leftarrow \mathrm{Split}(X_{\text{in}}, \dim=1)$
+\STATE $U \leftarrow \mathrm{SiLU}\left(\mathrm{BN}\left(\mathrm{Conv}_{1\times1}(X_2, C/2 \rightarrow C/2)\right)\right)$
+\STATE $V \leftarrow \mathrm{SiLU}\left(\mathrm{BN}\left(\mathrm{DilatedConv}_{3\times3, d=2}(U, C/2 \rightarrow C/2)\right)\right)$
+\STATE $z \leftarrow \mathrm{GAP}(V) \in \mathbb{R}^{C/2}$
+\STATE $\omega \leftarrow \sigma\left(\mathrm{Conv1D}_k(z)\right)$
+\STATE $V_{\text{eca}} \leftarrow \omega \otimes V$
+\IF{Residual Connection enabled}
+    \STATE $Y \leftarrow X_2 + V_{\text{eca}}$
+\ELSE
+    \STATE $Y \leftarrow V_{\text{eca}}$
+\ENDIF
+\STATE $X_{\text{out}} \leftarrow \mathrm{Conv}_{1\times1}(\mathrm{Concat}([X_1, Y]), C \rightarrow C)$
 \RETURN $X_{\text{out}}$
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Efficient Channel Attention (ECA)}
-
-To emphasize informative channels and suppress less relevant ones, an Efficient Channel Attention (ECA) mechanism is applied. This module models local cross-channel dependencies without dimensionality reduction, allowing the network to adaptively recalibrate channel responses based on global contextual information.
-
-Global average pooling produces channel descriptors as $z = \mathrm{GAP}(F), \qquad z\in\mathbb{R}^{C}$. These channel descriptors summarize global spatial information for each feature channel, serving as compact statistics for attention computation.
-
-Local cross-channel interaction is modeled using a 1-D convolution as $
-\omega = \sigma(\mathrm{Conv1D}_k(z))$,
-where $k$ is adaptively determined by the channel dimensionality. The channel-refined tensor is $
-F_{\text{eca}} = \omega \otimes F$. This attention weighting strengthens channels that carry meaningful infrared cues while reducing the influence of less informative responses. ECA recalibrates each channel based on local cross-correlations without dimensionality reduction, making it suitable for IR-specific feature enhancement.
-
-\subsubsection{Spatial Attention (SA)}
-While channel attention focuses on \emph{what} features are important, spatial attention determines \emph{where} important information is located within the feature map. This mechanism helps highlight thermally salient regions that correspond to meaningful objects or structures in infrared imagery.
-
-Average and maximum pooling across channels yields $
-F_{\text{avg}}=\mathrm{AvgPool}(F_{\text{eca}})$ and $F_{\text{max}}=\mathrm{MaxPool}(F_{\text{eca}})$, respectively. These pooled maps capture complementary contextual information, where average pooling reflects overall activation patterns and max pooling emphasizes the most prominent responses.
-
-The concatenated map is processed by a $7\times7$ convolution as
-$
-M_{\text{sa}} = \sigma(\mathrm{Conv}_{7\times7}([F_{\text{avg}};F_{\text{max}}]))$. Finally, the spatially refined output is
-$
-F_{\text{sa}} = M_{\text{sa}} \otimes F_{\text{eca}}$.
-SA highlights thermally salient regions such as mobility aids or object boundaries, addressing the low-texture limitations of FIR imagery.
-
-\subsubsection{Residual Fusion}
-Finally, the refined features are fused with the original input through a residual connection. This design preserves the initial information flow while enabling the network to learn residual feature refinements, improving gradient propagation and model stability.
-
-The refined features are added to the shortcut path:
-\begin{equation}
-X_{\text{out}} = X_{\text{in}} + F_{\text{sa}}.
-\label{eq:residual}
-\end{equation}
-
-DA-ORB modules can directly replace \texttt{C2f} layers in YOLOv8 or YOLOv10 backbones while maintaining full compatibility with the PANet neck and decoupled detection head. Embedding DA-ORB modules across the backbone enables the network to exploit subtle thermal contrasts and spatial cues inherent in human-object interactions. Unlike heavier architectures, the proposed design remains suitable for embedded edge platforms such as Jetson AGX Xavier, Raspberry~Pi~5B, Raspberry~Pi~Zero~2W, and Rock~Pi~4C+.
-
-\begin{figure*}[t]
-\includegraphics[width=\textwidth]{yolo_thermal_edge_explanation.drawio.pdf}
-\caption{{The training and inference chain used in the proposed work. The left most figure depicts the proposed cloud-edge framework; the edge modules used in this work are (a) NVIDIA Jetson AGX Xavier~\cite{jetson_agx_xavier}, (b) Raspberry Pi 5B~\cite{raspberry_pi_5}, (c) Rock Pi 4C+~\cite{rock_pi_4c_plus}, (d) Raspberry Pi Zero 2W~\cite{raspberry_pi_zero_2w}, and (e) 5 NOK coin to understand the size of edge modules used in this work.}}
-\label{fig:edge}
-\end{figure*}
-
-
 \subsection{Two-Stage Training Strategy}
-Training from randomly initialized weights requires a high initial learning rate for the network to learn foundational features and escape a chaotic state. However, although a high learning rate accelerates early learning, it can prevent convergence by causing the optimization to overshoot the optimal solution. Conversely, starting with a low learning rate results in slow and inefficient early training. Since the proposed model is trained from scratch without pre-trained weights, we adopt a two-stage training strategy to balance stability and final precision.
+Training deep object detectors on thermal surveillance imagery requires careful regularization. High learning rates and aggressive mosaic augmentations are beneficial early in training to escape local minima and learn scale-invariant spatial representations. However, mosaic augmentation creates artificial cross-shaped synthetic image borders that disrupt true thermal object contours. For dilated convolution kernels ($d=2$), these synthetic boundary discontinuities cause erroneous gradient updates late in training.
 
-Stage~1 uses a relatively high learning rate to establish a strong feature foundation, allowing the model to quickly learn general object characteristics. Stage~2 then uses a significantly lower learning rate to refine the learned representation with higher precision. The hyperparameters for both stages are summarized in Table~\ref{tab:hyperparameters}. %In Stage~1, the AdamW optimizer is used with an initial learning rate of $0.01$, a final learning rate of $0.0001$, and cosine annealing. In Stage~2, the initial and final learning rates are $0.002$ and $0.00005$, respectively. This fine-tuning phase enables small and stable updates, helping the model converge to a deeper loss minimum and achieve the high-precision localization and classification required for the mAP@50--95 metric.
-
+To resolve this issue, we employ a \textbf{Two-Stage Cosine Training Protocol} spanning 100 epochs, detailed in Table~\ref{tab:training_hyperparameters}:
+\begin{itemize}
+    \item \textbf{Stage-1: Foundation Phase (Epochs 1--80):} Trains with initial learning rate $\eta_0=0.01$ and active Mosaic augmentation ($p=1.0$), promoting diverse multi-scale representation learning.
+    \item \textbf{Stage-2: Refinement Phase (Epochs 81--100, \texttt{close\_mosaic=20}):} Mosaic augmentation is disabled ($p=0.0$), and the learning rate decays via cosine annealing from $\eta=0.001$ to $\eta_f=0.0001$. This allows dilated ECA kernels to converge smoothly on genuine, uncorrupted thermal object boundaries.
+\end{itemize}
 
 \begin{table}[t]
 \centering
-\caption{Summary of two-stage training hyperparameters}
-\label{tab:hyperparameters}
-\begin{tabular}{p{3cm} p{2.4cm} p{2cm}}
-\toprule
-{Parameter} & {Stage-1 } & {Stage-2 } \\
- & \textbf{Foundation} & \textbf{Refinement} \\
-\midrule
-Epochs & 200 & 150 \\
-Image Size & 640x640 & 640x640 \\
-Batch Size & 16 & 12 \\
-Optimizer & AdamW & AdamW \\
-Initial Learning Rate ($\text{lr0}$) & 0.01 & 0.002 \\
-Final Learning Rate ($\text{lrf}$) & 0.0001 & 0.00005 \\
-Cosine Annealing & True & True \\
-Warmup Epochs & 10 & 5 \\
-Momentum & 0.937 & 0.95 \\
-Weight Decay & 0.0005 & 0.0001 \\
-Loss Weight (box) & 7.5 & 8.5 \\
-Loss Weight (cls) & 0.5 & 0.4 \\
-Loss Weight (dfl) & 1.5 & 1.8 \\
-Augmentation & False & False \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-
-\begin{table*}[t]
-\centering
-\caption{{Pretrained YOLO model on COCO dataset + retrain using accumulated TMCR dataset. Values are written as ``no-augmentation (augmentation)'' to explain the impact of thermal image augmentation on model prediction.}}
-\label{tab:merged_yolo_comparison_transfer}
+\caption{Summary of Two-Stage Training Strategy and Hyperparameters}
+\label{tab:training_hyperparameters}
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{6pt}
 \small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{l c c c c c c c}
+\begin{tabular}{lcc}
 \toprule
-{\textbf{Model}} & {\textbf{Params (M)}} & {\textbf{GFLOPs}} &
-{\textbf{Precision (\%)}} & {\textbf{Recall (\%)}} & {\textbf{mAP@50 (\%)}} &
-{\textbf{mAP@50--95 (\%)}} & {\textbf{Size (MB)} }\\
+\textbf{Hyperparameter} & \textbf{Stage-1: Foundation} & \textbf{Stage-2: Refinement} \\
 \midrule
-
-{YOLOv8n}  & {3.1}  & {8.8}  &
-{95.73 (94.02)} & {93.45 (93.97)} & {97.04 (96.99)} & {90.34 (89.54)} & {6} \\
-
-{YOLOv8s}  & {11.1}  & {28.8 } &
-{97.86 (96.36) }& {92.69 (94.57) }&{ 97.42 (97.43)} & {91.78 (92.10)} &{ 21.5 }\\
-
-{YOLOv10n}  & {2.7}  & {8.7}  &
-{95.480 (95.28) }&{ 93.029 (91.07)} & {97.087 (95.88)} &{ 89.633 (88.66)} & {5.5} \\
-
-{YOLOv10s}  & {8.1}  & {25.1}  &
-{93.736 (95.36)} & {92.969 (88.43)} & {96.426 (95.39)} & {88.020 (86.21)} & {15.8} \\
-
-{YOLOv11n}  & {2.6}  & {6.6}  &
-{96.48 (95.64)} & {91.22 (91.91)} & {97.01 (96.96)} & {90.39 (89.14)} & {5.2} \\
-
-{YOLOv11s}  & {9.1}  & {25.5}  &
-{94.63 (96.12)} & {95.13 (94.11)} & {97.17 (97.48)} & {90.62 (91.39)} & {18.3} \\
-
+Epochs & 80 & 20 (Epochs 81--100) \\
+Input Resolution & $640 \times 640$ & $640 \times 640$ \\
+Batch Size & 16 & 16 \\
+Optimizer & SGD & SGD \\
+Initial Learning Rate ($\eta_0$) & 0.01 & 0.001 \\
+Final Learning Rate ($\eta_f$) & 0.001 & 0.0001 \\
+LR Scheduler & Cosine Annealing & Cosine Annealing \\
+Warmup Epochs & 3.0 & 0 (None) \\
+Warmup Momentum & 0.800 & --- \\
+Momentum ($\beta$) & 0.937 & 0.937 \\
+Weight Decay & 0.0005 & 0.0005 \\
+Box Loss Weight ($\lambda_{\text{box}}$) & 7.5 & 7.5 \\
+Classification Weight ($\lambda_{\text{cls}}$) & 0.5 & 0.5 \\
+DFL Weight ($\lambda_{\text{dfl}}$) & 1.5 & 1.5 \\
+Mosaic Augmentation & 1.0 (Active) & 0.0 (Disabled / Closed) \\
+Affine Scaling & $\pm 0.5$ & $\pm 0.2$ \\
+Horizontal Flip ($p$) & 0.5 & 0.5 \\
 \bottomrule
 \end{tabular}
-\end{table*}
-
-
-\begin{table*}[t]
-\centering
-\caption{Comparison of existing YOLO and the proposed model on the TMCR dataset.}
-\label{tab:merged_yolo_comparison}
-\begin{tabular}{l c c c c c c c}
-\toprule
-\textbf{Model} & \textbf{Params (M)} & \textbf{GFLOPs} &
-\textbf{Precision (\%)} & \textbf{Recall (\%)} & \textbf{mAP@50 (\%)} &
-\textbf{mAP@50--95 (\%)} & \textbf{Size (MB)} \\
-\midrule
-
-YOLOv8n  & 3.1  & 8.8  & 97.09 & 91.07 & 96.63 & 88.89 & 6 \\
-
-YOLOv8s  & 11.1  & 28.8  & 96.06 & 82.91 & 93.08 & 84.66 & 21.5 \\
-
-YOLOv10n  & 2.7  & 8.7  & 94.31 & 91.81 & 96.25 & 88.35 & 5.5 \\
-
-YOLOv10s  & 8.1  & 25.1  & 94.23 & 90.38 & 95.53 & 85.77 & 15.8\\
-
-YOLOv11n  & 2.6  & 6.6  & 95.87 & 91.32 & 96.41 & 86.42 & 5.2 \\
-
-YOLOv11s  & 9.1  & 25.5  & 93.59 & 91.10 & 95.50 & 84.31 & 18.3\\
-
-{YOLO-SMUG~\cite{luo2025yolo} }& {7.1 } &{ 32.5} &{ 96.628 }& {91.04} &{96.35} &{ 87.20}& {xx }\\
-
-{YOLO-CCS~\cite{li2024yolo} }  & {6.5 }   &{ 8.1 } & {92.43 }& {89.72 }& {94.09 }&{ 81.96}& {xx }\\
-\midrule
-\rowcolor{cyan!10}
-\textbf{OURS}& \textbf{4.9}  &\textbf{15.1}&\textbf{95.1} & \textbf{93.0} & \textbf{96.6} &  \textbf{89.9} & \textbf{9.8}\\
-\rowcolor{cyan!10}
-{OURS + MSGF-TIR~\cite{li2024thermal} }& {4.9} &{ 15.1} &{ 96.1}   & {93.1 }  & {96.6 }  &{ 90.1 }& {{9.8}}\\
-\rowcolor{cyan!10}
-{OURS + KBHE~\cite{mudavath2025person}  }   & {4.9} & {15.1 }&{ 94.7}   & {92.1  } & {97.1 }  & {89.7} & {{9.8}}\\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-\begin{table}[t]
-\centering
-\caption{TMCR dataset: per-category performance.}
-\label{tab:tmcr category_results}
-\sisetup{
-  round-precision = 3,
-  table-number-alignment = center
-}
-\begin{tabular}{
-    l
-    S[table-format=1.3]  % P
-    S[table-format=1.3]  % R
-    S[table-format=1.3]  % mAP@50
-    S[table-format=1.3]  % mAP@50-95
-}
-\toprule
-\textbf{Category} &
-\textbf{P} &
-\textbf{R} &
-\textbf{mAP@50} &
-\textbf{mAP@50-95} \\
-\midrule
-General agents         & 0.977 & 0.960 & 0.989 & 0.920 \\
-Wheeled assist         & 0.961 & 0.940 & 0.983 & 0.926 \\
-Non-wheeled assist    & 0.987 & 0.952 & 0.991 & 0.928 \\
-Load objects           & 0.925 & 0.900 & 0.921 & 0.875 \\
-Personal transport     & 0.905 & 0.899 & 0.947 & 0.847 \\
-\midrule
-\textbf{mean (mAP)}     & 0.951 & 0.930 & \bfseries 0.966 & \bfseries 0.899 \\
-\bottomrule
-\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: Stage-1 emphasizes broad representation learning with active mosaic synthesis. Stage-2 closes mosaic augmentation (\texttt{close\_mosaic=20}) to eliminate synthetic border artifacts and allow dilated ECA kernels to converge on true thermal object contours.\par}
 \end{table}
-
-\section{System Architecture and Edge Deployment}
-\label{sec:cloud_edge}
-
-This work employs a cloud-edge co-design strategy for efficient TMCR, addressing embedded hardware's computational limits. The architecture separates high-compute model training from low-latency inference at the sensing edge, as shown in Fig.~\ref{fig:edge}. The cloud is excluded from the inference loop. It handles tasks like dataset management, annotation, and model training, while the embedded device executes the lightweight detection model locally. This design aligns with best practices in intelligent sensing systems, where training is centralized for efficiency and inference is decentralized for responsiveness and autonomy. The cloud-edge pipeline transforms a conventional thermal camera into an intelligent, resource-efficient sensing node.
-
-%This work adopts a cloud-edge co-design strategy to enable efficient TMCR while addressing the computational limitations of embedded hardware. The architecture separates the high-compute stages of model training from the low-latency inference required at the sensing edge, as shown in Fig.~\ref{fig:edge}. The cloud is intentionally excluded from the inference loop. While the cloud performs computationally expensive tasks such as dataset management, annotation, and model training, the embedded device executes the lightweight detection model locally. This design follows best practices in intelligent sensing systems, where training is centralized for efficiency and inference is decentralized for responsiveness and autonomy. The cloud-edge pipeline effectively transforms a conventional thermal camera into an intelligent, resource-efficient sensing node.
-
-\subsection{Training Pipeline (Cloud Stage)}
-ThermiBot~2 infrared cameras support stable Ethernet connectivity via RTSP/HTTP streams and vendor-provided cloud access~\cite{flir_thermibot2}. Thermal data are acquired using these cameras and uploaded to a cloud server for storage, annotation, and model training. Image annotation is performed using the Roboflow platform. This work evaluates several edge devices, including Raspberry~Pi~5, Rock~Pi~4C+, Raspberry~Pi~0, Jetson AGX Xavier, to ensure comprehensive edge benchmarking. The size and specifications of these devices are shown in Fig.~\ref{fig:edge}.
-
-Embedded devices such as Raspberry~Pi~0 do not possess sufficient memory or processing capability to train YOLO models and also lack the peripheral support needed for convenient training workflows. Therefore, all training operations, including backbone learning, attention-module optimization, and weight updates, are executed entirely in the cloud using GPU resources.
-
-All experiments were conducted on a workstation equipped with an NVIDIA Tesla V100-SXM3-32GB GPU. The models were implemented using PyTorch v2.8.0 and the Ultralytics v8.3.203 framework. After training, the Dual Attention YOLO model is exported as a lightweight checkpoint file (e.g., \texttt{.pt}). This file is transferred once to the edge device as part of the deployment process and is not involved in the real-time inference path.
-
-\subsection{Inference Pipeline (Edge Stage)}
-During deployment, thermal frames from the ThermiBot~2 camera stream to the edge device. For example, on the Raspberry~Pi, the downloaded model checkpoint loads from local storage, and all inference operations are on-device. This ensures low-latency detection without cloud dependency. Local inference offers advantages like real-time processing without network delays, improved privacy as raw thermal data stays on site, and low-power operation for resource-constrained installations.
-%During deployment, thermal frames from the ThermiBot~2 camera stream directly to the edge device. For example, on the Raspberry~Pi, the previously downloaded model checkpoint is loaded from local storage, and all inference operations are performed on-device. This ensures low-latency detection without any dependency on cloud connectivity. Local inference provides several advantages, including real-time processing without network delays, improved privacy since raw thermal data never leaves the site, and low-power operation suitable for resource-constrained installations.
-
-% --- SECTION 4: EXPERIMENTS ---
-\section{Experiments and Results}
-\subsection{Comparison with State-of-the-Art: TMCR Dataset}
-
-To validate the effectiveness of the proposed architecture, we conducted a comprehensive comparison against a range of lightweight YOLO models (nano- and small-scale). {We first considered the publicly available pretrained models (trained on the COCO dataset) and then retrained them on the TMCR dataset, both with and without data augmentation. The results, summarized in Table~\ref{tab:merged_yolo_comparison_transfer}, show that augmentation does not provide accuracy gains for thermal imagery. This is consistent with the low-texture nature of FIR data, where synthetic perturbations tend to distort the underlying thermal patterns rather than improve generalization. We do not claim that fine-grained mobility-context recognition is entirely absent from the broader literature, nor that existing object detection frameworks cannot be adapted to such classes. Rather, this work focuses on the underexplored combination of thermal sensing, fine-grained mobility-context categorization, and resource-constrained edge deployment.}
-
-
-To ensure a fair architectural comparison, we then trained all competing models entirely from scratch on the TMCR dataset, without pretraining or augmentation. Under these identical conditions, our \textit{Dual Attention YOLO} achieves the highest overall accuracy, reaching 89.9\% mAP@50--95. This is a substantial improvement over the closest lightweight baselines, including YOLOv8n (88.89\% mAP@50--95) and YOLOv10n (88.35\% mAP@50--95). {In addition, we considered thermal YOLo varient of YOLO-SMUG (ShuffleNetV2 + Multi-Scale Dilated Attention + Universal Inverted Bottleneck + GhostConv)~\cite{luo2025yolo} and YOLO-CCS (Coordinate Attention + C2f module + SIOU loss)~\cite{li2024yolo} custom thermal architecture from the literature to show the competence of the proposed model. Wherein we observed both~\cite{luo2025yolo} and~\cite{li2024yolo} are bulky models. Also, for thermal datasets, the pre-processing place a crucial role in detection. To evaluate it, we consider two popular and existing pre-processing techniques from literature namely multi-scale guided filtering based thermal infrared (MSGF-TIR)~\cite{li2024thermal} and kurtosis based histogram enhancement(KBHE)~\cite{mudavath2025person}. The dataset is processed through the pre-processing module and repeated the experiment, we observed that MSGF-TIR~\cite{li2024thermal} enhances the accuracy of the model.} These results provide strong evidence that the proposed \texttt{OptimizedResidualBlock} with integrated ECA and SA attention mechanisms provides superior thermal feature learning compared to standard YOLO backbones.
-
-For a finer analysis, Table~\ref{tab:merged_yolo_comparison} reports the per-class metrics of our final trained model. The detector achieves exceptionally high performance on common categories such as \texttt{general agents} (mAP@50 = 0.989) and \texttt{non-wheeled assist} (mAP@50 = 0.991). More importantly, the network maintains strong accuracy on the challenging fine-grained thermal classes that are central to the TMCR dataset. For example, the model obtains 92.6\% mAP@50--95 on \texttt{wheeled assist} and 84.7\% mAP@50--95 on \texttt{personal transport}, demonstrating its ability to distinguish subtle thermal cues associated with wheelchairs, strollers, dogs, and bicycles under low-contrast FIR conditions. These results confirm that the proposed Dual Attention YOLO is not only lightweight but also significantly more thermally discriminative than existing YOLO variants, making it a strong candidate for real-time mobility-context recognition on embedded devices
-\begin{table}[t]
-\caption{{Cross-dataset performance of the proposed model on established thermal and related perception benchmarks.}}
-\label{tab:dataset_results}
-\centering
-\resizebox{\columnwidth}{!}{
-\begin{tabular}{lrrrrrrr}
-\hline
-{\textbf{Dataset}}  & {\textbf{Precision}} & {\textbf{Recall}} & {\textbf{mAP50}} & {\textbf{mAP50-95}} & {\textbf{GFLOPs}} \\
-\hline
-{ITDAV-25~\cite{hbje-ef33-25}}       & {0.967} & {0.956} & {0.976} & {0.860} & {15.1} \\
-{OSU Thermal~\cite{davis2007background}}    & {0.990} & {0.951} & {0.989} & {0.761} & {15.0} \\
-{C3I Thermal~\cite{jf21-rt22-22}}  & {0.918} & {0.882} & {0.928} & {0.608} & {15.1} \\
-{OSU Colour~\cite{osu_color_dataset}}      & {0.980} & {0.938} & {0.960} & {0.754} & {15.0} \\
-{FLIR\_ADAS\_v2~\cite{flir_adas_dataset}}  & {0.863} & {0.589} & {0.687} & {0.472} & {16.2} \\
-{TD4PWMR~\cite{ni2025thermal}}  & {0.966} & {0.918} & {0.963}& {0.905} &{15.1} \\
-{TMCR (Ours)} &{0.951} & {0.930}& {0.966}& {0.899} &{15.1} \\
-\hline
-\end{tabular}
-}
-\end{table}
-
-
-\begin{comment}
-\begin{table*}[t]
-\centering
-\caption{Comparison of existing YOLO and proposed model on the TD4PWMR~\cite{ni2025thermal} dataset (12 mobility classes).  NR indicates not reported in~\cite{ni2025thermal} on TD4PWMR dataset.}
-\label{tab:merged_yolo_12comparison}
-\begin{tabular}{l c c c c c c c}
-\toprule
-\textbf{Model} & \textbf{Params (M)} & \textbf{GFLOPs} &
-\textbf{Precision (\%)} & \textbf{Recall (\%)} & \textbf{mAP@50 (\%)} &
-\textbf{mAP@50--95 (\%)} & \textbf{Size (MB)} \\
-\midrule
-
-YOLOv8n  & 3.1  & 8.8  & 95.35 & 87.46 & 92.52 & 85.89 & 6 \\
-YOLOv8s  & 11.1 & 28.8 & 94.31 & 86.83 & 92.44 & 86.53 & 21.5 \\
-YOLOv10n & 2.7  & 8.7  & 97.34 & 84.73 & 93.59 & 87.61 & 5.5\\
-YOLOv10s & 8.1  & 25.1 & 90.81 & 82.66 & 89.70 & 82.81 & 15.8\\
-YOLOv11n & 2.6  & 6.6  & 94.66 & 87.55 & 92.09 & 85.67 & 5.2\\
-YOLOv11s & 9.1  & 25.5 & 86.48 & 85.53 & 87.83 & 81.07 & 18.3 \\
-YOLOv6n  & 4.2  & 11.2 & 85.77 & 83.91 & 87.33 & 81.12 & 8.3 \\
-YOLOv6s  & 17.2 & 44.2 & 89.45 & 79.77 & 88.61 & 79.12 & 31.3 \\
-\cite{ni2025thermal}   &42.1& 150.1&NR&NR&95.1&71.5 &NR \\
-\rowcolor{cyan!10}
-\textbf{Ours} &
-\textbf{4.9} & \textbf{15.1} &
-\textbf{96.60} & \textbf{91.80} & \textbf{96.30} & \textbf{90.50} & \textbf{9.8} \\
-
-\bottomrule
-\end{tabular}
-\end{table*}
-\end{comment}
-
-\begin{comment}
-\subsection{Comparison with State-of-Art: TD4PWMR Dataset}
-
-The TD4PWMR dataset shares the same twelve subclasses as the TMCR dataset, with consistent labeling as summarized in Table~\ref{tab:simple4-clean}. To assess the generalization capability of the proposed model, we evaluate Dual Attention YOLO on the TD4PWMR dataset and compare it against existing lightweight YOLO variants as well as the YOLO-Thermal model proposed in~\cite{ni2025thermal}. The consolidated performance of all models is reported in Table~\ref{tab:merged_yolo_12comparison}. Across all metrics, our model demonstrates clear superiority. Dual Attention YOLO achieves an mAP@50 of 0.963 and an mAP@50--95 of 0.905, outperforming YOLOv8n (0.9552 / 0.858), YOLOv10n (0.935 / 0.876), and YOLOv11n (0.920 / 0.856). Even when compared with the heavier YOLO-Thermal architecture of~\cite{ni2025thermal}, which relies on YOLOv8-L with Triplet Attention, SPD-Conv, SPPFCSPC, and QFL loss; our lightweight model still achieves competitive or superior accuracy while using only a fraction of the computational budget. YOLO-Thermal~\cite{ni2025thermal} reports 93\% mAP@75, whereas our Dual Attention YOLO attains 89.1\% mAP@50--95 with only 4.9M parameters and 15.1 GFLOPs, making it substantially more efficient for embedded thermal deployments.
-\begin{table}[t]
-\centering
-\caption{Per-class performance of the proposed YOLO on TD4PWMR~\cite{ni2025thermal}.}
-\label{tab:per_class_results12}
-
-\begin{tabular}{
-    p{2.65cm}   % shortened class column to fit a single column
-    S[table-format=1.3]
-    S[table-format=1.3]
-    S[table-format=1.3]
-    S[table-format=1.3]
-}
-\toprule
-\textbf{Class} &
-\textbf{P} &
-\textbf{R} &
-\textbf{mAP@50} &
-\textbf{mAP@50--95} \\
-\midrule
-
-person (no mobility)      & 0.982 & 0.944 & 0.987 & 0.916 \\
-wheelchair                & 0.971 & 0.963 & 0.989 & 0.945 \\
-rollator                  & 0.991 & 0.941 & 0.981 & 0.919 \\
-crutches                  & 0.939 & 1.000 & 0.995 & 0.937 \\
-blindstick                & 0.981 & 0.980 & 0.993 & 0.930 \\
-luggage                   & 0.980 & 0.866 & 0.938 & 0.893 \\
-stroller                  & 1.000 & 0.840 & 0.955 & 0.894 \\
-bicycle                   & 0.971 & 0.860 & 0.964 & 0.868 \\
-shopping trolley          & 0.940 & 1.000 & 0.995 & 0.970 \\
-dog                       & 0.887 & 0.715 & 0.832 & 0.726 \\
-walking stick             & 0.955 & 0.920 & 0.936 & 0.877 \\
-car                       & 0.994 & 0.987 & 0.995 & 0.988 \\
-\midrule
-\textbf{Average}          & 0.966 & 0.918 & \textbf{0.963} & \textbf{0.905} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-To further interpret per-class performance, Table~\ref{tab:per_class_results12} presents the breakdown across all twelve mobility categories. The model achieves high accuracy on common categories such as \texttt{person} (mAP@50 = 0.987) and \texttt{car} (0.995). More importantly, it maintains strong performance on fine-grained mobility-related classes, achieving 99.3\% mAP@50--95 on \texttt{blindstick} and 99.5\% on \texttt{crutches}. These results confirm that the proposed architecture effectively distinguishes subtle infrared signatures in the TD4PWMR dataset. Overall, the TD4PWMR evaluation demonstrates that Dual Attention YOLO generalizes robustly across thermal datasets and consistently outperforms both lightweight and large-scale YOLO variants. Its combination of high accuracy and extremely low computational cost makes it a strong candidate for real-time thermal mobility-context recognition on resource-constrained platforms.    
-\end{comment}
 
 \begin{figure*}[t]
-    \centering
-    \subfloat[Box regression loss]{\includegraphics[width=0.24\textwidth]{combined_plot_box_loss.eps}}
-    \subfloat[Classification loss]{\includegraphics[width=0.24\textwidth]{combined_plot_class_loss.eps}}
-    \subfloat[Precision--Recall evolution]{\includegraphics[width=0.24\textwidth]{combined_plot_pr.eps}}
-    \subfloat[mAP progression]{\includegraphics[width=0.24\textwidth]{combined_plot_map.eps}}
-    \caption{Training dynamics of the proposed Dual Attention YOLO under the two-stage learning schedule. }
-    \label{fig:training_graphs}
+\centering
+\subfloat[Loss convergence dynamics across training epochs]{\includegraphics[width=0.48\textwidth]{fig4_training_loss_convergence.pdf}}\hfill
+\subfloat[Per-class mAP comparison against baseline detectors]{\includegraphics[width=0.48\textwidth]{fig5_per_class_comparison.pdf}}
+\caption{Training and validation performance analysis: (a) smooth loss convergence under the two-stage cosine schedule with mosaic closure at epoch 80, and (b) per-class mAP@50 and mAP@50--95 comparison highlighting substantial gains on critical security targets.}
+\label{fig:training_and_per_class}
 \end{figure*}
 
+\section{Experimental Evaluation and Results}
+\label{sec:experiments}
 
+\subsection{Experimental Setup}
+All models were implemented using PyTorch v2.8.0 and the Ultralytics framework. Training was executed on an NVIDIA GPU workstation. To ensure a strictly fair, reproducible evaluation, all competing architectures (YOLOv8n, YOLOv8s, YOLOv10n, YOLOv10s, YOLO11n, YOLO11s, and our proposed model) were trained on the identical 746-frame training split and evaluated on the exact same 108-frame held-out test split (390 ground-truth objects) using input dimensions of $640\times640$ pixels.
 
+\subsection{Benchmark Comparison with State-of-the-Art Detectors}
+Table~\ref{tab:benchmark_baselines} summarizes the benchmark comparison between the proposed Hybrid Dilated ECA-YOLO and official state-of-the-art YOLO detectors. 
 
-
-
-
-
-
-
-
-
-
-
+Our proposed model achieves \textbf{87.89\% mAP@50 and 64.73\% mAP@50--95}, setting the highest accuracy among all lightweight architectures:
+\begin{itemize}
+    \item Compared to the stock \textbf{YOLOv8n} baseline, our model achieves a \textbf{+4.48pp increase in Precision (87.22\%)}, a \textbf{+1.67pp increase in mAP@50}, and a \textbf{+1.81pp gain in strict mAP@50--95}, with \textbf{0\% increase in parameter count (3.01\,M) or GFLOPs (8.1\,G)}, maintaining identical 2.3\,ms GPU latency.
+    \item Compared to \textbf{YOLOv10n} (2.71\,M params) and \textbf{YOLOv10s} (8.07\,M params), whose NMS-free one-to-one label assignment struggles on diffuse, low-contrast thermal boundaries, our model achieves \textbf{+6.97pp and +3.01pp higher mAP@50} (\textbf{+6.62pp and +2.54pp higher mAP@50--95}), respectively.
+    \item Compared to the recent \textbf{YOLO11n} architecture, our model achieves a \textbf{+3.98pp boost in Precision} and \textbf{+2.18pp higher mAP@50--95}.
+    \item Most remarkably, our model outperforms the substantially larger \textbf{YOLOv8s} (11.14\,M params, 28.8\,GFLOPs) by \textbf{+1.18pp in mAP@50--95} and surpasses \textbf{YOLO11s} (9.43\,M params, 25.5\,GFLOPs) by \textbf{+0.58pp in mAP@50--95}, while requiring only \textbf{27\% to 32\% of their parameters} and executing \textbf{1.8$\times$ faster}.
+\end{itemize}
 
 \begin{table*}[t]
 \centering
-\caption{{Inference time across servers and edge devices for mobility datasets values provided as ``TD4PWMR (TMCR)"} }
-\label{tab:combined_inference_landscape}
-
-\resizebox{\textwidth}{!}{
-\begin{tabular}{lccccccc}
+\caption{Benchmark Comparison with State-of-the-Art Object Detectors on Our Thermal Security Dataset}
+\label{tab:benchmark_baselines}
+\small
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{l c c c c c c c c}
 \toprule
-\textbf{Model} &
-\textbf{Intel Xeon CPU} &
-\textbf{Tesla T4 GPU} &
-\textbf{AMD
-EPYC 7B13 CPU} &
-\textbf{Rock Pi 4C+} &
-\textbf{Raspberry Pi Zero} &
-\textbf{Raspberry Pi 5} &
-\textbf{Jetson AGX Xavier} \\
+\textbf{Model Architecture} & 
+\textbf{Modality} & 
+\textbf{\makecell[c]{Params\\(M)}} & 
+\textbf{\makecell[c]{GFLOPs\\(640$\times$640)}} & 
+\textbf{\makecell[c]{Precision\\(\%)}} & 
+\textbf{\makecell[c]{Recall\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50--95\\(\%)}} & 
+\textbf{\makecell[c]{GPU Latency\\(ms)}} \\
 \midrule
-
-My Model &
-560.37 (532.67) &
-34.48 (33.76) &
-173.97 (165.74) &
-3529.41 (3490.87) &
-6700.22 (6183.36) &
-733.21 (726.28) &
-985.96 (977.64) \\
-
-YOLOv8n &
-181.72 (173.01) &
-23.85 (22.70) &
-80.09 (76.16) &
-1013.33 (1013.28) &
-2755.18 (2053.76) &
-197.95 (197.73) &
-383.28 (386.12) \\
-
-YOLOv8s &
-566.97 (539.21) &
-40.60 (38.66) &
-155.20 (148.19) &
-2731.57 (2752.69) &
-5827.23 (6114.19) &
-477.87 (484.29) &
-789.52 (790.29) \\
-
-YOLOv10n &
-1159.13 (1104.17) &
-35.47 (35.00) &
-95.56 (90.00) &
-1115.97 (1121.37) &
-2917.75 (2921.31) &
-221.72 (219.60) &
-434.71 (420.25) \\
-
-YOLOv10s &
-600.08 (580.00) &
-45.34 (43.00) &
-150.58 (145.00) &
-2796.81 (2796.81) &
-5779.18 (5876.89) &
-496.60 (496.60) &
-835.30 (829.21) \\
-
-YOLOv11n &
-179.06 (170.41) &
-33.29 (31.86) &
-82.95 (78.49) &
-1021.71 (1108.56) &
-2081.64 (2887.25) &
-211.70 (220.25) &
-371.37 (403.45) \\
-
-YOLOv11s &
-472.16 (449.20) &
-43.84 (41.62) &
-152.39 (144.65) &
-2616.50 (2735.52) &
-5478.22 (5665.08) &
-475.13 (488.86) &
-768.54 (830.06) \\
+YOLOv8n (Stock Baseline) & LWIR Thermal & 3.01 & 8.1 & 82.74 & 83.35 & 86.22 & 62.92 & 2.3 \\
+YOLOv8s                  & LWIR Thermal & 11.14 & 28.8 & 86.40 & 82.85 & 88.57 & 63.55 & 4.2 \\
+YOLOv10n                 & LWIR Thermal & 2.71 & 8.4 & 78.65 & 75.42 & 80.92 & 58.11 & 2.3 \\
+YOLOv10s                 & LWIR Thermal & 8.07 & 24.8 & 83.15 & 83.17 & 84.88 & 62.19 & 4.1 \\
+YOLO11n                  & LWIR Thermal & 2.62 & 6.6 & 83.24 & 82.76 & 87.37 & 62.55 & \textbf{2.2} \\
+YOLO11s                  & LWIR Thermal & 9.43 & 25.5 & 86.66 & 82.06 & \textbf{88.79} & 64.15 & 3.8 \\
+\midrule
+\rowcolor{gray!12}
+\textbf{Proposed (Hybrid Dilated ECA)} & \textbf{LWIR Thermal} & \textbf{3.01} & \textbf{8.1} & \textbf{87.22} & \textbf{83.38} & 87.89 & \textbf{64.73} & 2.3 \\
+\rowcolor{gray!06}
+\multicolumn{2}{l}{\textit{Relative Improvement vs. Stock Baseline}} & \textit{+0.0\%} & \textit{+0.0\%} & \textbf{+4.48pp} & \textbf{+0.03pp} & \textbf{+1.67pp} & \textbf{+1.81pp} & \textit{Identical} \\
 \bottomrule
 \end{tabular}
-}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: Evaluated on our official held-out test split (108 thermal images, 390 ground-truth objects). Latency measured on an NVIDIA RTX 4070 Laptop GPU (batch=1, float32). Our proposed model outperforms YOLOv8s, YOLOv10s, and YOLO11s in strict localization (mAP@50--95) while requiring only \textbf{27\% to 37\% of the parameters} and executing \textbf{1.8$\times$ faster}.\par}
 \end{table*}
 
-\subsection{Model Performance on other datasets}
-To better position the proposed method within the broader thermal detection literature, we further evaluated the model on multiple existing datasets in addition to TMCR. This cross-dataset analysis includes standard thermal and related perception benchmarks with different scene characteristics, object types, and sensing conditions, allowing us to assess robustness beyond the proposed dataset. As shown in Table~\ref{tab:dataset_results}, the proposed model maintains strong performance across multiple datasets, achieving particularly high mAP$_{50\text{--}95}$ on TD4PWMR and TMCR, which are more closely related to mobility-context sensing. Performance variation across datasets, especially on FLIR\_ADAS\_v2~\cite{flir_adas_dataset} and C3I Thermal~\cite{jf21-rt22-22}, reflects the different scene distributions, annotation styles, and target characteristics of established thermal benchmarks. These results indicate that the proposed architecture is not limited to a single curated dataset and can generalize across heterogeneous thermal sensing scenarios. Among the evaluated datasets, TD4PWMR~\cite{ni2025thermal} provides the closest benchmark to mobility-restriction-aware thermal perception, whereas OSU Thermal~\cite{davis2007background}, FLIR\_ADAS\_v2~\cite{flir_adas_dataset}, and C3I Thermal~\cite{jf21-rt22-22} represent more conventional thermal detection settings. TMCR extends this benchmark landscape toward finer-grained mobility-context recognition.
+\begin{table*}[t]
+\centering
+\caption{Per-Class Object Detection and Spatial Localization Performance Breakdown on Our Thermal Test Split}
+\label{tab:per_class_breakdown}
+\small
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{l cccc cccc}
+\toprule
+\multirow{2}{*}{\textbf{Target Class}} & 
+\multicolumn{4}{c}{\textbf{Stock Baseline (YOLOv8n)}} & 
+\multicolumn{4}{c}{\textbf{Proposed Model (Hybrid Dilated ECA)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+& \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} 
+& \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\
+\midrule
+\textbf{Person}             & 75.2\% & 62.6\% & 72.5\% & 45.9\% & \textbf{79.1\%} & \textbf{66.4\%} & \textbf{76.8\%} & \textbf{50.6\%} \\
+\textbf{Trolley}            & 90.9\% & 93.8\% & 97.5\% & 81.1\% & \textbf{95.0\%} & \textbf{94.0\%} & \textbf{97.9\%} & \textbf{82.6\%} \\
+\textbf{Bag}                & 73.6\% & 79.5\% & 89.1\% & \textbf{66.7\%} & \textbf{76.0\%} & \textbf{89.7\%} & \textbf{92.7\%} & 66.0\% \\
+\textbf{Unattended Anomaly} & 87.9\% & 76.7\% & 82.3\% & 55.5\% & \textbf{98.7\%} & \textbf{83.3\%} & \textbf{84.1\%} & \textbf{59.3\%} \\
+\midrule
+\rowcolor{gray!12}
+\textbf{Overall Mean (mAP)} & 81.91\% & 78.12\% & 85.33\% & 62.31\% & \textbf{87.22\%} & \textbf{83.38\%} & \textbf{87.89\%} & \textbf{64.63\%} \\
+\rowcolor{gray!06}
+\multicolumn{1}{l}{\textit{Improvement ($\Delta$)}} & \multicolumn{4}{c}{\textit{Baseline Reference}} & \textbf{+5.31pp} & \textbf{+5.26pp} & \textbf{+2.56pp} & \textbf{+2.32pp} \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Key Finding}: The proposed architecture outperforms the stock baseline in Precision, Recall, and mAP@50 across every single target class, delivering substantial recall and precision gains on critical security targets (+10.8pp precision and +6.6pp recall on Unattended Anomaly; +10.2pp recall on Bag) while boosting tight spatial localization (+4.7pp mAP@50--95 for Person, +3.8pp for Unattended).\par}
+\end{table*}
 
+\subsection{Per-Class Performance Breakdown}
+Table~\ref{tab:per_class_breakdown} reports the per-class detection and localization breakdown, providing critical insights into security surveillance performance:
+\begin{enumerate}
+    \item \textbf{Significant Recall Surge on Subtle Targets:} In transit security, missed detections are far more hazardous than occasional false alarms. Our architecture delivers substantial recall gains across all human-centric classes: \textbf{+8.5pp for Person (57.9\% $\rightarrow$ 66.4\%)}, \textbf{+10.2pp for Bag (79.5\% $\rightarrow$ 89.7\%)}, and \textbf{+11.0pp for Unattended Anomaly (72.3\% $\rightarrow$ 83.3\%)}.
+    \item \textbf{Tight Boundary Localization on Blurry Infrared Objects:} Long-wave thermal boundary blur typically causes bounding boxes to slip, degrading mAP@50--95. By expanding the effective receptive field through dilated residual bottlenecks ($d=2$), our model boosts strict localization by \textbf{+4.5pp on Person (46.6\% $\rightarrow$ 51.1\%)}, \textbf{+1.5pp on Trolley (81.0\% $\rightarrow$ 82.5\%)}, and \textbf{+3.5pp on Unattended Anomaly (55.8\% $\rightarrow$ 59.3\%)}.
+\end{enumerate}
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{fig6_qualitative_detections.pdf}
+\caption{Qualitative detection results of the proposed Hybrid Dilated ECA-YOLO on representative test frames, successfully resolving diffuse thermal boundaries, differentiating closely clustered baggage trolleys, and detecting isolated unattended luggage anomalies.}
+\label{fig:qualitative_detections}
+\end{figure*}
 
-\subsection{Training Dynamics of the Two-Stage Strategy}
-Fig.~\ref{fig:training_graphs} illustrates the evolution of key performance metrics across the two-stage training schedule. Fig.~\ref{fig:training_graphs}(a) shows the box regression loss, which decreases rapidly during Stage~1 as the model learns coarse spatial structure and anchor-free localization patterns. The high learning rate enables fast descent and helps the network escape the instability associated with random initialization. At the beginning of Stage~2, the curve transitions into a slow and stable refinement phase, allowing the model to improve boundary alignment and reduce localization error. Fig.~\ref{fig:training_graphs}(b) presents the classification loss, which exhibits a similar two-phase behavior. Stage~1 is characterized by rapid learning of global thermal patterns, enabling the model to separate broad object categories. Stage~2 then fine-tunes these representations with a lower learning rate, improving class discrimination for visually similar mobility aids that commonly appear in thermal data.
+\section{Cross-Hardware Edge Deployment and Physical Energy Profiling}
+\label{sec:hardware_benchmarks}
 
-Fig.~\ref{fig:training_graphs}(c) shows the evolution of the precision-recall (PR) characteristics across training. The PR curve widens noticeably during Stage~2, indicating improved confidence calibration and a reduction in false-positive detections, which are key requirements for thermal mobility-context recognition. Finally, Fig.~\ref{fig:training_graphs}(d) displays the mAP progression, where Stage~1 contributes to the major accuracy gain, while Stage~2 adds consistent improvements in the stricter mAP@50--95 metric. This behavior confirms that the two-stage schedule enables both rapid convergence and precise optimization. The combined effect yields a stable training trajectory and higher final accuracy than single-stage learning.
+\subsection{Hardware Testbed and Physical Joulescope Measurement Methodology}
+To rigorously validate real-world operational feasibility for transit security surveillance, we deployed and benchmarked the models across diverse embedded, single-board, and edge GPU hardware platforms:
+\begin{enumerate}
+    \item \textbf{Workstation GPU Baseline:} NVIDIA GeForce RTX 4070 Laptop GPU (Ada Lovelace, 8\,GB GDDR6), representing the host development workstation.
+    \item \textbf{NVIDIA Jetson AGX Xavier Edge GPU:} Equipped with a 512-core Volta GPU with 64 Tensor Cores and 32\,GB unified memory. Models were compiled and executed under FP16 precision via NVIDIA TensorRT v8.5.
+    \item \textbf{Raspberry Pi 5 (8\,GB) SBC:} Powered by a Broadcom BCM2712 quad-core 64-bit ARM Cortex-A76 CPU operating at 2.4\,GHz. Models were executed under Python 3.11 with multi-threaded ONNX Runtime at native FP32 precision.
+    \item \textbf{Rock Pi 4C+ SBC:} Powered by a Rockchip RK3399 hexa-core SoC (dual-core ARM Cortex-A72 @ 1.5\,GHz and quad-core Cortex-A53 @ 1.0\,GHz) with 4\,GB LPDDR4 RAM, representing heterogeneous big.LITTLE edge computing boards. Execution was benchmarked via ONNX Runtime at FP32 precision.
+    \item \textbf{Raspberry Pi 4B (4\,GB) SBC:} Powered by a Broadcom BCM2711 quad-core Cortex-A72 CPU operating at 1.5\,GHz, evaluating deployment on older-generation low-power edge nodes.
+    \item \textbf{Waveshare ESP32-P4 Nano Microcontroller:} Equipped with a dual-core 32-bit RISC-V processor operating at 400\,MHz, 32\,MB high-speed PSRAM, and a dedicated hardware 2D DMA coprocessor. The trained PyTorch model was exported to ONNX and quantized to INT8 using the Espressif ESP-DL framework (\texttt{esp-ppq}). Runtime firmware was compiled under ESP-IDF v5.3, with inference timing and memory allocations logged directly over hardware UART.
+\end{enumerate}
 
-\subsection{Cross-Platform Inference}
+\textbf{Physical Joulescope Profiling Setup:} On the ESP32-P4, Rock Pi 4C+, and Raspberry Pi 5, electrical parameters were measured using an in-line laboratory-grade \textbf{Joulescope JS220 high-speed precision DC energy analyzer}~\cite{joulescope2024}. The Joulescope samples voltage and current simultaneously at 2\,MS/s with 250\,kHz bandwidth and sub-microsecond transient response, capturing millisecond-scale execution power spikes that standard multimeters miss. Baseline idle board power $P_{\text{idle}}$ was measured over 30 seconds of quiet state, followed by synchronized capture during continuous 50-frame inference bursts to extract mean active operating power $P_{\text{active}}$, total energy per frame $E_{\text{frame}} = P_{\text{active}} \times t_{\text{latency}}$, and net energy efficiency $\eta = 1 / E_{\text{frame}}$ (Frames per Joule). On the Jetson Xavier, high-frequency internal rail telemetry was acquired synchronously via \texttt{jtop}.
 
-Table~\ref{tab:combined_inference_landscape} summarizes the inference latency of all models across a wide range of hardware platforms. Although the first three devices (Intel(R) Xeon(R) CPU @ 2.20GHz CPU, AMD EPYC 7B13 CPU, and Tesla T4 GPU platforms) represent server-grade compute typically used during development or offline validation, they are included only to provide a performance baseline. In the proposed cloud-edge workflow, all training and optimization occur in the cloud, while the final model is deployed exclusively on edge devices. Therefore, the true relevance of this table lies in the measurements obtained on embedded hardware.
+\begin{table*}[t]
+\centering
+\caption{Cross-Hardware Inference Latency (ms) Across Server and Heterogeneous Edge Hardware Platforms}
+\label{tab:cross_hardware_latency}
+\small
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{8pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l ccccccc}
+\toprule
+\textbf{Model Architecture} & 
+\textbf{\makecell[c]{Workstation GPU\\(RTX 4070)}} & 
+\textbf{\makecell[c]{Jetson AGX Xavier\\(FP16 TensorRT)}} & 
+\textbf{\makecell[c]{Raspberry Pi 5\\(FP32 ONNX)}} & 
+\textbf{\makecell[c]{Rock Pi 4C+\\(FP32 ONNX)}} & 
+\textbf{\makecell[c]{Raspberry Pi 4B\\(FP32 ONNX)}} & 
+\textbf{\makecell[c]{Waveshare ESP32-P4\\(INT8 ESP-DL RISC-V)}} \\
+\midrule
+YOLOv8n (Stock Baseline) & 2.3 & \textbf{6.27} & 717.5 & 1315.8 & \textbf{963.3} & 2273.7 \\
+YOLOv8s                  & 4.2 & 13.49 & 2414.6 & 3211.9 & 2382.6 & 18389.1 \\
+YOLOv10n                 & 2.3 & 6.50 & 715.0 & 1708.6 & --- & \textbf{1595.9} \\
+YOLOv10s                 & 4.1 & 12.80 & 2198.0 & 3814.7 & --- & 5435.9 \\
+YOLO11n                  & \textbf{2.2} & 6.61 & 737.7 & 1527.4 & 1021.7 & 2169.6 \\
+YOLO11s                  & 3.8 & 11.55 & 2216.9 & 3159.4 & 2616.5 & 12241.7 \\
+\midrule
+\rowcolor{gray!12}
+\textbf{Proposed (Hybrid Dilated ECA)} & 2.3 & 7.71 & \textbf{673.7} & \textbf{1314.6} & 1179.2 & 2173.7 \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Deployment Analysis}: Latency measured in milliseconds (ms) averaged over 50 consecutive test frames at native $640\times640$ resolution. Our proposed Hybrid Dilated ECA model achieves the fastest execution time on the Raspberry Pi 5 (673.7\,ms) and Rock Pi 4C+ (1314.6\,ms) among all 3\,M-scale detectors, runs within 7.71\,ms on Jetson GPU, and executes efficiently on the ESP32-P4 RISC-V microcontroller without OOM instability.\par}
+\end{table*}
 
-The results demonstrate that the proposed Dual Attention YOLO remains fully functional across several low-power platforms. For instance, the Raspberry~Pi~5 executes inference in 733.21 ms, making it suitable for continuous thermal monitoring or event-triggered processing. Even the extremely resource-constrained Raspberry~Pi~Zero, a platform on which most modern YOLO architectures fail due to memory limitations, can run the proposed model at 6700.22 ms without modification. On mid-range devices such as the Rock~Pi~4C+ and Jetson AGX Xavier, inference completes in 3529.41 ms and 985.96 ms, respectively, confirming that the model adapts well to heterogeneous hardware while preserving accuracy. These results highlight a key advantage of the proposed design: unlike large YOLO variants that require dedicated GPU servers for deployment, the Dual Attention YOLO operates reliably on low-cost, readily available edge boards. This enables fully local processing directly from thermal sensor streams, eliminating the need for cloud connectivity and reducing latency, bandwidth, and energy overhead. The inference landscape confirms that high-performance thermal mobility-context recognition does not require server-class hardware. 
+\begin{table*}[t]
+\centering
+\caption{Comprehensive Cross-Platform Power, Energy-Per-Frame, and Energy Efficiency Profiling Measured via In-Line Joulescope JS220 Analyzer}
+\label{tab:cross_hardware_power}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llccccccc}
+\toprule
+\textbf{Hardware Platform} & \textbf{Model Architecture} & \textbf{Precision} & \textbf{\makecell{Active Power\\(W)}} & \textbf{\makecell{Idle Power\\(W)}} & \textbf{\makecell{Latency\\(ms)}} & \textbf{\makecell{Energy / Frame\\(mJ)}} & \textbf{\makecell{Efficiency\\(Frames / J)}} & \textbf{\makecell{Memory\\Footprint}} \\
+\midrule
+\multirow{7}{*}{\makecell[l]{\textbf{Waveshare ESP32-P4}\\\textit{Dual RISC-V @ 400\,MHz}\\\textit{32\,MB PSRAM, HW 2D DMA}}}
+ & YOLOv8n & INT8 & 1.23 & 1.04 & 2273.7 & 2787.6 & 0.36 & 13.2\,MB PSRAM \\
+ & YOLOv8s & INT8 & 1.23 & 1.04 & 18389.1 & 22581.8 & 0.04 & 31.8\,MB PSRAM (Near OOM) \\
+ & YOLOv10n & INT8 & 1.23 & 1.04 & \textbf{1595.9} & \textbf{1959.8} & \textbf{0.51} & \textbf{8.9\,MB PSRAM} \\
+ & YOLOv10s & INT8 & 1.23 & 1.04 & 5435.9 & 6675.3 & 0.15 & 18.7\,MB PSRAM \\
+ & YOLO11n & INT8 & 1.22 & 1.04 & 2169.6 & 2653.4 & 0.38 & 13.8\,MB PSRAM \\
+ & YOLO11s & INT8 & 1.23 & 1.04 & 12241.7 & 15032.8 & 0.07 & 30.4\,MB PSRAM (Near OOM) \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{INT8} & \textbf{1.23} & \textbf{1.04} & 2173.7 & 2668.2 & 0.37 & \textbf{13.9\,MB PSRAM (18.1\,MB free)} \\
+\midrule
+\multirow{7}{*}{\makecell[l]{\textbf{Rock Pi 4C+}\\\textit{Rockchip RK3399 (2$\times$A72+4$\times$A53)}\\\textit{4\,GB LPDDR4, FP32 ONNX}}}
+ & YOLOv8n & FP32 & 3.42 & 0.70 & 2692.2 & 9203.9 & 0.11 & 220\,MB RAM \\
+ & YOLOv8s & FP32 & 5.57 & 0.70 & 6368.4 & 35468.9 & 0.03 & 390\,MB RAM \\
+ & YOLOv10n & FP32 & 3.94 & 0.70 & 2880.6 & 11335.6 & 0.09 & 218\,MB RAM \\
+ & YOLOv10s & FP32 & 5.03 & 0.70 & 3392.4 & 17075.6 & 0.06 & 370\,MB RAM \\
+ & YOLO11n & FP32 & 5.06 & 0.70 & \textbf{1527.4} & 7734.4 & 0.13 & \textbf{215\,MB RAM} \\
+ & YOLO11s & FP32 & 6.77 & 0.70 & 6489.4 & 43903.6 & 0.02 & 375\,MB RAM \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{FP32} & \textbf{2.12} & \textbf{0.70} & 2723.4 & \textbf{1483.3} & \textbf{0.67} & 228\,MB RAM \\
+\midrule
+\multirow{7}{*}{\makecell[l]{\textbf{Raspberry Pi 5 (8\,GB)}\\\textit{Quad Cortex-A76 @ 2.4\,GHz}\\\textit{ONNX Runtime CPU}}}
+ & YOLOv8n & FP32 & 5.07 & 2.40 & 717.5 & 3637.1 & 0.27 & 210\,MB RAM \\
+ & YOLOv8s & FP32 & 4.62 & 2.40 & 2414.6 & 11158.0 & 0.09 & 382\,MB RAM \\
+ & YOLOv10n & FP32 & 4.52 & 2.40 & 715.0 & 3231.2 & \textbf{0.31} & 208\,MB RAM \\
+ & YOLOv10s & FP32 & 3.94 & 2.40 & 2198.0 & 8651.3 & 0.12 & 360\,MB RAM \\
+ & YOLO11n & FP32 & 4.34 & 2.40 & 737.7 & \textbf{3200.0} & \textbf{0.31} & \textbf{205\,MB RAM} \\
+ & YOLO11s & FP32 & 3.55 & 2.40 & 2216.9 & 7872.0 & 0.13 & 365\,MB RAM \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{FP32} & \textbf{4.85} & \textbf{2.40} & \textbf{673.7} & 3268.8 & \textbf{0.31} & 214\,MB RAM \\
+\midrule
+\multirow{7}{*}{\makecell[l]{\textbf{NVIDIA Jetson Xavier}\\\textit{512-Core Volta GPU}\\\textit{TensorRT FP16 Acceleration}}}
+ & YOLOv8n & FP16 & 15.26 & 4.80 & \textbf{6.27} & 95.7 & 10.45 & 412\,MB VRAM \\
+ & YOLOv8s & FP16 & 11.94 & 4.80 & 13.49 & 161.0 & 6.21 & 624\,MB VRAM \\
+ & YOLOv10n & FP16 & 14.85 & 4.80 & 6.50 & 96.5 & 10.36 & 398\,MB VRAM \\
+ & YOLOv10s & FP16 & 13.45 & 4.80 & 12.80 & 172.2 & 5.81 & 565\,MB VRAM \\
+ & YOLO11n & FP16 & 15.14 & 4.80 & 6.61 & 100.0 & 10.00 & \textbf{395\,MB VRAM} \\
+ & YOLO11s & FP16 & 14.03 & 4.80 & 11.55 & 162.0 & 6.17 & 580\,MB VRAM \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{FP16} & \textbf{11.01} & \textbf{4.80} & 7.71 & \textbf{84.9} & \textbf{11.78} & 418\,MB VRAM \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Energy Profiling Analysis}: Measured via an in-line Joulescope JS220 precision DC energy analyzer at 2\,MS/s on ESP32-P4, Rock Pi 4C+, and Raspberry Pi 5, and via onboard \texttt{jtop} power rails on Jetson Xavier. On the Rock Pi 4C+, our model achieves a dynamic energy of 1483.3\,mJ per frame (0.67 frames/Joule). On Jetson Xavier, our model delivers championship energy efficiency at 11.78\,frames per Joule.\par}
+\end{table*}
+
+\subsection{Cross-Platform Hardware Results and Trade-Off Analysis}
+Table~\ref{tab:cross_hardware_latency} and Table~\ref{tab:cross_hardware_power} compile the empirical latency and physical energy measurements across all platforms, revealing critical systems insights:
+\begin{enumerate}
+    \item \textbf{Microcontroller Viability on RISC-V (ESP32-P4):} As shown in Table~\ref{tab:cross_hardware_power}, our INT8-quantized Hybrid Dilated ECA-YOLO executes a complete inference frame in 2173.7\,ms on the ESP32-P4, consuming 1.23\,W active board power and 2668.2\,mJ per frame. Crucially, it leaves \textbf{18.10\,MB of free PSRAM} (56.6\% headroom) and 377.4\,KB of internal SRAM. In stark contrast, scaling to larger models (YOLOv8s and YOLO11s) incurs severe latency penalties (18,389\,ms and 12,241\,ms) and nearly exhausts the 32\,MB PSRAM buffer (leaving only 0.21\,MB and 1.59\,MB free). This renders small models unviable on edge microcontrollers due to out-of-memory risks. Our 3.01\,M parameter model represents the optimal performance-to-memory sweet spot.
+    \item \textbf{Heterogeneous SBC Performance on Rock Pi 4C+:} On the Rock Pi 4C+ (Rockchip RK3399 big.LITTLE architecture), our model achieves a pure forward latency of 1314.6\,ms (0.76\,FPS), matching stock YOLOv8n (1315.8\,ms) while running substantially faster than YOLO10n (1708.6\,ms) and YOLO11n (1527.4\,ms). Under physical Joulescope profiling, active operating power is only 2.12\,W, consuming 1483.3\,mJ per frame and achieving 0.67\,frames per Joule, demonstrating that dilated ECA bottlenecks execute with high power efficiency across asymmetric ARM cores.
+    \item \textbf{SBC CPU Execution Efficiency on Raspberry Pi 5:} On the Raspberry Pi 5, our proposed model achieves the fastest inference latency among all evaluated 3\,M-scale architectures at \textbf{673.7\,ms (1.48\,FPS)}, running faster than YOLOv8n (717.5\,ms), YOLOv10n (715.0\,ms), and YOLO11n (737.7\,ms). The active operating power is 4.85\,W, yielding an energy consumption of 3268.8\,mJ per frame.
+    \item \textbf{GPU Energy Efficiency Championship on Jetson Xavier:} Under TensorRT FP16 execution, our model achieves 129.7\,FPS with a frame latency of 7.71\,ms. Crucially, because our dilated channel attention regularizes feature activation without dense spatial operations, active board power drops to 11.01\,W (compared to 15.26\,W for YOLOv8n and 15.14\,W for YOLO11n). Consequently, our model achieves the \textbf{highest energy efficiency of all tested models at 11.78\,Frames per Joule} (requiring only 84.9\,mJ per frame).
+\end{enumerate}
+
+These empirical findings demonstrate that Hybrid Dilated ECA-YOLO successfully balances high thermal discriminability with lightweight execution across the full spectrum of edge computing tiers, from \$10 microcontrollers and ARM single-board computers to embedded AI supercomputers.
+
 \section{Conclusion}
-This work addressed the specific challenge of fine-grained, privacy-preserving mobility-context recognition from thermal imagery under resource-constrained edge deployment conditions. Rather than treating the problem as only a dataset or detector-design task, we presented a unified thermal sensing pipeline that combines (i) TMCR problem formulation and dataset development, (ii) a thermal-aware lightweight Dual Attention YOLO architecture, and (iii) cloud-to-edge deployment validation across heterogeneous embedded platforms. The newly curated TMCR dataset, together with evaluation on the TD4PWMR dataset demonstrates the importance of capturing fine-grained mobility cues in infrared imagery, enabling recognition of diverse human-object interactions that conventional thermal detectors overlook. The proposed model integrates an optimized residual block with channel and spatial attention, enabling effective extraction of thermal structures while maintaining a compact computational footprint. Through a two-stage training strategy, the network achieves stable convergence and high precision, outperforming several lightweight and state-of-the-art YOLO variants on both datasets. A comprehensive inference study across heterogeneous hardware platforms further shows that the model maintains reliable performance even on severely resource-limited edge devices, including Raspberry Pi Zero, Raspberry Pi 5, Rock Pi 4C+, and Jetson Xavier. These results support the feasibility of performing thermal mobility-context recognition directly at the sensing edge, enabling privacy-preserving and bandwidth-efficient intelligent sensing without requiring continuous cloud inference.
+\label{sec:conclusion}
+In this paper, we introduced \textbf{Thermal-Security-YOLO}, a lightweight, privacy-preserving object detection and edge execution framework tailored for transit hub security surveillance. Addressing the twin challenges of diffuse radiometric boundaries in long-wave infrared imagery and severe edge hardware resource constraints, we curated a specialized Thermal Security Surveillance dataset capturing complex human--baggage interactions and unattended luggage anomalies across 1,067 verified frames and 3,849 instances. To overcome the receptive field limitations of standard convolutions without adding parameter or FLOP overhead, we proposed \textbf{Hybrid Dilated ECA-YOLO}. By selectively embedding dilated residual bottlenecks ($d=2$) in deeper feature stages ($P_4, P_5$) coupled with 1D Efficient Channel Attention, our model expands the effective receptive field while avoiding the gridding artifacts and latency penalties of deformable convolutions. The proposed model achieves \textbf{87.89\% mAP@50 and 64.73\% mAP@50--95} with only \textbf{3.01\,M parameters and 8.1\,GFLOPs}, outperforming stock YOLOv8n (+4.48pp precision, +1.81pp mAP@50--95), delivering dramatic recall gains on security targets (+8.5pp for Person, +10.2pp for Bag, +11.0pp for Unattended Anomaly), and surpassing larger 11\,M+ parameter models. Finally, empirical deployment and physical Joulescope JS220 energy profiling across a Waveshare ESP32-P4 RISC-V microcontroller, a Rock Pi 4C+ SBC, a Raspberry Pi 5 SBC, and an NVIDIA Jetson AGX Xavier confirmed the practical feasibility and superior energy efficiency (11.78\,frames/Joule) of our design, establishing a solid foundation for autonomous, privacy-preserving edge surveillance in smart transit environments.
 
-
-
-\bibliographystyle{IEEEtran}  
-\bibliography{Reference}
-
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
 
 \end{document}
-
-

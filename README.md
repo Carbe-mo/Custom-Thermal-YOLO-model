@@ -1,177 +1,103 @@
-# Hybrid Dilated ECA-YOLO: Lightweight Thermal Infrared Object Detection for Edge Surveillance
+# Asymmetric Dual-Stream RGB–LWIR Attention Fusion & 2D-Grid CWAR for Transit Security Surveillance
 
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.6%2B-EE4C2C.svg?style=flat&logo=pytorch)](https://pytorch.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?style=flat&logo=pytorch)](https://pytorch.org)
 [![YOLOv8](https://img.shields.io/badge/Ultralytics-YOLOv8-blue.svg?style=flat)](https://github.com/ultralytics/ultralytics)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-An ultra-lightweight, zero-parameter-overhead object detection architecture specifically engineered to resolve **radiant heat diffusion**, **sensor static**, and **small-object edge preservation** in thermal infrared (TIR) surveillance imagery.
-
-Developed through a systematic **29-iteration empirical research campaign**, this architecture introduces **stage-selective dilated convolutions** combined with **Efficient Channel Attention (ECA)**, achieving **87.89% test mAP@50** and **64.73% mAP@50-95** on unseen real-world thermal surveillance scenes—outperforming the stock YOLOv8n baseline by **+2.39pp mAP@50** and **+7.52pp Recall** under identical training dynamics.
-
----
-
-## 🌟 Key Highlights
-
-- **Zero-Parameter Overhead**: Fixed strictly at **3.01M parameters / 8.1 GFLOPs**, identical to stock YOLOv8n.
-- **100% Pretrained Prior Transfer**: Preserves standard tensor dimensions, allowing full transfer from COCO-pretrained weights.
-- **Stage-Selective Hybrid Dilation**: Keeps shallow stages (P2/P3) dense ($d=1$) for small pedestrians while expanding deep stages (P4/P5) via dilated convolutions ($d=2$, effective receptive field $5\times 5$) to capture composite heat signatures.
-- **ECA Channel Calibration**: Fast 1D convolution ($k=3$) adaptively scales informative thermal features and suppresses microbolometer sensor noise.
-- **Complete Open Research**: Includes all 38 experimental models, full research iteration notes (`notes.md`), and quantitative benchmarking tables.
+Official repository for:
+1. **Multimodal RGB–LWIR Paper:** *"Asymmetric Dual-Stream RGB–LWIR Attention Fusion and 2D-Grid Anchor-Aligned Confidence-Weighted Regression for Transit Hub Security Surveillance"* (**92.33% Test mAP@50**, **69.02%–69.49% Test mAP@50–95**, **92.89% Val mAP@50**).
+2. **Single-Modality Thermal Paper:** *"Overcoming Radiant Heat Diffusion: Stage-Selective Dilated Attention in Lightweight YOLO for Real-Time Edge Thermal Surveillance"* (**88.15% Test mAP@50**).
 
 ---
 
-## 📊 Benchmark Results (Official Held-Out Test Split)
+## ⚡ Quick Copy-Paste Commands for Edge Device Latency & Power Benchmarking
 
-Evaluated on official held-out test split (`data/splits/test.txt`, 108 unseen thermal surveillance scenes) under strictly controlled identical conditions (100 Epochs, Cosine Annealing, `close_mosaic=20`):
+Clone this repository onto any edge device, workstation, or cloud server and run the exact command below for your target platform:
 
-| Model Architecture | Params (M) | GFLOPs | Precision (%) | Recall (%) | **mAP@50 (%)** | **mAP@50-95 (%)** | Checkpoint Size | Net Gain vs. Baseline |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 👑 **Hybrid Dilated ECA (`v30`)** | **3.01** | **8.1** | **87.22** | **83.38** | **87.89** | **64.73** | **5.97 MB** | 🚀 **+2.39pp (+2.18pp)** |
-| **Stock YOLOv8n (`v0b`, 100ep)** | 3.01 | 8.1 | 86.31 | 75.86 | 85.50 | 62.55 | 5.97 MB | *Controlled Baseline* |
-| **Stock YOLOv8n (`v0`, 50ep)** | 3.01 | 8.1 | 82.74 | 83.35 | 86.22 | 62.92 | 5.96 MB | - |
-| **Pure C2f_ECA (`v5b`, 50ep)** | 3.01 | 8.1 | 87.22 | 80.77 | 87.39 | 63.41 | 5.97 MB | +1.17pp |
-| **ECA SPPF Neck (`v31`, 75ep)** | 3.01 | 8.1 | 81.85 | **84.95** | 87.13 | 63.34 | 5.97 MB | 🎯 *Peak Recall (84.95%)* |
-| **Linear Mixup (`v32`, 75ep)** | 3.01 | 8.1 | **90.80** | 78.36 | 86.35 | 63.65 | 5.97 MB | 🎯 *Peak Precision (90.80%)* |
-
----
-
-## 🏗️ Architecture Overview
-
-```
-                                  BACKBONE TOPOLOGY
-                                  =================
-  Thermal Input (640x640)
-         │
-         ▼
-  [Layer 0-1: Stem Convs (P1, P2)]
-         │
-         ▼
-  [Layer 2: C2f_ECA (P2/4)] ──────────> Dense 3x3 Conv + ECA (k=3)  [Preserves small edge priors]
-         │
-         ▼
-  [Layer 4: C2f_ECA (P3/8)] ──────────> Dense 3x3 Conv + ECA (k=3)  [Preserves small Person/Bag]
-         │
-         ▼
-  [Layer 6: C2f_ECA_Dilated (P4/16)] ──> Dilated 3x3 (d=2, RF=5x5) + ECA [Captures medium blooms]
-         │
-         ▼
-  [Layer 8: C2f_ECA_Dilated (P5/32)] ──> Dilated 3x3 (d=2, RF=5x5) + ECA [Panoramic context]
-         │
-         ▼
-  [Layer 9: SPPF (1024, 5)]
-         │
-         ▼
-  [Layers 10-21: Clean Linear PANet Neck] ──> [Layer 22: Decoupled Detect Head]
-```
-
-### Micro-Architecture: Residual Bottleneck Innovation
-1. **Shallow Bottlenecks (P2, P3)**: Standard $3\times 3$ Conv $\rightarrow$ Standard $3\times 3$ Conv $\rightarrow$ **ECA ($k=3$)** $\rightarrow$ Shortcut Addition.
-2. **Deep Bottlenecks (P4, P5)**: Standard $3\times 3$ Conv $\rightarrow$ **Dilated $3\times 3$ Conv ($d=2$, padding $p=2$)** $\rightarrow$ **ECA ($k=3$)** $\rightarrow$ Shortcut Addition.
-
----
-
-## 📁 Repository Structure
-
-```
-thermal-yolo/
-├── common/                        # Core architectural modules & plumbing
-│   ├── modules/
-│   │   ├── c2f_eca.py             # C2f with standard ECA channel attention
-│   │   ├── c2f_eca_dilated.py     # Dilated C2f_ECA module (d=2)
-│   │   ├── eca.py                 # Efficient Channel Attention (1D conv)
-│   │   ├── sppf_eca.py            # SPPF with post-pyramid ECA gating
-│   │   └── concat_eca.py          # Cross-scale concat channel gating
-│   ├── dataset.py                 # Thermal dataset YAML builder & split resolver
-│   └── results_logger.py          # Automated metric logger (CSV & Excel)
-│
-├── models/                        # 38 Model variants & training scripts
-│   ├── v0_baseline/               # Stock YOLOv8n baseline
-│   ├── v0b_baseline_100ep/        # Controlled 100-epoch baseline
-│   ├── v5b_c2f_eca/               # Base ECA model
-│   ├── v21_dilated_hybrid/        # First hybrid dilated architecture
-│   ├── v27_v21_cosine/            # 75-epoch cosine hybrid model
-│   ├── v30_v27_cosine_100ep/      # 👑 Champion Model (87.89% mAP50)
-│   └── ...                        # Full ablation spectrum (v1 to v33)
-│
-├── weights/                       # Pretrained champion model weights
-│   └── v30_champion_best.pt       # Ready-to-use trained weights (5.97 MB)
-│
-├── results/                       # Official evaluation metrics & logs
-│   ├── results.csv                # Complete database of all experimental runs
-│   └── results_highlighted.xlsx   # Color-formatted evaluation spreadsheet
-│
-├── scripts/                       # Automated execution and comparison runners
-│   ├── run_v21_to_v25_sequential.py
-│   ├── run_v21_combinations.py
-│   ├── run_v27_next_combinations.py
-│   └── run_v33_and_baseline_100ep.py
-│
-├── data/splits/                   # Official split partitions
-│   ├── train.txt                  # 746 training image paths
-│   ├── val.txt                    # 213 validation image paths
-│   └── test.txt                   # 108 held-out test image paths
-│
-└── notes.md                       # Comprehensive log of Iterations 0 through 29
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Installation
+### 1. Clone & Setup (Run on Any Edge Device)
 ```bash
-git clone <your-repo-url>.git
-cd thermal-yolo
-pip install ultralytics torch torchvision
-```
-
-### 2. Inference with Champion Model
-```python
-from ultralytics import YOLO
-from common.modules.c2f_eca import register_c2f_eca
-from common.modules.c2f_eca_dilated import register_c2f_eca_dilated
-
-# Register custom architectural modules
-register_c2f_eca()
-register_c2f_eca_dilated()
-
-# Load trained champion checkpoint
-model = YOLO("weights/v30_champion_best.pt")
-
-# Run inference on a thermal image
-results = model.predict("path/to/thermal_image.jpg", conf=0.25, imgsz=640)
-results[0].show()
-```
-
-### 3. Training from Scratch / Pretrained
-```bash
-# Train the champion v30 model (100 Epochs Cosine Annealing)
-python -m models.v30_v27_cosine_100ep.train --epochs 100 --batch 16
-```
-
-### 4. Official Test Split Evaluation
-```bash
-python scripts/evaluate_all.py
+git clone https://github.com/Carbe-mo/rgb-thermal-fusion.git
+cd rgb-thermal-fusion
+pip install ultralytics torch torchvision numpy pandas
 ```
 
 ---
 
-## 📜 Citation
+### 2. Run Inference Latency & Throughput Suite on Edge CPU (Raspberry Pi 5, Raspberry Pi 4B, Rock Pi 4C+, Laptop/Server CPU)
+Benchmarks all multimodal dual-stream models (`v36_main`, `v36_eca_rgb`, `v38_ca_dilated`, `v38_cwar_triad`), our thermal champion (`v30`), and all YOLO baselines (`YOLOv8n/s`, `YOLOv10n/s`, `YOLO11n/s`) in isolated crash-safe subprocesses:
 
-If you find this architecture, empirical findings, or benchmark useful in your research, please cite our manuscript:
+```bash
+# Run full suite (all 11 models, 30 runs each) and save to results/multimodal_edge_benchmark.csv:
+python3 scripts/benchmark_multimodal_edge.py --device cpu --runs 30
 
-```bibtex
-@article{thermal_hybrid_yolo_2026,
-  author    = {Satya Mohit and Contributors},
-  title     = {Overcoming Radiant Heat Diffusion: Stage-Selective Dilated Attention in Lightweight YOLO for Real-Time Edge Thermal Surveillance},
-  journal   = {IEEE Sensors Journal},
-  year      = {2026},
-  note      = {Under Review}
-}
+# Fast mode — run ONLY our proposed multimodal models + v30 thermal champion (10 runs each):
+python3 scripts/benchmark_multimodal_edge.py --device cpu --runs 10 --only-multimodal
+```
+> **Note for ARMv8.0 boards (Raspberry Pi 4B / Rock Pi 4C+):** If `OpenBLAS` gives a coretype warning, prefix with `OPENBLAS_CORETYPE=ARMV8`:
+> ```bash
+> OPENBLAS_CORETYPE=ARMV8 python3 scripts/benchmark_multimodal_edge.py --device cpu --runs 20 --skip-v10
+> ```
+
+---
+
+### 3. Run Inference Latency, Throughput & Onboard Power Suite on GPU (NVIDIA Jetson AGX Xavier / Orin / Nano, RTX GPU, A100)
+
+#### Option A: PyTorch GPU FP16 Benchmark (+ Automatic `jtop` Power Rail Telemetry on Jetson)
+```bash
+python3 scripts/benchmark_multimodal_edge.py --device 0 --half --runs 100
+```
+
+#### Option B: Jetson TensorRT FP16 Engine Build (`trtexec`) + `jtop` Hardware Power Rails
+Automatically compiles `.onnx` weights in `weights/` into TensorRT FP16 `.engine` files and measures GPU compute latency, FPS, Idle/Active Board Power (W), GPU Rail Power (W), Energy per Frame (mJ/frame), and Frames/Joule:
+```bash
+python3 scripts/benchmark_multimodal_edge.py --mode trt-jtop --out-csv results/jetson_multimodal_trt_power.csv
 ```
 
 ---
 
-## 📄 License
+### 4. Synchronized In-Line Joulescope JS220 High-Speed DC Power & Energy Profiling
+When the edge device (Raspberry Pi 5 / Rock Pi 4C+ / RPi 4B) is wired through a **Joulescope JS220** connected to your host PC over SSH:
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+```bash
+# Run from the host PC (automatically SSHes into the edge board and captures 2 MS/s Joulescope telemetry):
+python scripts/automated_power_suite.py <EDGE_DEVICE_IP>
+```
+Or to trigger a single model manually on the edge device during standalone power measurement:
+```bash
+# 6-channel Multimodal Dual-Stream Models:
+python3 -u scripts/measure_edge_power.py --weights weights/v36_main_best.pt --channels 6 --runs 10
+python3 -u scripts/measure_edge_power.py --weights weights/v36_eca_rgb_best.pt --channels 6 --runs 10
+python3 -u scripts/measure_edge_power.py --weights weights/v38_ca_dilated_best.pt --channels 6 --runs 10
+python3 -u scripts/measure_edge_power.py --weights CWAR_TRIAD --channels 6 --runs 10
+
+# 3-channel Single-Modality Thermal Models:
+python3 -u scripts/measure_edge_power.py --weights weights/v30_champion_best.pt --channels 3 --runs 10
+```
+
+---
+
+## 📊 Multimodal RGB–LWIR Detection Benchmark (1,067 Paired Frames)
+
+Evaluated on the official validation split (213 images, 776 instances) and held-out test split (108 images, 390 instances):
+
+| Model / Fusion Architecture | Sensing Modality | Params (M) | GFLOPs | Val mAP@50 | Val mAP@50–95 | Test Precision | Test Recall | **Test mAP@50** | **Test mAP@50–95** |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **YOLOv8n (Stock Baseline)** | LWIR Only (3-ch) | 3.01 | 8.1 | 86.25% | 60.41% | 82.74% | 83.35% | 86.22% | 62.92% |
+| **v30 (Hybrid Dilated ECA Champion)** | LWIR Only (3-ch) | 3.01 | 8.1 | 87.52% | 63.40% | 87.81% | 83.40% | 88.15% | 64.73% |
+| **v34 (Early 4-ch Stem Concat)** | RGB + LWIR (4-ch) | 3.01 | 8.1 | 84.20% | 59.74% | 81.76% | 82.47% | 83.68% | 58.67% |
+| **Ours: `v38_ca_dilated` (Sym-Dil + NeckECA)** | RGB + LWIR (6-ch) | 4.50 | 11.6 | 89.33% | 65.52% | 87.32% | **86.12%** | 88.74% | 66.52% |
+| **Ours: `v36_main` (Asym CA+ECA Dual-Stream)** | RGB + LWIR (6-ch) | 4.51 | 11.6 | **90.53%** | **66.11%** | 91.50% | 85.05% | 89.75% | **66.99%** |
+| **Ours: `v36_eca_rgb` (Asym ECA Dual-Stream)** | RGB + LWIR (6-ch) | 4.50 | 11.6 | 89.75% | 65.86% | **93.01%** | 82.74% | **89.86%** | 66.76% |
+| **Ours: `3_Core4_MACAF` (Class-Aware Routing)** | RGB + LWIR (6-ch) | 16.52 | 42.9 | 92.68% | 68.76% | 92.13% | 86.47% | 92.12% | **69.47%** |
+| 👑 **Ours: `v38_cwar_triad` (2D-Grid CWAR Triad)** | **RGB + LWIR (6-ch)** | **13.51** | **34.8** | **92.86%** | **68.80%** | **91.79%** | **87.44%** | **92.33%** | **69.02%** |
+
+---
+
+## 📁 Pretrained Weights Included in `weights/`
+
+All PyTorch (`.pt`) and ONNX (`.onnx`) weights are pre-exported in `weights/` so no training or export is required on edge devices:
+- `weights/v36_main_best.pt` & `weights/v36_main_best.onnx` — Asymmetric Dual-Stream (`CA+ECA` RGB $d=1$, Dilated LWIR $d=2$)
+- `weights/v36_eca_rgb_best.pt` & `weights/v36_eca_rgb_best.onnx` — Asymmetric Dual-Stream (`ECA` RGB $d=1$, Dilated LWIR $d=2$)
+- `weights/v38_ca_dilated_best.pt` & `weights/v38_ca_dilated_best.onnx` — Symmetric Dilated Dual-Stream ($d=2$) + `PANetNeckECA`
+- `weights/v30_champion_best.pt` & `weights/v30_champion_best.onnx` — Single-Modality Thermal Hybrid Dilated ECA Champion
+- `weights/yolov8n.pt`, `yolov8s.pt`, `yolov10n.pt`, `yolov10s.pt`, `yolo11n.pt`, `yolo11s.pt` (and `.onnx` / `.espdl` quantized models)

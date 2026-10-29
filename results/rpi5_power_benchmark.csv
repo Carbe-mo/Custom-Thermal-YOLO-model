@@ -1,0 +1,9 @@
+Timestamp,Target_Device,Processor,Model_Name,Weights,Inferences,Total_Duration_s,Avg_Latency_ms,Avg_FPS,Idle_Board_Power_W,Active_Board_Power_W,Dynamic_Power_W,Total_Energy_J,Energy_per_Frame_mJ,Frames_per_Joule,Joulescope_Measured_P_W,Superposition_Scale_Factor
+2026-09-21 20:15:13,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,Ours (Dilated ECA v30),weights/v30_champion_best.pt,10,6.737,673.73,1.48,2.400,4.852,2.452,32.688,3268.80,0.31,1.048,4.630
+2026-09-21 20:15:30,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv8n,weights/yolov8n.pt,10,7.175,717.53,1.39,2.400,5.069,2.669,36.371,3637.10,0.27,1.095,4.630
+2026-09-21 20:16:08,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv8s,weights/yolov8s.pt,10,24.146,2414.61,0.41,2.400,4.621,2.221,111.580,11158.00,0.09,0.998,4.630
+2026-09-21 20:16:25,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv10n,weights/yolov10n.pt,10,7.150,715.02,1.40,2.400,4.519,2.119,32.312,3231.20,0.31,0.976,4.630
+2026-09-21 20:17:00,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv10s,weights/yolov10s.pt,10,21.980,2197.98,0.45,2.400,3.936,1.536,86.513,8651.30,0.12,0.850,4.630
+2026-09-21 20:17:17,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLO11n,weights/yolo11n.pt,10,7.377,737.65,1.36,2.400,4.338,1.938,32.000,3200.00,0.31,0.937,4.630
+2026-09-21 20:17:52,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLO11s,weights/yolo11s.pt,10,22.169,2216.86,0.45,2.400,3.551,1.151,78.720,7872.00,0.13,0.767,4.630
+2026-09-21 20:18:16,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,Ours Dual-Backbone (v35),weights/v35_dual_fusion_best.pt,10,12.947,1294.67,0.77,2.400,3.579,1.179,46.336,4633.60,0.22,0.773,4.630

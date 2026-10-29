@@ -1,0 +1,8 @@
+Device,Model,Precision,Clock_MHz,Mean_Voltage_V,Mean_Current_mA,Latency_ms,Throughput_FPS,Idle_Board_Power_W,Active_Board_Power_W,Total_Energy_mJ_frame,Frames_per_Joule,Free_PSRAM_MB,Free_SRAM_KB
+Waveshare ESP32-P4 Nano,YOLO11n,INT8 (esp-ppq),400,4.992,244.89,2169.60,0.46,0.350,1.223,2653.42,0.38,18.21,365.0
+Waveshare ESP32-P4 Nano,Ours Champion (v30 Native2D),INT8 (esp-ppq),400,4.972,246.91,2173.66,0.46,1.044,1.228,2668.22,0.37,18.10,377.4
+Waveshare ESP32-P4 Nano,YOLOv8n,INT8 (esp-ppq),400,4.972,246.50,2273.73,0.44,1.044,1.226,2787.59,0.36,18.77,381.8
+Waveshare ESP32-P4 Nano,YOLOv8s,INT8 (esp-ppq),400,4.972,246.98,18389.06,0.05,1.044,1.228,22581.77,0.04,0.21,381.5
+Waveshare ESP32-P4 Nano,YOLO11s,INT8 (esp-ppq),400,4.972,246.95,12241.68,0.08,1.044,1.228,15032.78,0.07,1.59,372.1
+Waveshare ESP32-P4 Nano,YOLOv10n,INT8 (esp-ppq),400,4.972,246.90,1595.91,0.63,1.044,1.228,1959.78,0.51,23.06,408.5
+Waveshare ESP32-P4 Nano,YOLOv10s,INT8 (esp-ppq),400,4.972,246.90,5435.91,0.18,1.044,1.228,6675.30,0.15,13.31,408.5

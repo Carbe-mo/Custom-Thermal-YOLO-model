@@ -1,0 +1,21 @@
+[0;32mI (136222) yolov8s_bench: Run  5/10: 18388.68 ms (detections: 5)[0m
+[0;32mI (154702) yolov8s_bench: Run  6/10: 18388.22 ms (detections: 5)[0m
+[0;32mI (173182) yolov8s_bench: Run  7/10: 18387.72 ms (detections: 5)[0m
+[0;32mI (191662) yolov8s_bench: Run  8/10: 18387.59 ms (detections: 5)[0m
+[0;32mI (210142) yolov8s_bench: Run  9/10: 18387.17 ms (detections: 5)[0m
+[0;32mI (228622) yolov8s_bench: Run 10/10: 18386.36 ms (detections: 5)[0m
+[0;32mI (228622) yolov8s_bench: ==================================================[0m
+[0;32mI (228622) yolov8s_bench:   YOLOv8s BENCHMARK SUMMARY (ESP32-P4)            [0m
+[0;32mI (228632) yolov8s_bench: ==================================================[0m
+[0;32mI (228642) yolov8s_bench:   Model:           Stock YOLOv8s                  [0m
+[0;32mI (228652) yolov8s_bench:   Precision:       INT8 Quantized (esp-ppq)       [0m
+[0;32mI (228662) yolov8s_bench:   Clock:           400 MHz RISC-V SIMD            [0m
+[0;32mI (228662) yolov8s_bench:   Iterations:      10[0m
+[0;32mI (228672) yolov8s_bench:   Average Latency: 18389.06 ms[0m
+[0;32mI (228672) yolov8s_bench:   Min Latency:     18386.36 ms[0m
+[0;32mI (228682) yolov8s_bench:   Max Latency:     18394.66 ms[0m
+[0;32mI (228692) yolov8s_bench:   Throughput:      0.05 FPS[0m
+[0;32mI (228692) yolov8s_bench:   PSRAM Remaining: 213432 bytes[0m
+[0;32mI (228702) yolov8s_bench:   SRAM Remaining:  390691 bytes[0m
+[0;32mI (228702) yolov8s_bench: ==================================================[0m
+[0;32mI (228722) yolov8s_bench: Benchmark completed successfully. Halting.[0m

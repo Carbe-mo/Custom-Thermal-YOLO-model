@@ -1,0 +1,338 @@
+{
+  "single_v30_thm|val|rect=True": {
+    "mAP50": 87.52,
+    "mAP50_95": 63.39,
+    "P": 85.58,
+    "R": 79.79,
+    "per_cls": {
+      "person": 81.51,
+      "trolley": 96.67,
+      "bag": 83.71,
+      "unattended": 88.19
+    }
+  },
+  "single_v30_thm|val|rect=False": {
+    "mAP50": 86.76,
+    "mAP50_95": 62.74,
+    "P": 84.53,
+    "R": 79.34,
+    "per_cls": {
+      "person": 81.37,
+      "trolley": 96.08,
+      "bag": 84.57,
+      "unattended": 85.02
+    }
+  },
+  "single_v30_thm|test|rect=True": {
+    "mAP50": 88.15,
+    "mAP50_95": 64.71,
+    "P": 87.81,
+    "R": 83.4,
+    "per_cls": {
+      "person": 77.76,
+      "trolley": 97.96,
+      "bag": 92.66,
+      "unattended": 84.21
+    }
+  },
+  "single_v30_thm|test|rect=False": {
+    "mAP50": 86.98,
+    "mAP50_95": 62.89,
+    "P": 81.96,
+    "R": 83.81,
+    "per_cls": {
+      "person": 77.91,
+      "trolley": 97.71,
+      "bag": 91.63,
+      "unattended": 80.67
+    }
+  },
+  "single_v36_thm|val|rect=True": {
+    "mAP50": 88.68,
+    "mAP50_95": 62.37,
+    "P": 84.4,
+    "R": 82.57,
+    "per_cls": {
+      "person": 82.91,
+      "trolley": 96.86,
+      "bag": 89.04,
+      "unattended": 85.9
+    }
+  },
+  "single_v36_thm|val|rect=False": {
+    "mAP50": 87.44,
+    "mAP50_95": 62.34,
+    "P": 80.4,
+    "R": 85.36,
+    "per_cls": {
+      "person": 83.22,
+      "trolley": 96.5,
+      "bag": 86.3,
+      "unattended": 83.74
+    }
+  },
+  "single_v36_thm|test|rect=True": {
+    "mAP50": 86.64,
+    "mAP50_95": 63.37,
+    "P": 85.52,
+    "R": 80.38,
+    "per_cls": {
+      "person": 76.49,
+      "trolley": 97.74,
+      "bag": 86.4,
+      "unattended": 85.93
+    }
+  },
+  "single_v36_thm|test|rect=False": {
+    "mAP50": 85.46,
+    "mAP50_95": 61.19,
+    "P": 83.92,
+    "R": 79.02,
+    "per_cls": {
+      "person": 74.48,
+      "trolley": 97.62,
+      "bag": 86.07,
+      "unattended": 83.68
+    }
+  },
+  "single_v37a|val|rect=True": {
+    "mAP50": 89.27,
+    "mAP50_95": 65.28,
+    "P": 88.32,
+    "R": 81.97,
+    "per_cls": {
+      "person": 84.95,
+      "trolley": 98.09,
+      "bag": 89.71,
+      "unattended": 84.34
+    }
+  },
+  "single_v37a|val|rect=False": {
+    "mAP50": 88.54,
+    "mAP50_95": 64.69,
+    "P": 88.15,
+    "R": 81.31,
+    "per_cls": {
+      "person": 84.93,
+      "trolley": 97.76,
+      "bag": 90.87,
+      "unattended": 80.59
+    }
+  },
+  "single_v37a|test|rect=True": {
+    "mAP50": 87.29,
+    "mAP50_95": 63.93,
+    "P": 89.69,
+    "R": 81.02,
+    "per_cls": {
+      "person": 78.97,
+      "trolley": 98.68,
+      "bag": 86.63,
+      "unattended": 84.87
+    }
+  },
+  "single_v37a|test|rect=False": {
+    "mAP50": 87.33,
+    "mAP50_95": 64.1,
+    "P": 90.2,
+    "R": 80.37,
+    "per_cls": {
+      "person": 77.18,
+      "trolley": 98.25,
+      "bag": 90.41,
+      "unattended": 83.5
+    }
+  },
+  "MACAF_3m_grid|val|rect=True": {
+    "mAP50": 92.57,
+    "mAP50_95": 68.66,
+    "P": 89.16,
+    "R": 86.61,
+    "per_cls": {
+      "person": 89.65,
+      "trolley": 98.41,
+      "bag": 92.13,
+      "unattended": 90.09
+    }
+  },
+  "MACAF_3m_grid|val|rect=False": {
+    "mAP50": 91.62,
+    "mAP50_95": 68.08,
+    "P": 85.98,
+    "R": 86.82,
+    "per_cls": {
+      "person": 90.0,
+      "trolley": 98.14,
+      "bag": 91.62,
+      "unattended": 86.72
+    }
+  },
+  "MACAF_3m_grid|test|rect=True": {
+    "mAP50": 91.88,
+    "mAP50_95": 69.25,
+    "P": 91.26,
+    "R": 86.41,
+    "per_cls": {
+      "person": 85.55,
+      "trolley": 98.7,
+      "bag": 96.76,
+      "unattended": 86.52
+    }
+  },
+  "MACAF_3m_grid|test|rect=False": {
+    "mAP50": 91.23,
+    "mAP50_95": 69.09,
+    "P": 86.51,
+    "R": 85.63,
+    "per_cls": {
+      "person": 84.48,
+      "trolley": 98.54,
+      "bag": 96.97,
+      "unattended": 84.94
+    }
+  },
+  "MACAF_3m_hybrid|val|rect=True": {
+    "mAP50": 92.35,
+    "mAP50_95": 68.33,
+    "P": 88.2,
+    "R": 86.67,
+    "per_cls": {
+      "person": 89.21,
+      "trolley": 98.4,
+      "bag": 92.35,
+      "unattended": 89.46
+    }
+  },
+  "MACAF_3m_hybrid|val|rect=False": {
+    "mAP50": 91.61,
+    "mAP50_95": 67.31,
+    "P": 90.87,
+    "R": 81.51,
+    "per_cls": {
+      "person": 90.0,
+      "trolley": 98.26,
+      "bag": 91.52,
+      "unattended": 86.66
+    }
+  },
+  "MACAF_3m_hybrid|test|rect=True": {
+    "mAP50": 92.03,
+    "mAP50_95": 69.26,
+    "P": 91.73,
+    "R": 86.64,
+    "per_cls": {
+      "person": 85.8,
+      "trolley": 98.62,
+      "bag": 96.68,
+      "unattended": 87.02
+    }
+  },
+  "MACAF_3m_hybrid|test|rect=False": {
+    "mAP50": 91.3,
+    "mAP50_95": 68.88,
+    "P": 87.84,
+    "R": 84.94,
+    "per_cls": {
+      "person": 84.75,
+      "trolley": 98.46,
+      "bag": 96.43,
+      "unattended": 85.56
+    }
+  },
+  "MACAF_4m_grid|val|rect=True": {
+    "mAP50": 92.74,
+    "mAP50_95": 68.58,
+    "P": 88.64,
+    "R": 87.03,
+    "per_cls": {
+      "person": 89.82,
+      "trolley": 98.47,
+      "bag": 92.34,
+      "unattended": 90.34
+    }
+  },
+  "MACAF_4m_grid|val|rect=False": {
+    "mAP50": 91.72,
+    "mAP50_95": 67.98,
+    "P": 86.68,
+    "R": 86.55,
+    "per_cls": {
+      "person": 90.12,
+      "trolley": 98.29,
+      "bag": 91.77,
+      "unattended": 86.71
+    }
+  },
+  "MACAF_4m_grid|test|rect=True": {
+    "mAP50": 91.77,
+    "mAP50_95": 69.0,
+    "P": 89.58,
+    "R": 87.96,
+    "per_cls": {
+      "person": 85.34,
+      "trolley": 98.76,
+      "bag": 96.53,
+      "unattended": 86.47
+    }
+  },
+  "MACAF_4m_grid|test|rect=False": {
+    "mAP50": 91.24,
+    "mAP50_95": 69.12,
+    "P": 86.7,
+    "R": 85.33,
+    "per_cls": {
+      "person": 84.58,
+      "trolley": 98.58,
+      "bag": 96.89,
+      "unattended": 84.91
+    }
+  },
+  "MACAF_4m_hybrid|val|rect=True": {
+    "mAP50": 92.46,
+    "mAP50_95": 68.23,
+    "P": 88.33,
+    "R": 86.86,
+    "per_cls": {
+      "person": 89.12,
+      "trolley": 98.65,
+      "bag": 92.46,
+      "unattended": 89.61
+    }
+  },
+  "MACAF_4m_hybrid|val|rect=False": {
+    "mAP50": 91.64,
+    "mAP50_95": 67.16,
+    "P": 85.51,
+    "R": 86.45,
+    "per_cls": {
+      "person": 90.05,
+      "trolley": 98.37,
+      "bag": 91.61,
+      "unattended": 86.53
+    }
+  },
+  "MACAF_4m_hybrid|test|rect=True": {
+    "mAP50": 91.96,
+    "mAP50_95": 69.04,
+    "P": 91.42,
+    "R": 86.3,
+    "per_cls": {
+      "person": 85.66,
+      "trolley": 98.66,
+      "bag": 96.65,
+      "unattended": 86.87
+    }
+  },
+  "MACAF_4m_hybrid|test|rect=False": {
+    "mAP50": 91.15,
+    "mAP50_95": 68.78,
+    "P": 87.94,
+    "R": 84.6,
+    "per_cls": {
+      "person": 84.67,
+      "trolley": 98.5,
+      "bag": 96.24,
+      "unattended": 85.17
+    }
+  }
+}

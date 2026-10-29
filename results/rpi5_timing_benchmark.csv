@@ -1,0 +1,9 @@
+Timestamp,Device,Processor,Model_Name,Weights,Channels,Inferences,Total_Duration_s,Avg_Latency_ms,FPS
+2026-09-21 16:24:51,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,Ours (Dilated ECA v30),weights/v30_champion_best.pt,3,10,6.763,676.3,1.48
+2026-09-21 16:25:08,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv8n,weights/yolov8n.pt,3,10,7.495,749.48,1.33
+2026-09-21 16:25:46,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv8s,weights/yolov8s.pt,3,10,27.073,2707.34,0.37
+2026-09-21 16:26:01,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv10n,weights/yolov10n.pt,3,10,8.047,804.69,1.24
+2026-09-21 16:26:36,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv10s,weights/yolov10s.pt,3,10,24.04,2403.95,0.42
+2026-09-21 16:26:51,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv11n,weights/yolo11n.pt,3,10,8.208,820.79,1.22
+2026-09-21 16:27:24,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,YOLOv11s,weights/yolo11s.pt,3,10,22.892,2289.15,0.44
+2026-09-21 16:27:47,Raspberry Pi 5 (8GB),Broadcom BCM2712 Quad Cortex-A76 @ 2.4GHz,Ours Dual-Backbone (v35),weights/v35_dual_fusion_best.pt,6,10,13.571,1357.13,0.74

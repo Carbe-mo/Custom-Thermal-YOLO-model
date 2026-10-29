@@ -1,0 +1,9 @@
+Device,Model,Latency_ms,Latency_std_ms,Throughput_FPS,Idle_Board_Power_W,Active_Board_Power_W,CPU_Rail_Power_W,Total_Energy_mJ_frame,Active_Energy_mJ_frame,Frames_per_Joule
+Jetson AGX Xavier (CPU),Ours (Dilated ECA v30),129.46,12.31,7.72,3.817,5.694,2.29,737.1,243.0,1.36
+Jetson AGX Xavier (CPU),YOLOv8n,125.65,9.6,7.96,3.817,4.839,1.753,608.0,128.4,1.64
+Jetson AGX Xavier (CPU),YOLOv8s,256.1,14.75,3.9,3.817,7.122,3.613,1824.1,846.6,0.55
+Jetson AGX Xavier (CPU),YOLOv10n,132.6,10.42,7.54,3.817,4.939,1.83,654.9,148.8,1.53
+Jetson AGX Xavier (CPU),YOLOv10s,269.17,14.16,3.72,3.817,7.134,3.556,1920.4,893.0,0.52
+Jetson AGX Xavier (CPU),YOLO11n,119.75,11.49,8.35,3.817,4.739,1.666,567.5,110.4,1.76
+Jetson AGX Xavier (CPU),YOLO11s,231.59,15.06,4.32,3.817,6.84,3.207,1584.2,700.2,0.63
+Jetson AGX Xavier (CPU),Ours Dual-Backbone Fusion (v35),166.48,15.36,6.01,3.817,5.807,2.513,966.7,331.3,1.03

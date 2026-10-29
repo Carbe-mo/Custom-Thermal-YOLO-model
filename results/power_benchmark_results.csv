@@ -1,0 +1,16 @@
+Timestamp,Target_Device,Model_Name,Weights,Inferences,Total_Duration_s,Avg_Latency_ms,Avg_FPS,Idle_Power_W,Active_Power_W,Dynamic_Power_W,Total_Energy_J,Energy_per_Frame_mJ,Frames_per_Joule,Mean_Voltage_V,Mean_Current_mA
+2026-09-21 13:36:03,Rock Pi 4C+,Ours (Dilated ECA v30),weights/v30_champion_best.pt,10,27.236,2723.42,0.37,0.703,0.545,0.0,14.833,1483.33,0.67,0.41,1319.0
+2026-09-21 13:37:04,Rock Pi 4C+,YOLOv8n,weights/yolov8n.pt,10,26.923,2692.17,0.37,0.703,3.419,2.716,92.039,9203.9,0.11,2.46,1386.2
+2026-09-21 13:38:50,Rock Pi 4C+,YOLOv8s,weights/yolov8s.pt,10,63.684,6368.37,0.16,0.703,5.569,4.867,354.689,35468.89,0.03,3.66,1528.6
+2026-09-21 13:39:54,Rock Pi 4C+,YOLOv10n,weights/yolov10n.pt,10,28.806,2880.57,0.35,0.703,3.935,3.233,113.356,11335.62,0.09,2.72,1448.4
+2026-09-21 13:40:55,Rock Pi 4C+,YOLOv10s,weights/yolov10s.pt,10,33.924,3392.41,0.29,0.703,5.033,4.331,170.756,17075.64,0.06,4.16,1211.3
+2026-09-21 13:41:29,Rock Pi 4C+,YOLOv11n,weights/yolo11n.pt,10,15.274,1527.38,0.65,0.703,5.064,4.361,77.344,7734.43,0.13,4.21,1199.4
+2026-09-21 13:43:16,Rock Pi 4C+,YOLOv11s,weights/yolo11s.pt,10,64.895,6489.44,0.15,0.703,6.765,6.063,439.036,43903.56,0.02,4.4,1539.5
+2026-09-21 20:15:13,Raspberry Pi 5 (8GB),Ours (Dilated ECA v30),weights/v30_champion_best.pt,10,6.737,673.73,1.48,2.400,4.852,2.452,32.688,3268.80,0.31,5.21,931.3
+2026-09-21 20:15:30,Raspberry Pi 5 (8GB),YOLOv8n,weights/yolov8n.pt,10,7.175,717.53,1.39,2.400,5.069,2.669,36.371,3637.10,0.27,5.21,972.9
+2026-09-21 20:16:08,Raspberry Pi 5 (8GB),YOLOv8s,weights/yolov8s.pt,10,24.146,2414.61,0.41,2.400,4.621,2.221,111.580,11158.00,0.09,5.21,887.0
+2026-09-21 20:16:25,Raspberry Pi 5 (8GB),YOLOv10n,weights/yolov10n.pt,10,7.150,715.02,1.40,2.400,4.519,2.119,32.312,3231.20,0.31,5.21,867.4
+2026-09-21 20:17:00,Raspberry Pi 5 (8GB),YOLOv10s,weights/yolov10s.pt,10,21.980,2197.98,0.45,2.400,3.936,1.536,86.513,8651.30,0.12,5.21,755.5
+2026-09-21 20:17:17,Raspberry Pi 5 (8GB),YOLOv11n,weights/yolo11n.pt,10,7.377,737.65,1.36,2.400,4.338,1.938,32.000,3200.00,0.31,5.21,832.6
+2026-09-21 20:17:52,Raspberry Pi 5 (8GB),YOLOv11s,weights/yolo11s.pt,10,22.169,2216.86,0.45,2.400,3.551,1.151,78.720,7872.00,0.13,5.21,681.6
+2026-09-21 20:18:16,Raspberry Pi 5 (8GB),Ours Dual-Backbone (v35),weights/v35_dual_fusion_best.pt,10,12.947,1294.67,0.77,2.400,3.579,1.179,46.336,4633.60,0.22,5.21,687.0

@@ -1,0 +1,290 @@
+{
+  "A_main_eca_v30_cp1|val|rect=True": {
+    "mAP50": 91.62,
+    "mAP50_95": 68.27,
+    "P": 89.76,
+    "R": 84.13,
+    "per_cls": {
+      "person": 87.78,
+      "trolley": 98.29,
+      "bag": 90.86,
+      "unattended": 89.55
+    }
+  },
+  "A_main_eca_v30_cp1|val|rect=False": {
+    "mAP50": 91.15,
+    "mAP50_95": 67.51,
+    "P": 90.49,
+    "R": 81.62,
+    "per_cls": {
+      "person": 88.53,
+      "trolley": 98.22,
+      "bag": 91.03,
+      "unattended": 86.83
+    }
+  },
+  "A_main_eca_v30_cp1|test|rect=True": {
+    "mAP50": 91.49,
+    "mAP50_95": 69.1,
+    "P": 91.01,
+    "R": 87.41,
+    "per_cls": {
+      "person": 85.03,
+      "trolley": 98.46,
+      "bag": 97.27,
+      "unattended": 85.2
+    }
+  },
+  "A_main_eca_v30_cp1|test|rect=False": {
+    "mAP50": 90.4,
+    "mAP50_95": 68.34,
+    "P": 86.96,
+    "R": 84.29,
+    "per_cls": {
+      "person": 82.27,
+      "trolley": 98.39,
+      "bag": 96.19,
+      "unattended": 84.74
+    }
+  },
+  "B_main_eca_v30_gridflip_cp1|val|rect=True": {
+    "mAP50": 92.58,
+    "mAP50_95": 68.71,
+    "P": 90.11,
+    "R": 85.69,
+    "per_cls": {
+      "person": 89.66,
+      "trolley": 98.49,
+      "bag": 91.93,
+      "unattended": 90.23
+    }
+  },
+  "B_main_eca_v30_gridflip_cp1|val|rect=False": {
+    "mAP50": 91.87,
+    "mAP50_95": 68.37,
+    "P": 85.5,
+    "R": 87.51,
+    "per_cls": {
+      "person": 90.38,
+      "trolley": 98.22,
+      "bag": 91.77,
+      "unattended": 87.11
+    }
+  },
+  "B_main_eca_v30_gridflip_cp1|test|rect=True": {
+    "mAP50": 91.78,
+    "mAP50_95": 69.66,
+    "P": 90.83,
+    "R": 87.65,
+    "per_cls": {
+      "person": 85.58,
+      "trolley": 98.7,
+      "bag": 96.69,
+      "unattended": 86.16
+    }
+  },
+  "B_main_eca_v30_gridflip_cp1|test|rect=False": {
+    "mAP50": 91.18,
+    "mAP50_95": 69.08,
+    "P": 86.48,
+    "R": 86.26,
+    "per_cls": {
+      "person": 84.54,
+      "trolley": 98.52,
+      "bag": 96.92,
+      "unattended": 84.73
+    }
+  },
+  "C_main_eca_v30_hybridflip_cp1|val|rect=True": {
+    "mAP50": 92.42,
+    "mAP50_95": 68.51,
+    "P": 89.35,
+    "R": 85.9,
+    "per_cls": {
+      "person": 89.13,
+      "trolley": 98.4,
+      "bag": 92.12,
+      "unattended": 90.04
+    }
+  },
+  "C_main_eca_v30_hybridflip_cp1|val|rect=False": {
+    "mAP50": 91.64,
+    "mAP50_95": 67.58,
+    "P": 89.78,
+    "R": 82.44,
+    "per_cls": {
+      "person": 89.87,
+      "trolley": 98.28,
+      "bag": 91.53,
+      "unattended": 86.87
+    }
+  },
+  "C_main_eca_v30_hybridflip_cp1|test|rect=True": {
+    "mAP50": 92.04,
+    "mAP50_95": 69.37,
+    "P": 90.93,
+    "R": 87.87,
+    "per_cls": {
+      "person": 86.0,
+      "trolley": 98.61,
+      "bag": 96.84,
+      "unattended": 86.72
+    }
+  },
+  "C_main_eca_v30_hybridflip_cp1|test|rect=False": {
+    "mAP50": 91.1,
+    "mAP50_95": 68.78,
+    "P": 87.54,
+    "R": 85.14,
+    "per_cls": {
+      "person": 84.53,
+      "trolley": 98.44,
+      "bag": 96.24,
+      "unattended": 85.19
+    }
+  },
+  "D_main_eca_v30_thm_v37_cp1|val|rect=True": {
+    "mAP50": 92.06,
+    "mAP50_95": 68.55,
+    "P": 90.93,
+    "R": 84.12,
+    "per_cls": {
+      "person": 88.5,
+      "trolley": 98.42,
+      "bag": 91.89,
+      "unattended": 89.44
+    }
+  },
+  "D_main_eca_v30_thm_v37_cp1|val|rect=False": {
+    "mAP50": 91.24,
+    "mAP50_95": 67.65,
+    "P": 85.33,
+    "R": 86.84,
+    "per_cls": {
+      "person": 88.96,
+      "trolley": 98.19,
+      "bag": 91.25,
+      "unattended": 86.55
+    }
+  },
+  "D_main_eca_v30_thm_v37_cp1|test|rect=True": {
+    "mAP50": 91.13,
+    "mAP50_95": 69.09,
+    "P": 89.94,
+    "R": 86.59,
+    "per_cls": {
+      "person": 84.09,
+      "trolley": 98.56,
+      "bag": 96.65,
+      "unattended": 85.2
+    }
+  },
+  "D_main_eca_v30_thm_v37_cp1|test|rect=False": {
+    "mAP50": 90.29,
+    "mAP50_95": 68.21,
+    "P": 86.46,
+    "R": 84.53,
+    "per_cls": {
+      "person": 82.22,
+      "trolley": 98.52,
+      "bag": 95.4,
+      "unattended": 85.04
+    }
+  },
+  "E_main_eca_v30_thm_v37_hybridflip|val|rect=True": {
+    "mAP50": 92.73,
+    "mAP50_95": 68.74,
+    "P": 90.54,
+    "R": 85.46,
+    "per_cls": {
+      "person": 89.64,
+      "trolley": 98.64,
+      "bag": 92.44,
+      "unattended": 90.2
+    }
+  },
+  "E_main_eca_v30_thm_v37_hybridflip|val|rect=False": {
+    "mAP50": 91.77,
+    "mAP50_95": 67.65,
+    "P": 84.92,
+    "R": 87.77,
+    "per_cls": {
+      "person": 90.04,
+      "trolley": 98.38,
+      "bag": 91.78,
+      "unattended": 86.86
+    }
+  },
+  "E_main_eca_v30_thm_v37_hybridflip|test|rect=True": {
+    "mAP50": 91.69,
+    "mAP50_95": 69.39,
+    "P": 91.46,
+    "R": 86.41,
+    "per_cls": {
+      "person": 84.91,
+      "trolley": 98.68,
+      "bag": 96.5,
+      "unattended": 86.66
+    }
+  },
+  "E_main_eca_v30_thm_v37_hybridflip|test|rect=False": {
+    "mAP50": 91.02,
+    "mAP50_95": 68.79,
+    "P": 85.31,
+    "R": 86.54,
+    "per_cls": {
+      "person": 84.53,
+      "trolley": 98.57,
+      "bag": 95.66,
+      "unattended": 85.32
+    }
+  },
+  "F_main_eca_v30_thm_v37_gridflip|val|rect=True": {
+    "mAP50": 92.84,
+    "mAP50_95": 69.02,
+    "P": 89.65,
+    "R": 85.83,
+    "per_cls": {
+      "person": 89.87,
+      "trolley": 98.48,
+      "bag": 92.41,
+      "unattended": 90.62
+    }
+  },
+  "F_main_eca_v30_thm_v37_gridflip|val|rect=False": {
+    "mAP50": 91.89,
+    "mAP50_95": 67.94,
+    "P": 86.07,
+    "R": 87.0,
+    "per_cls": {
+      "person": 90.38,
+      "trolley": 98.27,
+      "bag": 91.85,
+      "unattended": 87.05
+    }
+  },
+  "F_main_eca_v30_thm_v37_gridflip|test|rect=True": {
+    "mAP50": 91.56,
+    "mAP50_95": 69.65,
+    "P": 89.06,
+    "R": 87.32,
+    "per_cls": {
+      "person": 85.2,
+      "trolley": 98.82,
+      "bag": 96.23,
+      "unattended": 85.98
+    }
+  },
+  "F_main_eca_v30_thm_v37_gridflip|test|rect=False": {
+    "mAP50": 91.15,
+    "mAP50_95": 69.14,
+    "P": 85.44,
+    "R": 87.92,
+    "per_cls": {
+      "person": 84.62,
+      "trolley": 98.62,
+      "bag": 96.53,
+      "unattended": 84.82
+    }
+  }
+}

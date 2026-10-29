@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seeing the Unseen: Multimodal Dual-Stream AI for Transit Security</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Newsreader:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+    
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    
+    .serif-quote {
+      font-family: 'Newsreader', serif;
+    }
+    
+    .mono-tag {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .slide {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
+
+  <!-- Top Header Navigation -->
+  <header class="border-b border-black px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <span class="border border-black px-2 py-0.5 text-xs font-bold uppercase tracking-wider mono-tag">AI Security Research</span>
+      <span class="text-xs text-neutral-500 hidden sm:inline">Multimodal RGB + Thermal Surveillance</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <div class="mono-tag text-xs font-semibold" id="slide-counter">Slide 01 / 10</div>
+      <button onclick="toggleFullscreen()" class="border border-black px-2.5 py-1 text-xs hover:bg-black hover:text-white transition mono-tag" title="Toggle Fullscreen">
+        [⛶ FULLSCREEN]
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Slide Container -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-6 py-6 flex items-center justify-center">
+
+    <!-- SLIDE 1: Title -->
+    <div class="slide active flex-col justify-center items-start w-full" data-slide="1">
+      <div class="border-l-4 border-black pl-5 mb-8">
+        <p class="mono-tag text-xs tracking-widest uppercase mb-2 text-neutral-500">Autonomous Transit Hub Security</p>
+        <h1 class="text-4xl sm:text-6xl font-bold tracking-tight leading-tight">
+          Seeing the Unseen:
+        </h1>
+        <h2 class="text-2xl sm:text-3xl font-light text-neutral-700 mt-2">
+          Dual-Vision AI for Airport & Railway Surveillance
+        </h2>
+      </div>
+      
+      <p class="text-lg text-neutral-800 max-w-3xl leading-relaxed mb-8">
+        How combining normal color cameras with invisible thermal heat vision helps security systems reliably detect passengers, carried luggage, and abandoned bags with <strong>over 92% accuracy</strong>.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full border-t border-black pt-6">
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">01. THE PROBLEM</div>
+          <p class="text-sm text-neutral-600">Why normal cameras fail at night and thermal cameras miss cold luggage.</p>
+        </div>
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">02. OUR ARCHITECTURE</div>
+          <p class="text-sm text-neutral-600">Two dedicated AI brains communicating through a real-time smart attention gate.</p>
+        </div>
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">03. THE RESULT</div>
+          <p class="text-sm text-neutral-600">Crossed the 92% milestone on real-world transit datasets (92.33% mAP@50).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: The Real-World Dilemma -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="2">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 02 • The Practical Challenge</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">The Airport Problem: 9.4 Billion Passengers & Lost Bags</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        <div class="border border-black p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-xl font-bold mb-3">The Security Risk</h3>
+            <p class="text-neutral-700 text-base leading-relaxed mb-4">
+              Airports and rail terminals are busy, crowded environments. When someone walks away from a backpack or suitcase, security protocols require treating it as a potential explosive threat (IED) until proven safe.
+            </p>
+            <p class="text-neutral-700 text-base leading-relaxed">
+              False alarms trigger concourse evacuations and cost millions. Missed bags create catastrophic safety hazards.
+            </p>
+          </div>
+          <div class="border-t border-black pt-3 mt-4 mono-tag text-xs text-neutral-600">
+            GOAL: Track 4 targets simultaneously: Persons, Trolleys, Carried Bags, and Unattended Bags.
+          </div>
+        </div>
+
+        <div class="border border-black p-6 flex flex-col justify-between bg-neutral-50">
+          <div>
+            <h3 class="text-xl font-bold mb-3">Why Is This Hard for AI?</h3>
+            <ul class="space-y-3 text-neutral-800 text-sm">
+              <li class="flex items-start">
+                <span class="font-bold mr-2">•</span>
+                <span><strong>Crowds & Occlusion:</strong> Travelers block cameras, walking in front of luggage.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="font-bold mr-2">•</span>
+                <span><strong>Lighting Swings:</strong> Blinding sunlight through terminal windows, deep shadows at night.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="font-bold mr-2">•</span>
+                <span><strong>Tiny Hazards:</strong> Unattended luggage is often small (median scale only 48 pixels wide on camera).</span>
+              </li>
+            </ul>
+          </div>
+          <div class="border-t border-black pt-3 mt-4 text-xs font-mono text-neutral-600">
+            Observation: A single camera sensor simply cannot handle all conditions.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Two Eyes Are Better Than One -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="3">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 03 • Complementary Sensing</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Why One Camera Isn't Enough: RGB vs. Thermal</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-6">
+        <!-- Visible RGB -->
+        <div class="border border-black p-5">
+          <div class="flex items-center justify-between border-b border-black pb-2 mb-3">
+            <span class="font-bold text-lg">Eye #1: Normal Color Camera (RGB)</span>
+            <span class="mono-tag text-xs px-2 py-0.5 border border-black">Visible Light</span>
+          </div>
+          <p class="text-sm text-neutral-700 mb-3">
+            Sees what human eyes see: colors, patterns, fine textures, zipper seams, luggage straps, and fabric logos.
+          </p>
+          <div class="border border-neutral-300 p-3 bg-neutral-50 text-xs space-y-1">
+            <p class="text-neutral-900 font-semibold">✓ Superpower: Distinguishes bags from floors easily via texture.</p>
+            <p class="text-neutral-500">✗ Blind Spot: Blinded by dark corridors, glare on glass, and night-time shadows.</p>
+          </div>
+        </div>
+
+        <!-- LWIR Thermal -->
+        <div class="border border-black p-5">
+          <div class="flex items-center justify-between border-b border-black pb-2 mb-3">
+            <span class="font-bold text-lg">Eye #2: Thermal Camera (LWIR)</span>
+            <span class="mono-tag text-xs px-2 py-0.5 border border-black">Heat Radiation</span>
+          </div>
+          <p class="text-sm text-neutral-700 mb-3">
+            Measures body heat (37°C) emitted into the air. Completely immune to pitch-black darkness or glare.
+          </p>
+          <div class="border border-neutral-300 p-3 bg-neutral-50 text-xs space-y-1">
+            <p class="text-neutral-900 font-semibold">✓ Superpower: Spots human bodies instantly anywhere, anytime.</p>
+            <p class="text-neutral-500">✗ Blind Spot: Abandoned luggage cools down to room temperature and turns invisible.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-black p-4 w-full bg-neutral-100 flex items-center justify-between">
+        <span class="serif-quote italic text-base">"A cold bag on a cold floor looks invisible to a thermal camera. But in pitch black, a person is invisible to a normal camera. We need both."</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: The Rookie Mistake -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="4">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 04 • What Doesn't Work</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">The Obvious Idea Fails: Why Naive Stacking Fails</h2>
+
+      <p class="text-neutral-700 text-base mb-6">
+        When people first try combining RGB and thermal, the simplest idea is: <em>"Just glue the pictures together at the start into one 6-channel image and feed it to a standard AI."</em>
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-6">
+        <div class="border border-black p-5">
+          <div class="mono-tag text-xs font-bold mb-2">1. PHYSICAL MISMATCH</div>
+          <p class="text-sm text-neutral-700">
+            Light waves and heat waves follow opposite physical rules. Asking the very first computer layer to blend them confuses the network.
+          </p>
+        </div>
+        <div class="border border-black p-5">
+          <div class="mono-tag text-xs font-bold mb-2">2. BROKEN MEMORY</div>
+          <p class="text-sm text-neutral-700">
+            Standard AI models are pretrained on millions of normal photos. Blending raw heat at the entry door wipes out all their prior learning.
+          </p>
+        </div>
+        <div class="border border-black p-5 bg-neutral-50">
+          <div class="mono-tag text-xs font-bold mb-2">3. THE RESULT: WORSE!</div>
+          <p class="text-sm text-neutral-800 font-semibold">
+            Accuracy drops to <span class="underline">83.68%</span> — which is actually <em>worse</em> than using the thermal camera alone (86.22%)!
+          </p>
+        </div>
+      </div>
+
+      <div class="border border-black p-4 w-full">
+        <span class="mono-tag text-xs font-bold">KEY LESSON:</span>
+        <span class="text-sm text-neutral-800 ml-2">You cannot force both sensors into a single blended blender. You must give each eye its own specialized brain first!</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Our Architecture (The 5-Panel Breakdown) -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="5">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 05 • The System Design</span>
+      <h2 class="text-2xl sm:text-3xl font-bold mb-3">Our Solution: Dual-Stream AI Architecture</h2>
+      <p class="text-sm text-neutral-600 mb-4">
+        Below is our complete 5-panel architecture diagram published in our IEEE manuscript:
+      </p>
+
+      <div class="border border-black p-2 w-full mb-4 bg-neutral-50 flex justify-center">
+        <img src="Multimodal_Dilated_ECA_Yolo.png" alt="5-Panel Multimodal Architecture" class="max-h-72 object-contain w-auto">
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 w-full text-xs mono-tag">
+        <div class="border border-black p-2">
+          <strong>(a) Failed Baseline</strong><br>
+          <span class="text-neutral-500">Naive early stem concat (83.7%).</span>
+        </div>
+        <div class="border border-black p-2">
+          <strong>(b) Dual Streams</strong><br>
+          <span class="text-neutral-500">Dedicated RGB + Thermal backbones.</span>
+        </div>
+        <div class="border border-black p-2">
+          <strong>(c) Asymmetric Blocks</strong><br>
+          <span class="text-neutral-500">Sharp RGB vs. wide-angle thermal.</span>
+        </div>
+        <div class="border border-black p-2">
+          <strong>(d) CMAF Gate</strong><br>
+          <span class="text-neutral-500">Smart real-time trust switch.</span>
+        </div>
+        <div class="border border-black p-2">
+          <strong>(e) 2D Grid CWAR</strong><br>
+          <span class="text-neutral-500">8,400 anchors fused pre-NMS.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Secret #1 - Asymmetric Vision -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="6">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 06 • Core Innovation 1</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Secret #1: Asymmetric Vision (Zoomed vs. Wide)</h2>
+
+      <p class="text-neutral-700 text-base mb-6">
+        Most people assume both cameras should look at the world the same way. We discovered they need completely opposite focus styles:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-6">
+        <div class="border border-black p-6">
+          <div class="mono-tag text-xs font-bold border-b border-black pb-2 mb-3">RGB STREAM: "THE SHARP MAGNIFIER"</div>
+          <p class="text-sm text-neutral-700 leading-relaxed mb-3">
+            Luggage detection depends on fine details: thin straps, metallic zippers, and luggage handles.
+          </p>
+          <p class="text-sm text-neutral-900 font-semibold">
+            We keep the RGB network tight and dense (<span class="mono-tag">d=1</span>). No skipped pixels. It inspects every single fiber so luggage edges are razor-sharp.
+          </p>
+        </div>
+
+        <div class="border border-black p-6">
+          <div class="mono-tag text-xs font-bold border-b border-black pb-2 mb-3">THERMAL STREAM: "THE WIDE-ANGLE GLANCE"</div>
+          <p class="text-sm text-neutral-700 leading-relaxed mb-3">
+            Thermal heat plumes are soft and fuzzy. A person's heat halo blurs outward into their cart and surroundings.
+          </p>
+          <p class="text-sm text-neutral-900 font-semibold">
+            We use dilated vision (<span class="mono-tag">d=2</span>) on thermal layers. It skips adjacent pixels to see a 5×5 area, connecting distant heat context without extra computation.
+          </p>
+        </div>
+      </div>
+
+      <div class="border border-black p-4 w-full bg-neutral-50">
+        <span class="mono-tag text-xs font-bold">PAYOFF:</span>
+        <span class="text-sm text-neutral-700 ml-2">RGB delivers <strong>93.01% precision</strong> on bags, while thermal delivers <strong>86.12% recall</strong> on human context!</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Secret #2 - CMAF Smart Gate -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="7">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 07 • Core Innovation 2</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Secret #2: The CMAF Smart Attention Gate</h2>
+
+      <p class="text-neutral-700 text-base mb-6">
+        When both cameras look at a pixel, which one should the system trust? Our <strong>Cross-Modal Attention Fusion (CMAF)</strong> gate decides automatically for every single pixel in milliseconds.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-6">
+        <div class="border border-black p-5">
+          <h3 class="font-bold text-lg mb-2">Scenario A: Bright Concourse, Cold Bag</h3>
+          <p class="text-sm text-neutral-600 mb-3">
+            The thermal camera only sees room-temperature gray floor. But the RGB camera sees a distinct navy-blue backpack with neon zippers.
+          </p>
+          <div class="mono-tag text-xs border border-black p-2 bg-neutral-100">
+            CMAF Gate shifts: <strong>α → 1.0 (Trust 100% RGB)</strong>
+          </div>
+        </div>
+
+        <div class="border border-black p-5">
+          <h3 class="font-bold text-lg mb-2">Scenario B: Dark Stairwell, Night Glare</h3>
+          <p class="text-sm text-neutral-600 mb-3">
+            The RGB camera is blinded by glare or pitch black shadows. But the thermal camera clearly sees a 37°C body moving with a metal cart.
+          </p>
+          <div class="mono-tag text-xs border border-black p-2 bg-neutral-100">
+            CMAF Gate shifts: <strong>α → 0.0 (Trust 100% Thermal)</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-black p-4 w-full text-center mono-tag text-sm font-semibold">
+        Mathematical Formulation: Fused = α · RGB + (1 - α) · Thermal + Residual
+      </div>
+    </div>
+
+    <!-- SLIDE 8: How We Hit >92% (CWAR) -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="8">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 08 • Reaching the 92% Milestone</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Crossing 92%: 2D-Grid Anchor Fusion (CWAR)</h2>
+
+      <p class="text-neutral-700 text-base mb-5">
+        A single standalone dual-stream model peaks around ~89.8% on the test split. To cross the demanding 92% mark, we unite three specialized model variations:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-6 text-sm">
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">EXPERT 1 (v36_main)</div>
+          <p class="text-neutral-600 mb-2">Equipped with Coordinate Attention.</p>
+          <p class="font-semibold">Master of People & Small Abandoned Bags (86.10% AP).</p>
+        </div>
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">EXPERT 2 (v36_eca_rgb)</div>
+          <p class="text-neutral-600 mb-2">Pure channel calibration.</p>
+          <p class="font-semibold">Master of High Precision & Carried Luggage (94.45% AP).</p>
+        </div>
+        <div class="border border-black p-4">
+          <div class="mono-tag text-xs font-bold mb-1">EXPERT 3 (v38_ca_dilated)</div>
+          <p class="text-neutral-600 mb-2">Extended receptive fields + neck.</p>
+          <p class="font-semibold">Master of Recall & Wheeled Trolleys (98.57% AP).</p>
+        </div>
+      </div>
+
+      <div class="border border-black p-4 w-full bg-neutral-50">
+        <div class="mono-tag text-xs font-bold mb-1">HOW DO WE COMBINE THEM? (CWAR)</div>
+        <p class="text-sm text-neutral-800">
+          Instead of letting them fight after drawing boxes, all 3 models vote <strong>simultaneously at all 8,400 coordinate cells</strong> before making a final decision. The confident expert pulls the bounding box into place!
+        </p>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: Results & Benchmark -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="9">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 09 • Experimental Verification</span>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">The Proof: Measured Results on 1,067 Frames</h2>
+
+      <div class="overflow-x-auto w-full mb-6">
+        <table class="w-full border-collapse border border-black text-left text-sm">
+          <thead>
+            <tr class="border-b border-black bg-neutral-100 mono-tag text-xs">
+              <th class="p-3 border-r border-black">System / Architecture</th>
+              <th class="p-3 border-r border-black">Sensors</th>
+              <th class="p-3 border-r border-black">Person AP</th>
+              <th class="p-3 border-r border-black">Bag AP</th>
+              <th class="p-3 border-r border-black">Unattended AP</th>
+              <th class="p-3 font-bold">Overall Test mAP@50</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-black">
+              <td class="p-3 border-r border-black font-semibold">Stock YOLOv8n</td>
+              <td class="p-3 border-r border-black text-neutral-600">Thermal Only</td>
+              <td class="p-3 border-r border-black">76.29%</td>
+              <td class="p-3 border-r border-black">89.20%</td>
+              <td class="p-3 border-r border-black">81.79%</td>
+              <td class="p-3 font-semibold">86.22%</td>
+            </tr>
+            <tr class="border-b border-black">
+              <td class="p-3 border-r border-black font-semibold">Naive Early Concat (v34)</td>
+              <td class="p-3 border-r border-black text-neutral-600">RGB + Thermal</td>
+              <td class="p-3 border-r border-black">74.50%</td>
+              <td class="p-3 border-r border-black">86.10%</td>
+              <td class="p-3 border-r border-black">77.30%</td>
+              <td class="p-3 font-semibold text-neutral-500">83.68% (Fails)</td>
+            </tr>
+            <tr class="border-b border-black">
+              <td class="p-3 border-r border-black font-semibold">Our Dual-Stream (v36_main)</td>
+              <td class="p-3 border-r border-black text-neutral-600">RGB + Thermal</td>
+              <td class="p-3 border-r border-black">82.42%</td>
+              <td class="p-3 border-r border-black">92.10%</td>
+              <td class="p-3 border-r border-black">86.10%</td>
+              <td class="p-3 font-semibold">89.75%</td>
+            </tr>
+            <tr class="bg-black text-white">
+              <td class="p-3 border-r border-neutral-700 font-bold">Proposed CWAR Triad</td>
+              <td class="p-3 border-r border-neutral-700">RGB + Thermal</td>
+              <td class="p-3 border-r border-neutral-700 font-bold">87.03%</td>
+              <td class="p-3 border-r border-neutral-700 font-bold">96.74%</td>
+              <td class="p-3 border-r border-neutral-700 font-bold">86.92%</td>
+              <td class="p-3 font-bold text-lg">92.33%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full text-center">
+        <div class="border border-black p-3">
+          <div class="text-2xl font-bold">+10.74%</div>
+          <div class="mono-tag text-xs text-neutral-600">Gain on Pedestrian Plumes</div>
+        </div>
+        <div class="border border-black p-3">
+          <div class="text-2xl font-bold">+7.54%</div>
+          <div class="mono-tag text-xs text-neutral-600">Gain on Carried Luggage</div>
+        </div>
+        <div class="border border-black p-3">
+          <div class="text-2xl font-bold">+6.11%</div>
+          <div class="mono-tag text-xs text-neutral-600">Overall Accuracy Jump</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Conclusion & Impact -->
+    <div class="slide flex-col justify-center items-start w-full" data-slide="10">
+      <span class="mono-tag text-xs uppercase tracking-widest text-neutral-500 mb-2">Slide 10 • Summary & Future</span>
+      <h2 class="text-3xl sm:text-5xl font-bold mb-6">Summary: Why This Matters</h2>
+
+      <div class="space-y-4 w-full mb-8">
+        <div class="border-l-2 border-black pl-4">
+          <h3 class="font-bold text-lg">1. Hardware & Physics Matter in AI</h3>
+          <p class="text-sm text-neutral-700">
+            AI cannot magically fix bad sensor data. Decoupling sensors into asymmetric streams respects the physical difference between photons and heat.
+          </p>
+        </div>
+        <div class="border-l-2 border-black pl-4">
+          <h3 class="font-bold text-lg">2. 92.33% Detection Eliminates False Alarms</h3>
+          <p class="text-sm text-neutral-700">
+            High precision (91.8%) and high recall (87.4%) mean security personnel only get alerted for genuine anomalies, not shadows or floor reflections.
+          </p>
+        </div>
+        <div class="border-l-2 border-black pl-4">
+          <h3 class="font-bold text-lg">3. Fully Autonomous & Edge Ready</h3>
+          <p class="text-sm text-neutral-700">
+            At only 4.5M parameters per stream, the architecture runs easily in real-time on edge GPUs at airport gates and transit corridors.
+          </p>
+        </div>
+      </div>
+
+      <div class="border border-black p-5 w-full bg-black text-white flex flex-col sm:flex-row items-center justify-between">
+        <div>
+          <div class="font-bold text-lg">Thank You! Any Questions?</div>
+          <div class="text-xs text-neutral-400 mono-tag mt-1">Autonomous and Cyber-Physical Systems (ACPS) • University of Agder</div>
+        </div>
+        <div class="mt-3 sm:mt-0">
+          <span class="mono-tag text-xs border border-white px-3 py-1">Code & Models Verified</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="border-t border-black px-6 py-4 flex items-center justify-between bg-white">
+    <div class="flex items-center space-x-2">
+      <button onclick="prevSlide()" class="border border-black px-4 py-1.5 text-xs font-bold hover:bg-black hover:text-white transition mono-tag">
+        ← PREV
+      </button>
+      <button onclick="nextSlide()" class="border border-black px-4 py-1.5 text-xs font-bold hover:bg-black hover:text-white transition mono-tag">
+        NEXT →
+      </button>
+    </div>
+
+    <!-- Slide indicator dots / numbers -->
+    <div class="hidden sm:flex items-center space-x-1" id="dots-container">
+      <!-- Generated by JS -->
+    </div>
+
+    <div class="text-xs text-neutral-500 mono-tag">
+      Use <kbd class="border border-neutral-400 px-1 text-[11px]">←</kbd> <kbd class="border border-neutral-400 px-1 text-[11px]">→</kbd> or <kbd class="border border-neutral-400 px-1 text-[11px]">Space</kbd>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function renderSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const activeEl = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeEl) activeEl.classList.add('active');
+
+      document.getElementById('slide-counter').textContent = 
+        `Slide ${currentSlide.toString().padStart(2, '0')} / ${totalSlides.toString().padStart(2, '0')}`;
+
+      updateDots();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        renderSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        renderSlide(currentSlide - 1);
+      }
+    }
+
+    function updateDots() {
+      const container = document.getElementById('dots-container');
+      container.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const btn = document.createElement('button');
+        btn.className = `w-6 h-6 text-xs mono-tag border ${i === currentSlide ? 'border-black bg-black text-white font-bold' : 'border-neutral-300 text-neutral-500 hover:border-black'}`;
+        btn.textContent = i;
+        btn.onclick = () => renderSlide(i);
+        container.appendChild(btn);
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    // Initialize
+    updateDots();
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿% ==============================================================================
+% TABLE VI: Systematic Multi-Axis Architectural Ablation Study (29 Iterations)
+% IEEE Sensors Journal Format (Double-column width table*, clean readable typography)
+% ==============================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Systematic Multi-Axis Architectural Ablation Study Across 29 Iterations on Official Thermal Test Split}
+\label{tab:ablation_study}
+\small
+\renewcommand{\arraystretch}{1.20}
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{l l l c c c c c}
+\toprule
+\textbf{Ablation Axis} & 
+\textbf{ID} & 
+\textbf{Architectural Hypothesis / Modification} & 
+\textbf{\makecell[c]{Params\\(M)}} & 
+\textbf{\makecell[c]{Precision\\(\%)}} & 
+\textbf{\makecell[c]{Recall\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50\\(\%)}} & 
+\textbf{\makecell[c]{mAP@50--95\\(\%)}} \\
+\midrule
+\multirow{5}{*}{\textbf{\makecell[l]{1. Receptive Field\\\& Dilation}}}
+& \texttt{v20} & Uniform Dilation (=2$ across P2--P5 stages) & 3.01 & 80.77 & 82.28 & 85.22 & 60.60 \\
+& \texttt{v25} & Graduated Dilation (=1$ @ P2/P3, =2$ @ P4, =3$ @ P5) & 3.01 & 81.09 & 82.99 & 85.89 & 61.15 \\
+& \texttt{v26} & Dilation Restricted to P4 Only (=2$ @ P4, =1$ elsewhere) & 3.01 & 85.68 & 79.83 & 86.52 & 62.56 \\
+& \texttt{v29} & Dilation at P3 and P4 (=2$ @ P3/P4) & 3.01 & 83.00 & 80.97 & 84.36 & 61.41 \\
+& \textbf{\texttt{v21}} & \textbf{Stage-Selective Hybrid Dilation (=1$ @ P2/P3, =2$ @ P4/P5)} & \textbf{3.01} & \textbf{85.39} & \textbf{80.90} & \textbf{87.41} & \textbf{63.03} \\
+\midrule
+\multirow{5}{*}{\textbf{\makecell[l]{2. Attention\\Mechanisms}}}
+& \texttt{v7} & Convolutional Block Attention Module (CBAM) & 3.01 & 81.61 & 81.94 & 85.96 & 62.72 \\
+& \texttt{v15}& Dual Sequential ECA in Bottlenecks (post-cv1 and post-cv2) & 3.01 & 89.24 & 75.89 & 85.50 & 62.19 \\
+& \texttt{v16}& Coordinate Attention (Direction-Aware 1D Pooling) & 3.02 & 83.10 & 80.67 & 85.47 & 62.72 \\
+& \texttt{v10}& Adaptive Kernel ECA (Dynamic kernel =5$ in deep stages) & 3.01 & 87.89 & 79.74 & 85.51 & 61.57 \\
+& \textbf{\texttt{v5b}}& \textbf{Single ECA (=3$) in Bottleneck Residual Path} & \textbf{3.01} & \textbf{87.22} & \textbf{80.77} & \textbf{87.39} & \textbf{63.41} \\
+\midrule
+\multirow{3}{*}{\textbf{\makecell[l]{3. Convolutional\\Variants}}}
+& \texttt{v8} & Partial Convolutions (FasterNet PConv, 1/4 channels) & 3.01 & 84.39 & 73.52 & 81.09 & 56.71 \\
+& \texttt{v14}& GhostConvolutions in Bottlenecks (Cheap Linear Operations) & 2.89 & 79.34 & 81.65 & 84.25 & 59.78 \\
+& \texttt{v6} & Deformable Convolutions (DCNv3 in Backbone Stages) & 3.01 & 62.64 & 64.39 & 66.65 & 43.89 \\
+\midrule
+\multirow{3}{*}{\textbf{\makecell[l]{4. Multi-Scale\\Neck Gating}}}
+& \texttt{v9} & Full-Network ECA (Propagated into all 4 PANet stages) & 3.01 & 85.81 & 77.70 & 85.45 & 61.11 \\
+& \texttt{v31}& SPPF\_ECA (ECA Channel Gating directly post-SPPF pooling) & 3.01 & 81.85 & \textbf{84.95} & 87.13 & 63.34 \\
+& \texttt{v33}& Concat\_ECA (ECA Channel Gating at Multi-Scale Skip Concat) & 3.01 & 83.57 & 80.35 & 85.31 & 62.09 \\
+\midrule
+\multirow{3}{*}{\textbf{\makecell[l]{5. Training\\Convergence}}}
+& \texttt{v21}& Hybrid Dilated ECA + Standard Linear Schedule (50 Epochs) & 3.01 & 85.39 & 80.90 & 87.41 & 63.03 \\
+& \texttt{v27}& Hybrid Dilated ECA + Cosine Annealing (75 Epochs) & 3.01 & \textbf{88.47} & 80.43 & 87.57 & 63.49 \\
+& \rowcolor{gray!12}
+& \textbf{\texttt{v30}}& \textbf{Hybrid Dilated ECA + Cosine Annealing (100 Epochs, \texttt{close\_mosaic=20})} & \textbf{3.01} & 87.22 & 83.38 & \textbf{87.89} & \textbf{64.73} \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Ablation Insights}: (1) Stage-selective dilation (=2$ restricted to P4/P5) prevents gridding artifacts in early shallow layers. (2) Lightweight 1D ECA gating in the residual path outperforms heavy 2D spatial attention (CBAM/CA). (3) DCNv3 struggles under low-texture thermal gradients. (4) Cosine annealing with mosaic closure unlocks optimal boundary localization (+1.7pp mAP@50--95).\par}
+\end{table*}

@@ -1,0 +1,482 @@
+{
+  "1_v36_main_single|val|rect=True": {
+    "mAP50": 90.53,
+    "mAP50_95": 66.11,
+    "P": 85.42,
+    "R": 87.05,
+    "per_cls": {
+      "person": 87.14,
+      "trolley": 98.09,
+      "bag": 91.52,
+      "unattended": 85.38
+    }
+  },
+  "1_v36_main_single|val|rect=False": {
+    "mAP50": 89.68,
+    "mAP50_95": 65.44,
+    "P": 85.08,
+    "R": 86.5,
+    "per_cls": {
+      "person": 87.54,
+      "trolley": 97.95,
+      "bag": 91.12,
+      "unattended": 82.12
+    }
+  },
+  "1_v36_main_single|test|rect=True": {
+    "mAP50": 89.74,
+    "mAP50_95": 66.99,
+    "P": 91.5,
+    "R": 85.05,
+    "per_cls": {
+      "person": 82.41,
+      "trolley": 98.36,
+      "bag": 92.1,
+      "unattended": 86.1
+    }
+  },
+  "1_v36_main_single|test|rect=False": {
+    "mAP50": 88.67,
+    "mAP50_95": 66.33,
+    "P": 87.03,
+    "R": 84.57,
+    "per_cls": {
+      "person": 80.07,
+      "trolley": 97.99,
+      "bag": 91.53,
+      "unattended": 85.11
+    }
+  },
+  "2_v36_eca_single|val|rect=True": {
+    "mAP50": 89.77,
+    "mAP50_95": 65.8,
+    "P": 85.41,
+    "R": 86.05,
+    "per_cls": {
+      "person": 85.06,
+      "trolley": 97.34,
+      "bag": 89.41,
+      "unattended": 87.26
+    }
+  },
+  "2_v36_eca_single|val|rect=False": {
+    "mAP50": 89.18,
+    "mAP50_95": 64.93,
+    "P": 89.51,
+    "R": 81.07,
+    "per_cls": {
+      "person": 86.12,
+      "trolley": 97.62,
+      "bag": 89.26,
+      "unattended": 83.72
+    }
+  },
+  "2_v36_eca_single|test|rect=True": {
+    "mAP50": 89.87,
+    "mAP50_95": 66.75,
+    "P": 93.01,
+    "R": 82.74,
+    "per_cls": {
+      "person": 82.21,
+      "trolley": 98.13,
+      "bag": 94.45,
+      "unattended": 84.67
+    }
+  },
+  "2_v36_eca_single|test|rect=False": {
+    "mAP50": 89.14,
+    "mAP50_95": 66.59,
+    "P": 89.67,
+    "R": 78.95,
+    "per_cls": {
+      "person": 81.15,
+      "trolley": 98.04,
+      "bag": 95.24,
+      "unattended": 82.13
+    }
+  },
+  "3_v36_main_flipTTA|val|rect=True": {
+    "mAP50": 91.25,
+    "mAP50_95": 66.34,
+    "P": 84.76,
+    "R": 88.69,
+    "per_cls": {
+      "person": 88.28,
+      "trolley": 98.22,
+      "bag": 93.0,
+      "unattended": 85.49
+    }
+  },
+  "3_v36_main_flipTTA|val|rect=False": {
+    "mAP50": 90.82,
+    "mAP50_95": 65.86,
+    "P": 83.37,
+    "R": 88.35,
+    "per_cls": {
+      "person": 89.92,
+      "trolley": 98.08,
+      "bag": 91.62,
+      "unattended": 83.65
+    }
+  },
+  "3_v36_main_flipTTA|test|rect=True": {
+    "mAP50": 90.77,
+    "mAP50_95": 67.31,
+    "P": 89.42,
+    "R": 87.92,
+    "per_cls": {
+      "person": 82.75,
+      "trolley": 98.61,
+      "bag": 93.28,
+      "unattended": 88.44
+    }
+  },
+  "3_v36_main_flipTTA|test|rect=False": {
+    "mAP50": 89.89,
+    "mAP50_95": 67.29,
+    "P": 88.15,
+    "R": 83.92,
+    "per_cls": {
+      "person": 82.38,
+      "trolley": 98.45,
+      "bag": 92.92,
+      "unattended": 85.79
+    }
+  },
+  "4_v36_eca_flipTTA|val|rect=True": {
+    "mAP50": 90.57,
+    "mAP50_95": 66.39,
+    "P": 86.21,
+    "R": 85.02,
+    "per_cls": {
+      "person": 85.7,
+      "trolley": 98.17,
+      "bag": 90.15,
+      "unattended": 88.25
+    }
+  },
+  "4_v36_eca_flipTTA|val|rect=False": {
+    "mAP50": 89.94,
+    "mAP50_95": 65.62,
+    "P": 88.35,
+    "R": 82.34,
+    "per_cls": {
+      "person": 86.85,
+      "trolley": 97.81,
+      "bag": 90.58,
+      "unattended": 84.5
+    }
+  },
+  "4_v36_eca_flipTTA|test|rect=True": {
+    "mAP50": 90.48,
+    "mAP50_95": 67.18,
+    "P": 92.52,
+    "R": 84.63,
+    "per_cls": {
+      "person": 84.42,
+      "trolley": 98.19,
+      "bag": 94.12,
+      "unattended": 85.17
+    }
+  },
+  "4_v36_eca_flipTTA|test|rect=False": {
+    "mAP50": 90.28,
+    "mAP50_95": 67.07,
+    "P": 88.84,
+    "R": 82.04,
+    "per_cls": {
+      "person": 83.8,
+      "trolley": 98.21,
+      "bag": 95.06,
+      "unattended": 84.05
+    }
+  },
+  "5_avg_main_eca|val|rect=True": {
+    "mAP50": 91.4,
+    "mAP50_95": 67.55,
+    "P": 89.1,
+    "R": 83.88,
+    "per_cls": {
+      "person": 87.77,
+      "trolley": 98.17,
+      "bag": 91.75,
+      "unattended": 87.91
+    }
+  },
+  "5_avg_main_eca|val|rect=False": {
+    "mAP50": 90.88,
+    "mAP50_95": 66.9,
+    "P": 92.46,
+    "R": 80.43,
+    "per_cls": {
+      "person": 88.73,
+      "trolley": 98.04,
+      "bag": 91.61,
+      "unattended": 85.15
+    }
+  },
+  "5_avg_main_eca|test|rect=True": {
+    "mAP50": 91.29,
+    "mAP50_95": 68.53,
+    "P": 92.67,
+    "R": 86.18,
+    "per_cls": {
+      "person": 84.78,
+      "trolley": 98.22,
+      "bag": 96.04,
+      "unattended": 86.13
+    }
+  },
+  "5_avg_main_eca|test|rect=False": {
+    "mAP50": 90.37,
+    "mAP50_95": 67.77,
+    "P": 86.33,
+    "R": 85.05,
+    "per_cls": {
+      "person": 83.11,
+      "trolley": 98.06,
+      "bag": 95.59,
+      "unattended": 84.73
+    }
+  },
+  "6_concat_main_eca|val|rect=True": {
+    "mAP50": 91.08,
+    "mAP50_95": 66.78,
+    "P": 88.42,
+    "R": 83.68,
+    "per_cls": {
+      "person": 87.39,
+      "trolley": 98.09,
+      "bag": 91.44,
+      "unattended": 87.41
+    }
+  },
+  "6_concat_main_eca|val|rect=False": {
+    "mAP50": 90.41,
+    "mAP50_95": 66.32,
+    "P": 85.9,
+    "R": 84.62,
+    "per_cls": {
+      "person": 88.51,
+      "trolley": 97.92,
+      "bag": 91.53,
+      "unattended": 83.66
+    }
+  },
+  "6_concat_main_eca|test|rect=True": {
+    "mAP50": 90.23,
+    "mAP50_95": 67.78,
+    "P": 90.24,
+    "R": 87.16,
+    "per_cls": {
+      "person": 82.16,
+      "trolley": 98.37,
+      "bag": 94.18,
+      "unattended": 86.19
+    }
+  },
+  "6_concat_main_eca|test|rect=False": {
+    "mAP50": 89.63,
+    "mAP50_95": 66.84,
+    "P": 85.76,
+    "R": 85.83,
+    "per_cls": {
+      "person": 81.42,
+      "trolley": 98.2,
+      "bag": 93.45,
+      "unattended": 85.44
+    }
+  },
+  "7_concat_main_eca_flip|val|rect=True": {
+    "mAP50": 91.8,
+    "mAP50_95": 66.91,
+    "P": 87.59,
+    "R": 85.62,
+    "per_cls": {
+      "person": 88.86,
+      "trolley": 98.18,
+      "bag": 92.17,
+      "unattended": 87.99
+    }
+  },
+  "7_concat_main_eca_flip|val|rect=False": {
+    "mAP50": 91.13,
+    "mAP50_95": 66.44,
+    "P": 84.99,
+    "R": 85.05,
+    "per_cls": {
+      "person": 90.29,
+      "trolley": 98.0,
+      "bag": 91.81,
+      "unattended": 84.43
+    }
+  },
+  "7_concat_main_eca_flip|test|rect=True": {
+    "mAP50": 90.94,
+    "mAP50_95": 68.04,
+    "P": 89.84,
+    "R": 88.08,
+    "per_cls": {
+      "person": 84.01,
+      "trolley": 98.63,
+      "bag": 93.73,
+      "unattended": 87.4
+    }
+  },
+  "7_concat_main_eca_flip|test|rect=False": {
+    "mAP50": 90.47,
+    "mAP50_95": 67.55,
+    "P": 85.12,
+    "R": 86.73,
+    "per_cls": {
+      "person": 84.23,
+      "trolley": 98.38,
+      "bag": 93.45,
+      "unattended": 85.83
+    }
+  },
+  "8_avg_main_eca_v30|val|rect=True": {
+    "mAP50": 91.24,
+    "mAP50_95": 67.77,
+    "P": 89.99,
+    "R": 83.99,
+    "per_cls": {
+      "person": 87.42,
+      "trolley": 98.24,
+      "bag": 90.86,
+      "unattended": 88.45
+    }
+  },
+  "8_avg_main_eca_v30|val|rect=False": {
+    "mAP50": 91.09,
+    "mAP50_95": 67.29,
+    "P": 90.51,
+    "R": 82.0,
+    "per_cls": {
+      "person": 88.26,
+      "trolley": 98.17,
+      "bag": 91.72,
+      "unattended": 86.2
+    }
+  },
+  "8_avg_main_eca_v30|test|rect=True": {
+    "mAP50": 91.4,
+    "mAP50_95": 69.16,
+    "P": 91.36,
+    "R": 87.65,
+    "per_cls": {
+      "person": 85.65,
+      "trolley": 98.5,
+      "bag": 96.2,
+      "unattended": 85.23
+    }
+  },
+  "8_avg_main_eca_v30|test|rect=False": {
+    "mAP50": 90.62,
+    "mAP50_95": 68.43,
+    "P": 87.13,
+    "R": 84.83,
+    "per_cls": {
+      "person": 83.21,
+      "trolley": 98.38,
+      "bag": 96.11,
+      "unattended": 84.78
+    }
+  },
+  "9_concat_main_eca_v30_v37|val|rect=True": {
+    "mAP50": 90.81,
+    "mAP50_95": 66.83,
+    "P": 88.42,
+    "R": 83.75,
+    "per_cls": {
+      "person": 87.4,
+      "trolley": 98.12,
+      "bag": 91.12,
+      "unattended": 86.59
+    }
+  },
+  "9_concat_main_eca_v30_v37|val|rect=False": {
+    "mAP50": 90.47,
+    "mAP50_95": 66.35,
+    "P": 86.1,
+    "R": 84.67,
+    "per_cls": {
+      "person": 89.17,
+      "trolley": 97.88,
+      "bag": 91.26,
+      "unattended": 83.59
+    }
+  },
+  "9_concat_main_eca_v30_v37|test|rect=True": {
+    "mAP50": 90.91,
+    "mAP50_95": 68.23,
+    "P": 90.25,
+    "R": 87.09,
+    "per_cls": {
+      "person": 83.36,
+      "trolley": 98.62,
+      "bag": 95.62,
+      "unattended": 86.04
+    }
+  },
+  "9_concat_main_eca_v30_v37|test|rect=False": {
+    "mAP50": 90.17,
+    "mAP50_95": 66.82,
+    "P": 87.02,
+    "R": 84.27,
+    "per_cls": {
+      "person": 82.3,
+      "trolley": 98.49,
+      "bag": 94.58,
+      "unattended": 85.31
+    }
+  },
+  "10_concat_all_flip|val|rect=True": {
+    "mAP50": 91.36,
+    "mAP50_95": 67.15,
+    "P": 87.58,
+    "R": 85.58,
+    "per_cls": {
+      "person": 87.98,
+      "trolley": 98.42,
+      "bag": 91.61,
+      "unattended": 87.44
+    }
+  },
+  "10_concat_all_flip|val|rect=False": {
+    "mAP50": 90.77,
+    "mAP50_95": 66.44,
+    "P": 84.99,
+    "R": 85.05,
+    "per_cls": {
+      "person": 89.9,
+      "trolley": 98.18,
+      "bag": 91.17,
+      "unattended": 83.82
+    }
+  },
+  "10_concat_all_flip|test|rect=True": {
+    "mAP50": 91.19,
+    "mAP50_95": 68.26,
+    "P": 89.21,
+    "R": 88.3,
+    "per_cls": {
+      "person": 83.75,
+      "trolley": 98.63,
+      "bag": 95.42,
+      "unattended": 86.97
+    }
+  },
+  "10_concat_all_flip|test|rect=False": {
+    "mAP50": 90.75,
+    "mAP50_95": 67.68,
+    "P": 85.45,
+    "R": 86.46,
+    "per_cls": {
+      "person": 83.95,
+      "trolley": 98.46,
+      "bag": 94.72,
+      "unattended": 85.85
+    }
+  }
+}

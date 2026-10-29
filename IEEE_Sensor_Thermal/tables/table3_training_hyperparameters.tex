@@ -1,0 +1,38 @@
+﻿% ==============================================================================
+% TABLE III: Summary of Two-Stage Training Strategy and Hyperparameters
+% IEEE Sensors Journal Format (Single-column width, clean booktabs typography)
+% ==============================================================================
+
+\begin{table}[t]
+\centering
+\caption{Summary of Two-Stage Training Strategy and Hyperparameters}
+\label{tab:training_hyperparameters}
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{8pt}
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Hyperparameter} & \textbf{Stage-1: Foundation} & \textbf{Stage-2: Refinement} \\
+\midrule
+Epochs & 80 & 20 (Epochs 81--100) \\
+Input Resolution &  \times 640$ &  \times 640$ \\
+Batch Size & 16 & 16 \\
+Optimizer & SGD & SGD \\
+Initial Learning Rate ($\eta_0$) & 0.01 & 0.001 \\
+Final Learning Rate ($\eta_f$) & 0.001 & 0.0001 \\
+LR Scheduler & Cosine Annealing & Cosine Annealing \\
+Warmup Epochs & 3.0 & 0 (None) \\
+Warmup Momentum & 0.800 & --- \\
+Momentum ($\beta$) & 0.937 & 0.937 \\
+Weight Decay & 0.0005 & 0.0005 \\
+Box Loss Weight ($\lambda_{\text{box}}$) & 7.5 & 7.5 \\
+Classification Weight ($\lambda_{\text{cls}}$) & 0.5 & 0.5 \\
+DFL Weight ($\lambda_{\text{dfl}}$) & 1.5 & 1.5 \\
+Mosaic Augmentation & 1.0 (Active) & 0.0 (Disabled / Closed) \\
+Affine Scaling & $\pm 0.5$ & $\pm 0.2$ \\
+Horizontal Flip ($) & 0.5 & 0.5 \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: Stage-1 emphasizes broad representation learning with active mosaic synthesis. Stage-2 closes mosaic augmentation (\texttt{close\_mosaic=20}) to eliminate synthetic border artifacts and allow dilated ECA kernels to converge on true thermal object contours.\par}
+\end{table}

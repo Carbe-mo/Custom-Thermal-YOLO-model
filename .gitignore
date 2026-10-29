@@ -16,6 +16,13 @@ data/fusion/
 data/fusion_data.yaml
 data/fusion_dual/
 data/fusion_dual_data.yaml
+data/fusion6/
+data/fusion6_unreg/
+weights/*.info
+weights/*_esp.onnx
+*.torchscript
+*.onnx
+!weights/*.onnx
 *.cache
 *.zip
 

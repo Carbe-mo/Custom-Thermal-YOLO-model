@@ -1,0 +1,12 @@
+{
+  "scale": 0.6900000000000002,
+  "x0": 98.99999999999999,
+  "y0": 70.69999999999999,
+  "mad_scale": 0.0,
+  "mad_x0": 0.0,
+  "mad_y0": 0.0,
+  "n_pairs": 107,
+  "n_used": 80,
+  "median_score": 0.7794196009635925,
+  "convention": "rgb_px = (x0 + scale*u, y0 + scale*v), u,v thermal px at 640x480"
+}

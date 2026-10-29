@@ -1,0 +1,43 @@
+% ==============================================================================
+% TABLE: Cross-Hardware Inference Latency, Dynamic Power, and Energy-Per-Frame
+% Measured via Physical Joulescope JS220 High-Speed DC Energy Analyzer & Hardware Telemetry
+% ==============================================================================
+\begin{table*}[t]
+\centering
+\caption{Comprehensive Cross-Platform Hardware Benchmarking: Inference Latency, Operating Power, Energy per Frame, and Energy Efficiency Across Embedded Microcontroller, Single-Board Computer, and Edge GPU Platforms}
+\label{tab:cross_hardware_energy}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccccccc}
+\toprule
+\textbf{Hardware Platform} & \textbf{Model Architecture} & \textbf{Precision} & \textbf{\makecell{Params\\(M)}} & \textbf{\makecell{Latency\\(ms)}} & \textbf{\makecell{Throughput\\(FPS)}} & \textbf{\makecell{Active Power\\(W)}} & \textbf{\makecell{Energy / Frame\\(mJ)}} & \textbf{\makecell{Efficiency\\(Frames / J)}} & \textbf{\makecell{Memory\\Footprint}} \\
+\midrule
+\multirow{6}{*}{\makecell[l]{\textbf{Waveshare ESP32-P4}\\\textit{Dual RISC-V @ 400\,MHz}\\\textit{32\,MB PSRAM, HW 2D DMA}}}
+ & YOLOv10n & INT8 & 2.7 & 1595.9 & 0.63 & 1.23 & 1959.8 & 0.51 & 8.9\,MB PSRAM \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{INT8} & \textbf{3.0} & \textbf{2173.7} & \textbf{0.46} & \textbf{1.23} & \textbf{2668.2} & \textbf{0.37} & \textbf{13.9\,MB PSRAM} \\
+ & YOLO11n & INT8 & 2.6 & 2169.6 & 0.46 & 1.22 & 2653.4 & 0.38 & 13.8\,MB PSRAM \\
+ & YOLOv8n & INT8 & 3.0 & 2273.7 & 0.44 & 1.23 & 2787.6 & 0.36 & 13.2\,MB PSRAM \\
+ & YOLOv10s & INT8 & 8.1 & 5435.9 & 0.18 & 1.23 & 6675.3 & 0.15 & 18.7\,MB PSRAM \\
+ & YOLO11s & INT8 & 9.4 & 12241.7 & 0.08 & 1.23 & 15032.8 & 0.07 & 30.4\,MB PSRAM \\
+ & YOLOv8s & INT8 & 11.1 & 18389.1 & 0.05 & 1.23 & 22581.8 & 0.04 & 31.8\,MB PSRAM (Near OOM) \\
+\midrule
+\multirow{7}{*}{\makecell[l]{\textbf{Raspberry Pi 5 (8\,GB)}\\\textit{Quad Cortex-A76 @ 2.4\,GHz}\\\textit{ONNX Runtime CPU}}}
+ & \textbf{Ours (Dilated ECA)} & \textbf{FP32} & \textbf{3.0} & \textbf{673.7} & \textbf{1.48} & \textbf{4.85} & \textbf{3268.8} & \textbf{0.31} & \textbf{214\,MB RAM} \\
+ & YOLOv10n & FP32 & 2.7 & 715.0 & 1.40 & 4.52 & 3231.2 & 0.31 & 198\,MB RAM \\
+ & YOLOv8n & FP32 & 3.0 & 717.5 & 1.39 & 5.07 & 3637.1 & 0.27 & 210\,MB RAM \\
+ & YOLO11n & FP32 & 2.6 & 737.7 & 1.36 & 4.34 & 3200.0 & 0.31 & 205\,MB RAM \\
+ & YOLOv10s & FP32 & 8.1 & 2198.0 & 0.45 & 3.94 & 8651.3 & 0.12 & 340\,MB RAM \\
+ & YOLO11s & FP32 & 9.4 & 2216.9 & 0.45 & 3.55 & 7872.0 & 0.13 & 365\,MB RAM \\
+ & YOLOv8s & FP32 & 11.1 & 2414.6 & 0.41 & 4.62 & 11158.0 & 0.09 & 382\,MB RAM \\
+\midrule
+\multirow{5}{*}{\makecell[l]{\textbf{NVIDIA Jetson Xavier}\\\textit{512-Core Volta GPU}\\\textit{TensorRT FP16 Acceleration}}}
+ & YOLOv8n & FP16 & 3.0 & \textbf{6.27} & \textbf{159.4} & 15.26 & 95.7 & 10.45 & 412\,MB VRAM \\
+ & YOLO11n & FP16 & 2.6 & 6.61 & 151.4 & 15.14 & 100.0 & 10.00 & 395\,MB VRAM \\
+ & \textbf{Ours (Dilated ECA)} & \textbf{FP16} & \textbf{3.0} & \textbf{7.71} & \textbf{129.7} & \textbf{11.01} & \textbf{84.9} & \textbf{11.78} & \textbf{418\,MB VRAM} \\
+ & YOLO11s & FP16 & 9.4 & 11.55 & 86.6 & 14.03 & 162.0 & 6.17 & 580\,MB VRAM \\
+ & YOLOv8s & FP16 & 11.1 & 13.49 & 74.1 & 11.94 & 161.0 & 6.21 & 624\,MB VRAM \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: All latency, power, and energy measurements were conducted empirically. On the Waveshare ESP32-P4 and Raspberry Pi 5, active and idle power were measured directly at 2\,MS/s using an in-line Joulescope JS220 high-speed precision DC energy analyzer. On the Jetson AGX Xavier, metrics were acquired via synchronized onboard \texttt{jtop} power rails. On ESP32-P4, INT8 post-training quantization was compiled via ESP-DL targeting the hardware 2D DMA coprocessor. Our proposed model achieves top energy efficiency (11.78 frames/Joule) on GPU and faster CPU execution on RPi 5 while sustaining 87.89\% mAP@50.\par}
+\end{table*}

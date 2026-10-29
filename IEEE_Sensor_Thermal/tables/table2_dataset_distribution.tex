@@ -1,0 +1,23 @@
+% TABLE II: Thermal Security Dataset Class Definitions and Instance Distribution Across Splits
+\begin{table}[t]
+\centering
+\caption{Thermal Security Dataset Class Definitions and Instance Counts Across Data Splits}
+\label{tab:dataset_distribution}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Target Class} & \textbf{Semantic Surveillance Context} & \textbf{Train} & \textbf{Val} & \textbf{Test} & \textbf{Total (\%)} \\
+\midrule
+\textbf{Person}     & Pedestrians and moving individuals       & 742     & 237 & 97  & 1{,}076 (28.0\%) \\
+\textbf{Trolley}    & Wheeled baggage trolleys and carts       & 1{,}514 & 407 & 224 & 2{,}145 (55.7\%) \\
+\textbf{Bag}        & Hand-carried backpacks and luggage       & 250     & 64  & 39  & 353 (9.2\%) \\
+\textbf{Unattended} & Stationary / abandoned luggage anomaly   & 177     & 68  & 30  & 275 (7.1\%) \\
+\midrule
+\textbf{Total Instances} & All annotated bounding boxes       & 2{,}683 & 776 & 390 & 3{,}849 (100\%) \\
+\textbf{Total Images}    & Unique infrared thermal frames      & 746     & 213 & 108 & 1{,}067 (100\%) \\
+\bottomrule
+\end{tabular}%
+}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Note}: Instance distribution across official train, validation, and held-out test splits. Demonstrates severe real-world class imbalance where anomalous unattended luggage accounts for only 7.1\% of all labels.\par}
+\end{table}

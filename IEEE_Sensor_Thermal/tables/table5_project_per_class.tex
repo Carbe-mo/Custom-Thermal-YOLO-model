@@ -1,0 +1,36 @@
+﻿% ==============================================================================
+% TABLE V: Per-Class Performance Breakdown on Our Held-Out Test Split
+% Compares Baseline YOLOv8n vs. Proposed Hybrid Dilated ECA Model
+% Target: IEEE Sensors Journal (Double-column width table*)
+% ==============================================================================
+
+\begin{table*}[t]
+\centering
+\caption{Per-Class Object Detection and Spatial Localization Performance Breakdown on Our Thermal Test Split}
+\label{tab:per_class_breakdown}
+\small
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{11pt}
+\begin{tabular}{l cccc cccc}
+\toprule
+\multirow{2}{*}{\textbf{Target Class}} & 
+\multicolumn{4}{c}{\textbf{Stock Baseline (YOLOv8n)}} & 
+\multicolumn{4}{c}{\textbf{Proposed Model (Hybrid Dilated ECA)}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+& \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} 
+& \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\
+\midrule
+\textbf{Person}             & 76.8\% & 57.9\% & 72.6\% & 46.6\% & \textbf{79.1\%} & \textbf{66.4\%} & \textbf{76.9\%} & \textbf{51.1\%} \\
+\textbf{Trolley}            & 91.7\% & 93.8\% & 97.4\% & 81.0\% & \textbf{95.0\%} & \textbf{94.0\%} & \textbf{97.9\%} & \textbf{82.5\%} \\
+\textbf{Bag}                & 76.8\% & 79.5\% & 89.2\% & \textbf{66.7\%} & 76.0\% & \textbf{89.7\%} & \textbf{92.7\%} & 66.0\% \\
+\textbf{Unattended Anomaly} & \textbf{100.0\%} & 72.3\% & 82.8\% & 55.8\% & 98.7\% & \textbf{83.3\%} & \textbf{84.1\%} & \textbf{59.3\%} \\
+\midrule
+\rowcolor{gray!12}
+\textbf{Overall Mean (mAP)} & 86.31\% & 75.86\% & 85.50\% & 62.55\% & \textbf{87.22\%} & \textbf{83.38\%} & \textbf{87.89\%} & \textbf{64.73\%} \\
+\rowcolor{gray!06}
+\multicolumn{1}{l}{\textit{Improvement ($\Delta$)}} & \multicolumn{4}{c}{\textit{Baseline Reference}} & \textbf{+0.91pp} & \textbf{+7.52pp} & \textbf{+2.39pp} & \textbf{+2.18pp} \\
+\bottomrule
+\end{tabular}
+\vspace{1ex}
+{\raggedright \footnotesize \textit{Key Finding}: The proposed architecture yields substantial recall gains on critical security targets (+8.5pp for Person, +10.2pp for Bag, and +11.0pp for Unattended anomaly) and boosts tight spatial localization (+4.5pp mAP@50--95 for Person, +3.5pp for Unattended), resolving severe thermal boundary blur.\par}
+\end{table*}

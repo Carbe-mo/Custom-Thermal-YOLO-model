@@ -1,0 +1,43 @@
+% TABLE IV: Systematic Multi-Axis Architectural Ablation Study (29 Iterations)
+\begin{table*}[t]
+\centering
+\caption{Systematic Architectural Ablation Study Across 29 Iterations on Official Test Split}
+\label{tab:ablation_study}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllccccc}
+\toprule
+\textbf{Category} & \textbf{Model ID} & \textbf{Architectural Hypothesis / Modification} & \textbf{Params (M)} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\
+\midrule
+\multirow{5}{*}{\textbf{Receptive Field \& Dilation}}
+& \texttt{v20} & Uniform Dilation ($d=2$ across P2--P5) & 3.01 & 80.77\% & 82.28\% & 85.22\% & 60.60\% \\
+& \texttt{v25} & Graduated Dilation ($d=1$ @ P2/P3, $d=2$ @ P4, $d=3$ @ P5) & 3.01 & 81.09\% & 82.99\% & 85.89\% & 61.15\% \\
+& \texttt{v26} & Dilation Restricted to P4 Only ($d=2$ @ P4, $d=1$ elsewhere) & 3.01 & 85.68\% & 79.83\% & 86.52\% & 62.56\% \\
+& \texttt{v29} & Dilation at P3 and P4 ($d=2$ @ P3/P4) & 3.01 & 83.00\% & 80.97\% & 84.36\% & 61.41\% \\
+& \textbf{\texttt{v21}} & \textbf{Stage-Selective Hybrid Dilation ($d=1$ @ P2/P3, $d=2$ @ P4/P5)} & \textbf{3.01} & \textbf{85.39\%} & \textbf{80.90\%} & \textbf{87.41\%} & \textbf{63.03\%} \\
+\midrule
+\multirow{5}{*}{\textbf{Attention Mechanisms}}
+& \texttt{v7} & Convolutional Block Attention Module (CBAM) & 3.01 & 81.61\% & 81.94\% & 85.96\% & 62.72\% \\
+& \texttt{v15}& Dual Sequential ECA in Bottlenecks (post-cv1 and post-cv2) & 3.01 & 89.24\% & 75.89\% & 85.50\% & 62.19\% \\
+& \texttt{v16}& Coordinate Attention (Direction-Aware Pooling) & 3.02 & 83.10\% & 80.67\% & 85.47\% & 62.72\% \\
+& \texttt{v10}& Adaptive Kernel ECA (Dynamic kernel $k=5$ in deep stages) & 3.01 & 87.89\% & 79.74\% & 85.51\% & 61.57\% \\
+& \textbf{\texttt{v5b}}& \textbf{Single ECA ($k=3$) in Residual Path} & \textbf{3.01} & \textbf{87.22\%} & \textbf{80.77\%} & \textbf{87.39\%} & \textbf{63.41\%} \\
+\midrule
+\multirow{3}{*}{\textbf{Convolutional Variants}}
+& \texttt{v8} & Partial Convolutions (FasterNet PConv, 1/4 channels) & 3.01 & 84.39\% & 73.52\% & 81.09\% & 56.71\% \\
+& \texttt{v14}& GhostConvolutions in Bottlenecks (Cheap Linear Ops) & 2.89 & 79.34\% & 81.65\% & 84.25\% & 59.78\% \\
+& \texttt{v6} & Deformable Convolutional Networks (DCNv3 in Backbone) & 3.01 & 62.64\% & 64.39\% & 66.65\% & 43.89\% \\
+\midrule
+\multirow{3}{*}{\textbf{Multi-Scale Neck Gating}}
+& \texttt{v9} & Full-Network ECA (Propagated into all 4 PANet stages) & 3.01 & 85.81\% & 77.70\% & 85.45\% & 61.11\% \\
+& \texttt{v31}& SPPF\_ECA (ECA Channel Gating directly after SPPF pooling) & 3.01 & 81.85\% & 84.95\% & 87.13\% & 63.34\% \\
+& \texttt{v33}& Concat\_ECA (ECA Channel Gating at Multi-Scale Skip Concat) & 3.01 & 83.57\% & 80.35\% & 85.31\% & 62.09\% \\
+\midrule
+\multirow{3}{*}{\textbf{Training Convergence}}
+& \texttt{v21}& Hybrid Dilated ECA + Standard Linear Schedule (50 Epochs) & 3.01 & 85.39\% & 80.90\% & 87.41\% & 63.03\% \\
+& \texttt{v27}& Hybrid Dilated ECA + Cosine Annealing (75 Epochs) & 3.01 & 88.47\% & 80.43\% & 87.57\% & 63.49\% \\
+& \rowcolor{gray!10}
+& \textbf{\texttt{v30}}& \textbf{Hybrid Dilated ECA + Cosine Annealing (100 Epochs, close\_mosaic=20)} & \textbf{3.01} & \textbf{87.22\%} & \textbf{83.38\%} & \textbf{87.89\%} & \textbf{64.73\%} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}

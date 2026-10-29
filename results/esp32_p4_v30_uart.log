@@ -1,0 +1,112 @@
+ESP-ROM:esp32p4-eco2-20240710
+Build:Jul 10 2024
+rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1a54
+load:0x4ff2abd0,len:0xf2c
+load:0x4ff2cbd0,len:0x3320
+entry 0x4ff2abda
+[0;32mI (25) boot: ESP-IDF v5.3.2 2nd stage bootloader[0m
+[0;32mI (26) boot: compile time Sep 21 2026 21:02:09[0m
+[0;32mI (26) boot: Multicore bootloader[0m
+[0;32mI (30) boot: chip revision: v1.0[0m
+[0;32mI (32) boot: efuse block revision: v0.3[0m
+[0;32mI (37) qio_mode: Enabling default flash chip QIO[0m
+[0;32mI (42) boot.esp32p4: SPI Speed      : 80MHz[0m
+[0;32mI (47) boot.esp32p4: SPI Mode       : QIO[0m
+[0;32mI (52) boot.esp32p4: SPI Flash Size : 16MB[0m
+[0;32mI (57) boot: Enabling RNG early entropy source...[0m
+[0;32mI (62) boot: Partition Table:[0m
+[0;32mI (66) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (73) boot:  0 nvs              WiFi data        01 02 0000a000 00005000[0m
+[0;32mI (80) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (88) boot:  2 factory          factory app      00 00 00010000 007d0000[0m
+[0;32mI (96) boot: End of partition table[0m
+[0;32mI (99) esp_image: segment 0: paddr=00010020 vaddr=482d0020 size=358344h (3507012) map[0m
+[0;32mI (645) esp_image: segment 1: paddr=0036836c vaddr=30100000 size=0005ch (    92) load[0m
+[0;32mI (647) esp_image: segment 2: paddr=003683d0 vaddr=4ff00000 size=07c48h ( 31816) load[0m
+[0;32mI (658) esp_image: segment 3: paddr=00370020 vaddr=48000020 size=2c5198h (2904472) map[0m
+[0;32mI (1104) esp_image: segment 4: paddr=006351c0 vaddr=4ff07c48 size=093c0h ( 37824) load[0m
+[0;32mI (1113) esp_image: segment 5: paddr=0063e588 vaddr=4ff11080 size=03a78h ( 14968) load[0m
+[0;32mI (1121) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (1121) boot: Disabling RNG early entropy source...[0m
+[0;32mI (1133) hex_psram: vendor id    : 0x0d (AP)[0m
+[0;32mI (1134) hex_psram: Latency      : 0x01 (Fixed)[0m
+[0;32mI (1134) hex_psram: DriveStr.    : 0x00 (25 Ohm)[0m
+[0;32mI (1138) hex_psram: dev id       : 0x03 (generation 4)[0m
+[0;32mI (1144) hex_psram: density      : 0x07 (256 Mbit)[0m
+[0;32mI (1149) hex_psram: good-die     : 0x06 (Pass)[0m
+[0;32mI (1154) hex_psram: SRF          : 0x02 (Slow Refresh)[0m
+[0;32mI (1160) hex_psram: BurstType    : 0x00 ( Wrap)[0m
+[0;32mI (1165) hex_psram: BurstLen     : 0x03 (2048 Byte)[0m
+[0;32mI (1171) hex_psram: BitMode      : 0x01 (X16 Mode)[0m
+[0;32mI (1176) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)[0m
+[0;32mI (1182) hex_psram: DriveStrength: 0x00 (1/1)[0m
+[0;32mI (1188) MSPI DQS: tuning success, best phase id is 2[0m
+[0;32mI (1365) MSPI DQS: tuning success, best delayline id is 11[0m
+I esp_psram: Found 32MB PSRAM device
+I esp_psram: Speed: 200MHz
+[0;32mI (1366) mmu_psram: flash_drom_paddr_start: 0x10000[0m
+[0;32mI (1538) mmu_psram: flash_irom_paddr_start: 0x370000[0m
+[0;32mI (1677) hex_psram: psram CS IO is dedicated[0m
+[0;32mI (1677) cpu_start: Multicore app[0m
+[0;32mI (2008) esp_psram: SPI SRAM memory test OK[0m
+[0;33mW (2017) clk: esp_perip_clk_init() has not been implemented yet[0m
+[0;32mI (2024) cpu_start: Pro cpu start user code[0m
+[0;32mI (2024) cpu_start: cpu freq: 360000000 Hz[0m
+[0;32mI (2024) app_init: Application information:[0m
+[0;32mI (2027) app_init: Project name:     yolo11_detect[0m
+[0;32mI (2032) app_init: App version:      1012855-dirty[0m
+[0;32mI (2038) app_init: Compile time:     Sep 21 2026 21:01:11[0m
+[0;32mI (2044) app_init: ELF file SHA256:  43fe8cef2...[0m
+[0;32mI (2049) app_init: ESP-IDF:          v5.3.2[0m
+[0;32mI (2054) efuse_init: Min chip rev:     v0.1[0m
+[0;32mI (2059) efuse_init: Max chip rev:     v1.99 [0m
+[0;32mI (2064) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (2069) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (2076) heap_init: At 4FF177C0 len 00023800 (142 KiB): RAM[0m
+[0;32mI (2082) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM[0m
+[0;32mI (2088) heap_init: At 4FF40000 len 00040000 (256 KiB): RAM[0m
+[0;32mI (2095) heap_init: At 3010005C len 00001FA4 (7 KiB): TCM[0m
+[0;32mI (2101) esp_psram: Adding pool of 22976K of PSRAM memory to heap allocator[0m
+[0;32mI (2109) spi_flash: detected chip: generic[0m
+[0;32mI (2113) spi_flash: flash io: qio[0m
+[0;32mI (2118) main_task: Started on CPU0[0m
+[0;32mI (2158) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (2158) main_task: Calling app_main()[0m
+[0;32mI (2158) v30_champion: ==================================================[0m
+[0;32mI (2168) v30_champion:   Ours Champion (v30 Native2D ECA) Benchmark      [0m
+[0;32mI (2178) v30_champion:   Target: ESP32-P4 RISC-V Dual-Core @ 400 MHz     [0m
+[0;32mI (2178) v30_champion: ==================================================[0m
+[0;32mI (5248) v30_champion: Decoded test image: 405x540 (3 channels)[0m
+[0;32mI (5248) v30_champion: Initial Free PSRAM: 22868168 bytes, Free SRAM: 418227 bytes[0m
+[0;32mI (5258) v30_champion: Loading Quantized INT8 Champion v30 Model...[0m
+[0;32mI (5258) v30_champion: Warming up (2 iterations)...[0m
+[0;33mW (5368) FbsLoader: CONFIG_SPIRAM_RODATA or CONFIG_SPIRAM_XIP_FROM_PSRAM option is on, fbs model is copied to PSRAM.[0m
+[0;33mW (5488) dl::Model: minimize() will delete unused inference variables, breaking model testing/debugging.[0m
+[0;32mI (9928) v30_champion: >>> STARTING 10-RUN BENCHMARK (ACTIVE INFERENCE) <<<[0m
+[0;32mI (12198) v30_champion: Run  1/10: 2173.69 ms (detections: 0)[0m
+[0;32mI (14468) v30_champion: Run  2/10: 2173.68 ms (detections: 0)[0m
+[0;32mI (16738) v30_champion: Run  3/10: 2173.64 ms (detections: 0)[0m
+[0;32mI (19008) v30_champion: Run  4/10: 2173.65 ms (detections: 0)[0m
+[0;32mI (21278) v30_champion: Run  5/10: 2173.65 ms (detections: 0)[0m
+[0;32mI (23548) v30_champion: Run  6/10: 2173.64 ms (detections: 0)[0m
+[0;32mI (25818) v30_champion: Run  7/10: 2173.66 ms (detections: 0)[0m
+[0;32mI (28088) v30_champion: Run  8/10: 2173.65 ms (detections: 0)[0m
+[0;32mI (30358) v30_champion: Run  9/10: 2173.68 ms (detections: 0)[0m
+[0;32mI (32628) v30_champion: Run 10/10: 2173.64 ms (detections: 0)[0m
+[0;32mI (32628) v30_champion: ==================================================[0m
+[0;32mI (32628) v30_champion:   CHAMPION v30 BENCHMARK SUMMARY (ESP32-P4)       [0m
+[0;32mI (32638) v30_champion: ==================================================[0m
+[0;32mI (32648) v30_champion:   Model:           Ours Champion (v30 Native2D)   [0m
+[0;32mI (32648) v30_champion:   Precision:       INT8 Quantized (esp-ppq)       [0m
+[0;32mI (32658) v30_champion:   Clock:           400 MHz RISC-V SIMD            [0m
+[0;32mI (32668) v30_champion:   Iterations:      10[0m
+[0;32mI (32668) v30_champion:   Average Latency: 2173.66 ms[0m
+[0;32mI (32678) v30_champion:   Min Latency:     2173.64 ms[0m
+[0;32mI (32688) v30_champion:   Max Latency:     2173.69 ms[0m
+[0;32mI (32688) v30_champion:   Throughput:      0.46 FPS[0m
+[0;32mI (32698) v30_champion:   PSRAM Remaining: 18984136 bytes[0m
+[0;32mI (32698) v30_champion:   SRAM Remaining:  386467 bytes[0m
+[0;32mI (32708) v30_champion: ==================================================[0m
+[0;32mI (32718) v30_champion: Benchmark completed successfully. Halting.[0m
