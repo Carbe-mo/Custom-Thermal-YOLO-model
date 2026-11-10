@@ -1,0 +1,42 @@
+# models/daorb_yolo_11498574/model.yaml
+# Paper 11498574 (DOI 10.1109/JSEN.2026.3686674):
+# "TMCR Edge-YOLO: Thermal Sensing-based Mobility-Context Recognition on the Edge",
+# IEEE Sensors Journal, 2026.
+# Replaces YOLOv8 backbone C2f blocks with Dual-Attention Optimized Residual Block
+# (DA-ORB: 5x5 DW inverted residual + adaptive ECA + 7x7 Spatial Attention).
+
+nc: 4
+scales:
+  n: [0.33, 0.25, 1024]
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]    # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]]   # 1-P2/4
+  - [-1, 3, DAORB, [128]]        # 2-P2/4 (DA-ORB replaces C2f)
+  - [-1, 1, Conv, [256, 3, 2]]   # 3-P3/8
+  - [-1, 6, DAORB, [256]]        # 4-P3/8 (DA-ORB replaces C2f)
+  - [-1, 1, Conv, [512, 3, 2]]   # 5-P4/16
+  - [-1, 6, DAORB, [512]]        # 6-P4/16 (DA-ORB replaces C2f)
+  - [-1, 1, Conv, [1024, 3, 2]]  # 7-P5/32
+  - [-1, 3, DAORB, [1024]]       # 8-P5/32 (DA-ORB replaces C2f)
+  - [-1, 1, SPPF, [1024, 5]]     # 9
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 6], 1, Concat, [1]]    # cat backbone P4
+  - [-1, 3, C2f, [512]]          # 12
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 4], 1, Concat, [1]]    # cat backbone P3
+  - [-1, 3, C2f, [256]]          # 15 (P3/8-small)
+
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 12], 1, Concat, [1]]   # cat head P4
+  - [-1, 3, C2f, [512]]          # 18 (P4/16-medium)
+
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [[-1, 9], 1, Concat, [1]]    # cat head P5
+  - [-1, 3, C2f, [1024]]         # 21 (P5/32-large)
+
+  - [[15, 18, 21], 1, Detect, [nc]]  # Detect(P3, P4, P5)

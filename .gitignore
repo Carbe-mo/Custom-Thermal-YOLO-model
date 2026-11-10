@@ -8,6 +8,7 @@ __pycache__/
 runs/
 *.pt
 !weights/*.pt
+!models/*/*.pt
 
 # Large dataset image binaries (keep data/splits/ tracked)
 data/thermal/

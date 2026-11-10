@@ -1,0 +1,6 @@
+Model,Params_M,GFLOPs,Precision,Recall,mAP50,mAP50_95,GPU_Latency_ms,Person_P,Person_R,Person_mAP50,Person_mAP50_95,Trolley_P,Trolley_R,Trolley_mAP50,Trolley_mAP50_95,Bag_P,Bag_R,Bag_mAP50,Bag_mAP50_95,Unattended_P,Unattended_R,Unattended_mAP50,Unattended_mAP50_95
+"Thermal-YOLO (YOLOv5 + SGD) [Farooq et al., 2022]",2.51,7.2,76.98,69.22,75.55,51.54,9.28,72.4,55.7,66.2,38.5,90.5,92.0,96.4,73.9,59.4,69.2,67.6,48.6,85.6,60.0,72.0,45.2
+"MS-YOLO (MobileNetV4 + SlideLoss) [Zhang et al., 2025]",2.95,6.7,80.63,76.22,81.87,53.51,7.1,77.2,60.8,69.8,40.5,88.4,92.0,96.2,73.7,76.4,82.9,84.6,57.3,80.6,69.2,76.9,42.6
+"AFB-YOLO (ECA + CoordAtt) [Lade et al., 2026 / 11520574]",2.78,7.7,80.41,77.97,81.47,58.05,11.12,71.9,58.8,67.9,43.3,91.3,91.1,96.2,77.3,67.2,82.1,79.8,58.1,91.3,80.0,82.0,53.5
+"DA-ORB-YOLO (ECA + SpatialAtt) [TMCR Edge-YOLO, 2026 / 11498574]",2.77,7.7,85.75,74.88,82.06,58.71,9.39,79.3,47.5,66.5,43.8,91.9,93.3,97.6,79.4,73.9,82.1,80.2,55.9,97.8,76.7,84.0,55.7
+Proposed (Hybrid Dilated ECA-YOLO v30),3.01,8.1,87.22,83.38,87.89,64.73,9.13,79.1,66.4,76.9,51.1,95.0,94.0,97.9,82.5,76.0,89.7,92.7,66.0,98.7,83.3,84.1,59.3
